@@ -19,12 +19,12 @@ public class beginningCtrller {
     void onStartAction(ActionEvent event) {
         try {
             FXMLLoader fxmlLoader = new
-                    FXMLLoader(Main.class.getResource("Registration.fxml"));
+                    FXMLLoader(Main.class.getResource("Start.fxml"));
             Parent root = fxmlLoader.load();
-            RegistrationCtrller controller = fxmlLoader.getController();
+            StartCtrller controller = fxmlLoader.getController();
             Scene scene = new Scene(root);
             Stage stage = (Stage) this.startBtt.getScene().getWindow();
-            stage.setTitle("Registration");
+            stage.setTitle("Start Application");
             stage.setScene(scene);
             if (!stage.isShowing()) {
                 stage.show();

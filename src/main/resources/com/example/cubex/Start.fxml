@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="400.0" prefWidth="745.0" style="-fx-background-color: #325743;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cubex.Controller.StartCtrller">
+   <children>
+      <ImageView fitHeight="400.0" fitWidth="750.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Imagen/start.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="271.0" fitWidth="329.0" layoutX="333.0" layoutY="66.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Imagen/cuadro.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="tryBtt" layoutX="121.0" layoutY="305.0" mnemonicParsing="false" onAction="#onTryAction" style="-fx-background-color: #73ca5b;" text="Try demo -&gt;">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Button>
+      <Text layoutX="401.0" layoutY="187.0" strokeType="OUTSIDE" strokeWidth="0.0" text="22. 16,833&#9;   +2   DNF  X&#10;23. 16,390 &#9;   +2   DNF  X&#10;24. 13,070&#9;   +2   DNF  X&#10;25. 13,808&#9;   +2   DNF  X&#10;26. 16,212&#9;   +2   DNF  X&#10;">
+         <font>
+            <Font name="DejaVu Sans" size="14.0" />
+         </font>
+      </Text>
+      <ImageView fitHeight="78.0" fitWidth="256.0" layoutX="45.0" layoutY="149.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Imagen/title.png" />
+         </image>
+      </ImageView>
+      <Text layoutX="59.0" layoutY="241.0" strokeType="OUTSIDE" strokeWidth="0.0" text="The application &#10;to save your times.">
+         <font>
+            <Font name="Kristen ITC" size="27.0" />
+         </font>
+      </Text>
+      <Button fx:id="logBtt" layoutX="615.0" layoutY="13.0" mnemonicParsing="false" onAction="#onLogAction" style="-fx-background-color: #385444; -fx-underline: true;" text="Log in" textFill="WHITE">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Button>
+      <Button fx:id="signBtt" layoutX="666.0" layoutY="13.0" mnemonicParsing="false" onAction="#onSignAction" style="-fx-background-color: #385444;" text="Sign up " textFill="WHITE">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

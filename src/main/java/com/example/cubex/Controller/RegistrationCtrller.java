@@ -14,6 +14,10 @@ import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 public class RegistrationCtrller implements Initializable {
+
+    @FXML
+    private Label labelLog;
+
     @FXML
     private Button cancelBtt;
 
@@ -70,20 +74,36 @@ public class RegistrationCtrller implements Initializable {
     void onEnterAction(ActionEvent event) throws SQLException {
         if (emailTxt.getText().equals("") || passwordTxt.getText().equals("")) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Campos vacíos");
-            alert.setHeaderText(null);
-            alert.setContentText("Los campos a rellenar están vacíos");
+            alert.setTitle("Campos vacíos.");
+            alert.setHeaderText("¡ERROR!");
+            alert.setContentText("Por favor, completa todos los campos antes de continuar.");
             alert.showAndWait();
         } else {
             Connection connection = DatabaseConnection.conectar();
-            Statement statement = connection.createStatement();
-            String sqlInsert = "INSERT INTO cube_users VALUES ();";
-            int rowsUpdated = statement.executeUpdate(sqlInsert); // NOS DEVUELVE EL NUMERO DE FILAS QUE HAN SIDO MODIFICADAS
+
+            // COMPROBAR SI EL USUARIO INTRODUCIDO YA EXISTE
+            String sqlQuery = "SELECT * FROM CUBE_USERS WHERE MAIL = ? AND PASSWORD_USER = ?;";
+            PreparedStatement statementQuery = connection.prepareStatement(sqlQuery);
+            statementQuery.setString(1, emailTxt.getText());
+            statementQuery.setString(2, passwordTxt.getText());
+            ResultSet resultSet = statementQuery.executeQuery();
+            try {
+                if (!resultSet.next()) {
+                    // SI EL USUARIO NO EXISTE, MOSTRAR UN MENSAJE DE ERROR
+                    String message = "Please, verify your email and password and try again.";
+                    labelLog.setText(message);
+                } else{
+
+                }
+            } catch (SQLException e) {
+                System.out.println("Error " + e);
+            }
+            connection.close();
         }
     }
 
     @FXML
-    void onSignAction(ActionEvent event) {
+    void onSignAction() {
         signVision.setVisible(true);
         logginVision.setVisible(false);
         // PONGO LOS PROMPT TEXT MANUALMENTE
@@ -99,7 +119,7 @@ public class RegistrationCtrller implements Initializable {
     }
 
     @FXML
-    void onLogAction(ActionEvent event) {
+    void onLogAction() {
         signVision.setVisible(false);
         logginVision.setVisible(true);
         emailTxt.setPromptText("example@example.com");
@@ -125,31 +145,48 @@ public class RegistrationCtrller implements Initializable {
             alert.setContentText("Las contraseñas no coinciden. Por favor, verifica e intenta nuevamente.");
             alert.showAndWait();
             //comprobacion del mail
-            //comprobacion de que un usuario no se llame igual que otro
-        } else {
-            Connection connection = DatabaseConnection.conectar();
-            String sqlInsert = "INSERT INTO cube_users (NAME_USER, PASSWORD_USER, MAIL, REGISTRATION_DATE) " +
-                    "VALUES (?, ?, ?, ?);";
-            PreparedStatement statement = connection.prepareStatement(sqlInsert);
-            statement.setString(1, txtNameUser.getText());
-            statement.setString(2, txtPasswdUser.getText());
-            statement.setString(3, txtEmailUser.getText());
-            statement.setString(4, currentDate.toString());
+            //comprobar contraseña
 
-            int rowsInserted = statement.executeUpdate();
-            if (rowsInserted > 0) {
-                // SI SE INSERTO EL USUARIO, MOSTRAR UN MENSAJE DE EXITO
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Creación de usuario");
-                alert.setHeaderText("Creación exitosa");
-                alert.setContentText("Se ha creado el usuario correctamente.");
-                alert.showAndWait();
-            } else {
-                // SI NO SE INSERTO EL USUARIO, MOSTRAR UN MENSAJE DE ERROR
+        }
+        /*if(!txtEmailUser.getText().equals()){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Correo electrónico inválido");
+            alert.setHeaderText("¡ERROR!");
+            alert.setContentText("Por favor, introduzca un correo electrónico válido " +
+                    "en el formato 'example@example.com'.");
+            alert.showAndWait();
+        }*/
+        else {
+            Connection connection = DatabaseConnection.conectar();
+            try { // EXCEPCION PARA CONTROLAR QUE NO HAYA DOS NOMBRES DE USUARIOS IGUALES
+                String sqlInsert = "INSERT INTO cube_users (NAME_USER, PASSWORD_USER, MAIL, REGISTRATION_DATE) " +
+                        "VALUES (?, ?, ?, ?);";
+                PreparedStatement statement = connection.prepareStatement(sqlInsert);
+                statement.setString(1, txtNameUser.getText());
+                statement.setString(2, txtPasswdUser.getText());
+                statement.setString(3, txtEmailUser.getText());
+                statement.setString(4, currentDate.toString());
+
+                int rowsInserted = statement.executeUpdate();
+
+                // COMPROBAR SI EL NOMBRE INTRODUCIDO YA EXISTE
+                String sqlQuery = "SELECT NAME_USER FROM CUBE_USERS WHERE NAME_USER = ?;";
+                PreparedStatement statementQuery = connection.prepareStatement(sqlQuery);
+                statementQuery.setString(1, txtNameUser.getText());
+                if (rowsInserted > 0) {
+                    // SI SE INSERTO EL USUARIO, MOSTRAR UN MENSAJE DE EXITO
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Creación de usuario");
+                    alert.setHeaderText("Creación exitosa");
+                    alert.setContentText("Se ha creado el usuario correctamente.");
+                    alert.showAndWait();
+                }
+            } catch (SQLException e) {
+                // SI EL NOMBRE YA EXISTE, MOSTRAR UN MENSAJE DE ERROR
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error al crear usuario");
-                alert.setHeaderText("No se pudo crear el usuario");
-                alert.setContentText("No se pudo crear el usuario. Por favor, inténtelo de nuevo.");
+                alert.setHeaderText("Nombre ya existente");
+                alert.setContentText("Ese nombre ya existe. Por favor, elija otro.");
                 alert.showAndWait();
             }
             connection.close();
@@ -159,11 +196,10 @@ public class RegistrationCtrller implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        signVision.setVisible(false);
-        logginVision.setVisible(true);
-        emailTxt.setPromptText("example@example.com");
-        passwordTxt.setPromptText("Password");
-        emailTxt.setStyle("-fx-prompt-text-fill: #9B9B9B; -fx-background-color: #b1c8a3;");
-        passwordTxt.setStyle("-fx-prompt-text-fill: #9B9B9B; -fx-background-color: #b1c8a3;");
+        if(!StartCtrller.optionRegistrer){
+            onLogAction();
+        } else {
+            onSignAction();
+        }
     }
 }
