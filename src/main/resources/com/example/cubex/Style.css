@@ -1,0 +1,4 @@
+.text-field {
+    -fx-prompt-text-fill: black;
+    -fx-background-color: #b1c8a3;
+}
