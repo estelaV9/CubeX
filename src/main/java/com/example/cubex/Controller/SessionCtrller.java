@@ -22,6 +22,7 @@ public class SessionCtrller extends CodeGeneral implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         settingMenu.setVisible(false);
         optionMenu.setVisible(false);
+        optionDemoPane.setVisible(false);
         nameSession.setVisible(false);
         sessionName.setPromptText("Name of Session");
         sessionName.setStyle("-fx-prompt-text-fill: #9B9B9B; -fx-background-color: #b1c8a3;");

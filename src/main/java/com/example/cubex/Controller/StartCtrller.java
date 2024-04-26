@@ -22,10 +22,13 @@ public class StartCtrller {
     @FXML
     private Button tryBtt;
     public static boolean optionRegistrer = false;
+    // SI HA INICIADO LA APLICACION COMO DEMO ALGUNAS FUNCIONES NO PODRA HACER
+    public static boolean isDemo = false;
 
     @FXML
     void onLogAction(ActionEvent event) {
         optionRegistrer = false;
+        isDemo = false;
         try {
             FXMLLoader fxmlLoader = new
                     FXMLLoader(Main.class.getResource("Registration.fxml"));
@@ -46,6 +49,7 @@ public class StartCtrller {
     @FXML
     void onSignAction(ActionEvent event) {
         optionRegistrer = true;
+        isDemo = false;
         try {
             FXMLLoader fxmlLoader = new
                     FXMLLoader(Main.class.getResource("Registration.fxml"));
@@ -65,6 +69,7 @@ public class StartCtrller {
 
     @FXML
     void onTryAction(ActionEvent event) {
+        isDemo = true;
         try {
             FXMLLoader fxmlLoader = new
                     FXMLLoader(Main.class.getResource("Page.fxml"));

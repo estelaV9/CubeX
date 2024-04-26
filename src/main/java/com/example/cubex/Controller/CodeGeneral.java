@@ -4,6 +4,7 @@ import com.example.cubex.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -14,8 +15,10 @@ import javafx.stage.Stage;
 
 import javax.swing.*;
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class CodeGeneral {
+public class CodeGeneral implements Initializable {
                             /********* GENERAL ATRIBUTTES ***********/
     @FXML public Button closeBtt;
     @FXML public Button closeOpBtt;
@@ -36,6 +39,9 @@ public class CodeGeneral {
     @FXML public Button timerBtt;
     @FXML public Pane timesMenu;
     @FXML public TextField sessionName;
+    @FXML public Button champBtt;
+    @FXML public Pane optionDemoPane;
+    @FXML public Button signOutBtt;
 
                             /********* GENERAL METHODS ***********/
     @FXML void manejarTeclaPresionada(KeyEvent event) {
@@ -64,7 +70,6 @@ public class CodeGeneral {
     }// SE ABRE EL PANEL DE TIEMPOS Y EL BOTON DE CERRAR
 
     @FXML void onCloseMenuAction(ActionEvent event) {
-
         timesMenu.setVisible(false);
         closeBtt.setVisible(false);
     }// SE CIERRA EL PANEL DE TIEMPOS Y EL BOTON DE CERRAR
@@ -72,7 +77,13 @@ public class CodeGeneral {
 
                                 /********* OPTIONS MENU ***********/
     @FXML void onOptionAction(ActionEvent event) {
-        optionMenu.setVisible(true);
+        if(StartCtrller.isDemo){
+            optionMenu.setVisible(false);
+            optionDemoPane.setVisible(true);
+        } else {
+            optionMenu.setVisible(true);
+            optionDemoPane.setVisible(false);
+        }
     } // ABRIR EL MENU DE OPCIONES
 
     @FXML void onCloseOptionAction(ActionEvent event) {
@@ -80,7 +91,38 @@ public class CodeGeneral {
     } // CERRAR EL MENU DE OPCIONES
 
     @FXML void onSettingsMenuAction(ActionEvent event) {
-
+        try {
+            FXMLLoader fxmlLoader = new
+                    FXMLLoader(Main.class.getResource("Setting.fxml"));
+            Parent root = fxmlLoader.load();
+            SettingCtrller controller = fxmlLoader.getController();
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) this.timerBtt.getScene().getWindow();
+            stage.setTitle("Settings");
+            stage.setScene(scene);
+            if (!stage.isShowing()) {
+                stage.show();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    @FXML void onSignOutAction(ActionEvent event) {
+        try {
+            FXMLLoader fxmlLoader = new
+                    FXMLLoader(Main.class.getResource("Start.fxml"));
+            Parent root = fxmlLoader.load();
+            StartCtrller controller = fxmlLoader.getController();
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) this.timerBtt.getScene().getWindow();
+            stage.setTitle("Start Application");
+            stage.setScene(scene);
+            if (!stage.isShowing()) {
+                stage.show();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML void onScreenAction(ActionEvent event) {
@@ -152,5 +194,14 @@ public class CodeGeneral {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }// IR A LA PAGINA PRINCIPAL
+    }// PAGINA PRINCIPAL
+
+    @FXML void onChampAction(ActionEvent event) {
+
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+    }
 }

@@ -13,6 +13,7 @@ public class PageCtrller extends CodeGeneral implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         settingMenu.setVisible(false);
         optionMenu.setVisible(false);
+        optionDemoPane.setVisible(false);
         timesMenu.setVisible(false);
         closeBtt.setVisible(false);
     }
