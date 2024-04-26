@@ -1,13 +1,19 @@
 package com.example.cubex.Controller;
 
 import com.example.cubex.Database.DatabaseConnection;
+import com.example.cubex.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 
 import javax.swing.*;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.time.LocalDate;
@@ -93,7 +99,21 @@ public class RegistrationCtrller implements Initializable {
                     String message = "Please, verify your email and password and try again.";
                     labelLog.setText(message);
                 } else{
-
+                    try {
+                        FXMLLoader fxmlLoader = new
+                                FXMLLoader(Main.class.getResource("Page.fxml"));
+                        Parent root = fxmlLoader.load();
+                        PageCtrller controller = fxmlLoader.getController();
+                        Scene scene = new Scene(root);
+                        Stage stage = (Stage) this.logBtt.getScene().getWindow();
+                        stage.setTitle("Application Page");
+                        stage.setScene(scene);
+                        if (!stage.isShowing()) {
+                            stage.show();
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } // IR A LA PAGINA PRINCIPAL DESPUES DE HABER INICIADO SESION
                 }
             } catch (SQLException e) {
                 System.out.println("Error " + e);
@@ -180,6 +200,22 @@ public class RegistrationCtrller implements Initializable {
                     alert.setHeaderText("Creación exitosa");
                     alert.setContentText("Se ha creado el usuario correctamente.");
                     alert.showAndWait();
+
+                    try {
+                        FXMLLoader fxmlLoader = new
+                                FXMLLoader(Main.class.getResource("Page.fxml"));
+                        Parent root = fxmlLoader.load();
+                        PageCtrller controller = fxmlLoader.getController();
+                        Scene scene = new Scene(root);
+                        Stage stage = (Stage) this.logBtt.getScene().getWindow();
+                        stage.setTitle("Application Page");
+                        stage.setScene(scene);
+                        if (!stage.isShowing()) {
+                            stage.show();
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } // IR A LA PAGINA PRINCIPAL DESPUES DE HABER CREADO EL USUARIO
                 }
             } catch (SQLException e) {
                 // SI EL NOMBRE YA EXISTE, MOSTRAR UN MENSAJE DE ERROR

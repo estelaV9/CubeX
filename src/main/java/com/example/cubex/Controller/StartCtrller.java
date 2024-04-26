@@ -65,7 +65,21 @@ public class StartCtrller {
 
     @FXML
     void onTryAction(ActionEvent event) {
-
+        try {
+            FXMLLoader fxmlLoader = new
+                    FXMLLoader(Main.class.getResource("Page.fxml"));
+            Parent root = fxmlLoader.load();
+            PageCtrller controller = fxmlLoader.getController();
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) this.logBtt.getScene().getWindow();
+            stage.setTitle("Application Page");
+            stage.setScene(scene);
+            if (!stage.isShowing()) {
+                stage.show();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="740.0" style="-fx-background-color: #1e3728;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cubex.Controller.PageCtrller">
+   <children>
+      <ImageView fitHeight="50.0" fitWidth="186.0" layoutX="277.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Imagen/title.png" />
+         </image>
+      </ImageView>
+      <Pane layoutX="36.0" layoutY="70.0" prefHeight="312.0" prefWidth="674.0" style="-fx-background-color: #325743; -fx-background-radius: 24;">
+         <children>
+            <!-- //cuando el foco este en timer se activa el evento y el metodo para saber que tecla se ha presionado -->
+
+            <TextField fx:id="scramblePane" editable="false" layoutX="40.0" layoutY="24.0" prefHeight="99.0" prefWidth="563.0" style="-fx-background-color: #b1c8a3; -fx-alignment: center;  -fx-font-size: 20px;" />
+            <TextField fx:id="chronoPane" layoutX="197.0" layoutY="158.0" prefHeight="99.0" prefWidth="247.0" style="-fx-background-color: #b1c8a3; -fx-alignment: center;  -fx-font-size: 55px;" />
+            <Button fx:id="openBtt" layoutX="627.0" layoutY="270.0" mnemonicParsing="false" onAction="#onOpenMenuAction" style="-fx-background-color: #325743; -fx-background-radius: 100;">
+               <graphic>
+                  <ImageView fitHeight="34.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@Imagen/menu3.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="closeBtt" layoutX="622.0" layoutY="273.0" mnemonicParsing="false" onAction="#onCloseMenuAction" prefHeight="23.0" prefWidth="46.0" style="-fx-background-color: #325743; -fx-background-radius: 100;">
+               <graphic>
+                  <ImageView fitHeight="34.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@Imagen/menu2.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+
+            </Button>
+         </children>
+      </Pane>
+      <Button layoutX="656.0" layoutY="84.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="72.0" style="-fx-background-color: #1e3728;" text="Button">
+         <graphic>
+            <ImageView fitHeight="42.0" fitWidth="67.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Imagen/cube.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button layoutX="14.0" layoutY="309.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" prefHeight="50.0" prefWidth="72.0" style="-fx-background-color: #1e3728;" text="Button">
+         <graphic>
+            <ImageView fitHeight="42.0" fitWidth="67.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Imagen/cube.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button fx:id="settingsBtt" layoutX="674.0" layoutY="20.0" mnemonicParsing="false" onAction="#onSettingsAction" onKeyPressed="#manejarTeclaPresionada" onKeyReleased="#manejarTeclaSoltada" prefHeight="31.0" prefWidth="35.0" style="-fx-background-color: #325743; -fx-background-radius: 100;">
+         <graphic>
+            <ImageView fitHeight="36.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Imagen/tres_puntos.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button fx:id="optionBtt" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#onOptionAction" prefHeight="31.0" prefWidth="35.0" style="-fx-background-color: #325743; -fx-background-radius: 100;">
+         <graphic>
+            <ImageView fitHeight="36.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Imagen/TRES_RAYAS1.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button fx:id="profileBtt" layoutX="74.0" layoutY="14.0" mnemonicParsing="false" onAction="#onProfileAction" prefHeight="44.0" prefWidth="46.0" style="-fx-background-color: #325743; -fx-background-radius: 100;">
+         <graphic>
+            <ImageView fitHeight="36.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Imagen/login_photo.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Pane fx:id="timesMenu" layoutX="422.0" layoutY="161.0" prefHeight="182.0" prefWidth="276.0" style="-fx-background-color: #204338; -fx-background-radius: 24;">
+         <children>
+            <TextField layoutX="15.0" layoutY="13.0" prefHeight="156.0" prefWidth="247.0" style="-fx-background-color: #325743;" />
+            <TableView layoutX="29.0" layoutY="16.0" prefHeight="150.0" prefWidth="186.0">
+               <columns>
+                  <TableColumn prefWidth="75.0" text="C1" />
+                  <TableColumn prefWidth="75.0" text="C2" />
+               </columns>
+            </TableView>
+         </children>
+      </Pane>
+      <Pane fx:id="optionMenu" layoutX="10.0" layoutY="65.0" prefHeight="224.0" prefWidth="276.0" style="-fx-background-color: #204338; -fx-background-radius: 24;">
+         <children>
+            <Button fx:id="closeOpBtt" layoutX="14.0" layoutY="172.0" mnemonicParsing="false" onAction="#onCloseOptionAction" prefHeight="31.0" prefWidth="251.0" style="-fx-background-color: #6d7b64; -fx-background-radius: 100;" text="CLOSE">
+               <font>
+                  <Font name="DejaVu Sans Bold" size="17.0" />
+               </font>
+            </Button>
+            <Button fx:id="timerBtt" layoutX="13.0" layoutY="14.0" mnemonicParsing="false" onAction="#onTimerAction" prefHeight="31.0" prefWidth="251.0" style="-fx-background-color: #325743; -fx-background-radius: 100;" text="TIMER">
+               <font>
+                  <Font name="DejaVu Sans Bold" size="17.0" />
+               </font>
+            </Button>
+            <Button fx:id="solvesBtt" layoutX="14.0" layoutY="53.0" mnemonicParsing="false" onAction="#onSolvesAction" prefHeight="31.0" prefWidth="251.0" style="-fx-background-color: #325743; -fx-background-radius: 100;" text="SOLVES">
+               <font>
+                  <Font name="DejaVu Sans Bold" size="17.0" />
+               </font>
+            </Button>
+            <Button fx:id="sessionBtt" layoutX="14.0" layoutY="92.0" mnemonicParsing="false" onAction="#onSessionAction" prefHeight="31.0" prefWidth="251.0" style="-fx-background-color: #325743; -fx-background-radius: 100;" text="SESSIONS">
+               <font>
+                  <Font name="DejaVu Sans Bold" size="17.0" />
+               </font>
+            </Button>
+            <Button fx:id="compeBtt" layoutX="14.0" layoutY="131.0" mnemonicParsing="false" onAction="#onCompeAction" prefHeight="31.0" prefWidth="251.0" style="-fx-background-color: #325743; -fx-background-radius: 100;" text="COMPETITION">
+               <font>
+                  <Font name="DejaVu Sans Bold" size="17.0" />
+               </font>
+            </Button>
+         </children>
+      </Pane>
+      <Pane fx:id="settingMenu" layoutX="454.0" layoutY="58.0" prefHeight="176.0" prefWidth="276.0" style="-fx-background-color: #204338; -fx-background-radius: 24;">
+         <children>
+            <Button fx:id="exitBtt" layoutX="14.0" layoutY="132.0" mnemonicParsing="false" onAction="#onExitAction" prefHeight="31.0" prefWidth="251.0" style="-fx-background-color: #f0443c; -fx-background-radius: 100;" text="EXIT">
+               <font>
+                  <Font name="DejaVu Sans Bold" size="17.0" />
+               </font>
+            </Button>
+            <Button fx:id="closeSeBtt" layoutX="14.0" layoutY="93.0" mnemonicParsing="false" onAction="#onCloseSettingAction" prefHeight="31.0" prefWidth="251.0" style="-fx-background-color: #6d7b64; -fx-background-radius: 100;" text="CLOSE">
+               <font>
+                  <Font name="DejaVu Sans Bold" size="17.0" />
+               </font>
+            </Button>
+            <Button fx:id="settingsMenuBtt" layoutX="13.0" layoutY="14.0" mnemonicParsing="false" onAction="#onSettingsMenuAction" prefHeight="31.0" prefWidth="251.0" style="-fx-background-color: #325743; -fx-background-radius: 100;" text="SETTINGS">
+               <font>
+                  <Font name="DejaVu Sans Bold" size="17.0" />
+               </font>
+            </Button>
+            <Button fx:id="screenBtt" layoutX="14.0" layoutY="53.0" mnemonicParsing="false" onAction="#onScreenAction" prefHeight="31.0" prefWidth="251.0" style="-fx-background-color: #325743; -fx-background-radius: 100;" text="FULL SCREEN">
+               <font>
+                  <Font name="DejaVu Sans Bold" size="17.0" />
+               </font>
+            </Button>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
