@@ -61,7 +61,21 @@ public class CodeGeneral implements Initializable {
     } // SALIR DE LA APLICACIÓN
 
     @FXML void onProfileAction(ActionEvent event) {
-
+        try {
+            FXMLLoader fxmlLoader = new
+                    FXMLLoader(Main.class.getResource("Setting.fxml"));
+            Parent root = fxmlLoader.load();
+            SettingCtrller controller = fxmlLoader.getController();
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) this.profileBtt.getScene().getWindow();
+            stage.setTitle("Settings");
+            stage.setScene(scene);
+            if (!stage.isShowing()) {
+                stage.show();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
                                 /********* TIMES MENU ***********/
     @FXML void onOpenMenuAction(ActionEvent event) {
@@ -87,7 +101,11 @@ public class CodeGeneral implements Initializable {
     } // ABRIR EL MENU DE OPCIONES
 
     @FXML void onCloseOptionAction(ActionEvent event) {
-        optionMenu.setVisible(false);
+        if(StartCtrller.isDemo){
+            optionDemoPane.setVisible(false);
+        } else {
+            optionMenu.setVisible(false);
+        }
     } // CERRAR EL MENU DE OPCIONES
 
     @FXML void onSettingsMenuAction(ActionEvent event) {
@@ -97,7 +115,7 @@ public class CodeGeneral implements Initializable {
             Parent root = fxmlLoader.load();
             SettingCtrller controller = fxmlLoader.getController();
             Scene scene = new Scene(root);
-            Stage stage = (Stage) this.timerBtt.getScene().getWindow();
+            Stage stage = (Stage) this.settingMenu.getScene().getWindow();
             stage.setTitle("Settings");
             stage.setScene(scene);
             if (!stage.isShowing()) {
@@ -114,7 +132,7 @@ public class CodeGeneral implements Initializable {
             Parent root = fxmlLoader.load();
             StartCtrller controller = fxmlLoader.getController();
             Scene scene = new Scene(root);
-            Stage stage = (Stage) this.timerBtt.getScene().getWindow();
+            Stage stage = (Stage) this.signOutBtt.getScene().getWindow();
             stage.setTitle("Start Application");
             stage.setScene(scene);
             if (!stage.isShowing()) {
@@ -145,7 +163,7 @@ public class CodeGeneral implements Initializable {
             Parent root = fxmlLoader.load();
             CompetitionCtrller controller = fxmlLoader.getController();
             Scene scene = new Scene(root);
-            Stage stage = (Stage) this.timerBtt.getScene().getWindow();
+            Stage stage = (Stage) this.compeBtt.getScene().getWindow();
             stage.setTitle("Competition Page");
             stage.setScene(scene);
             if (!stage.isShowing()) {
@@ -163,7 +181,7 @@ public class CodeGeneral implements Initializable {
             Parent root = fxmlLoader.load();
             SessionCtrller controller = fxmlLoader.getController();
             Scene scene = new Scene(root);
-            Stage stage = (Stage) this.timerBtt.getScene().getWindow();
+            Stage stage = (Stage) this.sessionBtt.getScene().getWindow();
             stage.setTitle("Session Page");
             stage.setScene(scene);
             if (!stage.isShowing()) {
