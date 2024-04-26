@@ -20,64 +20,34 @@ import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 public class RegistrationCtrller implements Initializable {
+    @FXML private Label labelLog;
+    @FXML private Button cancelBtt;
+    @FXML private TextField emailTxt;
+    @FXML private Button logBtt;
+    @FXML private Pane logginVision;
+    @FXML private Label loginMessage;
+    @FXML private PasswordField passwordTxt;
+    @FXML private Button signBtt;
+    @FXML private Pane signVision;
+    @FXML private PasswordField txtConfirmPsswd;
+    @FXML private TextField txtEmailUser;
+    @FXML private TextField txtNameUser;
+    @FXML private PasswordField txtPasswdUser;
 
-    @FXML
-    private Label labelLog;
-
-    @FXML
-    private Button cancelBtt;
-
-    @FXML
-    private TextField emailTxt;
-
-    @FXML
-    private Button logBtt;
-
-    @FXML
-    private Pane logginVision;
-
-    @FXML
-    private Label loginMessage;
-
-    @FXML
-    private PasswordField passwordTxt;
-
-    @FXML
-    private Button signBtt;
-
-    @FXML
-    private Pane signVision;
-
-    @FXML
-    private PasswordField txtConfirmPsswd;
-
-    @FXML
-    private TextField txtEmailUser;
-
-    @FXML
-    private TextField txtNameUser;
-
-    @FXML
-    private PasswordField txtPasswdUser;
-
-    @FXML
-    void onCancelAction(ActionEvent event) {
+    @FXML void onCancelAction(ActionEvent event) {
         emailTxt.clear();
         passwordTxt.clear();
-    }
+    } // LIMPIAR LOS CAMPOS DEL LOGIN
 
-    @FXML
-    void onCloseAction(ActionEvent event) {
+    @FXML void onCloseAction(ActionEvent event) {
         int opcion = JOptionPane.showConfirmDialog(null,
                 "¿Está seguro de que desea salir?", "Confirmación", JOptionPane.YES_NO_OPTION);
         if (opcion == JOptionPane.YES_OPTION) {
-            // CERRAR APLICACIÓN
-            System.exit(0);
+            System.exit(0); // CERRAR APLICACIÓN
         }
-    }
+    } // SALIR DE LA APLICACION
 
-    @FXML
-    void onEnterAction(ActionEvent event) throws SQLException {
+    @FXML void onEnterAction(ActionEvent event) throws SQLException {
         if (emailTxt.getText().equals("") || passwordTxt.getText().equals("")) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Campos vacíos.");
@@ -120,10 +90,9 @@ public class RegistrationCtrller implements Initializable {
             }
             connection.close();
         }
-    }
+    } // INICIAR SESION
 
-    @FXML
-    void onSignAction() {
+    @FXML void onSignAction() {
         signVision.setVisible(true);
         logginVision.setVisible(false);
         // PONGO LOS PROMPT TEXT MANUALMENTE
@@ -136,20 +105,18 @@ public class RegistrationCtrller implements Initializable {
         txtPasswdUser.setStyle("-fx-prompt-text-fill: #9B9B9B; -fx-background-color: #b1c8a3;");
         txtConfirmPsswd.setStyle("-fx-prompt-text-fill: #9B9B9B; -fx-background-color: #b1c8a3;");
 
-    }
+    } // APARIENCIA DEL SIGN UP
 
-    @FXML
-    void onLogAction() {
+    @FXML void onLogAction() {
         signVision.setVisible(false);
         logginVision.setVisible(true);
         emailTxt.setPromptText("example@example.com");
         passwordTxt.setPromptText("Password");
         emailTxt.setStyle("-fx-prompt-text-fill: #9B9B9B; -fx-background-color: #b1c8a3;");
         passwordTxt.setStyle("-fx-prompt-text-fill: #9B9B9B; -fx-background-color: #b1c8a3;");
-    }
+    } // APARIENCIA DEL LOGIN
 
-    @FXML
-    void onSignUpAction(ActionEvent event) throws SQLException {
+    @FXML void onSignUpAction(ActionEvent event) throws SQLException {
         LocalDate currentDate = LocalDate.now();
         if (txtNameUser.getText().equals("") || txtEmailUser.getText().equals("") || txtPasswdUser.getText().equals("")
                 || txtConfirmPsswd.getText().equals("")) {
@@ -227,11 +194,9 @@ public class RegistrationCtrller implements Initializable {
             }
             connection.close();
         }
-    }
+    } // CREAR UNA CUENTA
 
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    @Override public void initialize(URL url, ResourceBundle resourceBundle) {
         if(!StartCtrller.optionRegistrer){
             onLogAction();
         } else {

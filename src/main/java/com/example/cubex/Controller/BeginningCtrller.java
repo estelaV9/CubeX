@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class beginningCtrller {
+public class BeginningCtrller {
     @FXML
     private Button startBtt;
 
