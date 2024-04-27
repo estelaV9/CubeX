@@ -2,3 +2,10 @@
     -fx-prompt-text-fill: black;
     -fx-background-color: #b1c8a3;
 }
+
+.labelTitle{
+        -fx-fill: #6d7b64; /* Color del texto */
+        -fx-stroke: black; /* Color del contorno */
+        -fx-stroke-width: 2px; /* Ancho del contorno */
+}
+
