@@ -9,10 +9,16 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
+import javax.swing.*;
+import java.awt.*;
 import java.io.IOException;
+import java.net.URI;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -47,50 +53,10 @@ public class SettingCtrller extends CodeGeneral implements Initializable {
     @FXML private PasswordField txtNewPasswordUp;
     @FXML private PasswordField txtPasswdUser;
     @FXML private Button upPasswordBtt;
-
-    @FXML
-    void onUpPasswordAction(ActionEvent event) {
-        if (txtNameUser.getText().equals("") || txtEmailUser.getText().equals("") || txtPasswdUser.getText().equals("")) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Campos vacíos.");
-            alert.setHeaderText("¡ERROR!");
-            alert.setContentText("Por favor, completa todos los campos antes de continuar.");
-            alert.showAndWait();
-        } else {
-            Connection connection = DatabaseConnection.conectar();
-            try {
-                String sqlInsert = "UPDATE CUBE_USERS SET NAME_USER = ?, ";
-                PreparedStatement statement = connection.prepareStatement(sqlInsert);
-                statement.setString(1, txtNameUser.getText());
-                statement.setString(2, txtPasswdUser.getText());
-                statement.setString(3, txtEmailUser.getText());
-
-                int rowsInserted = statement.executeUpdate();
-
-                // COMPROBAR SI EL NOMBRE INTRODUCIDO YA EXISTE
-                String sqlQuery = "SELECT NAME_USER FROM CUBE_USERS WHERE NAME_USER = ?;";
-                PreparedStatement statementQuery = connection.prepareStatement(sqlQuery);
-                statementQuery.setString(1, txtNameUser.getText());
-                if (rowsInserted > 0) {
-                    // SI SE INSERTO EL USUARIO, MOSTRAR UN MENSAJE DE EXITO
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Creación de usuario");
-                    alert.setHeaderText("Creación exitosa");
-                    alert.setContentText("Se ha creado el usuario correctamente.");
-                    alert.showAndWait();
+    @FXML private Button deleteAccountBtt;
+    int rowsNameUp;
 
 
-                }
-            } catch (SQLException e) {
-                // SI EL NOMBRE YA EXISTE, MOSTRAR UN MENSAJE DE ERROR
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error al actualizar usuario");
-                alert.setHeaderText("Nombre ya existente");
-                alert.setContentText("Ese nombre ya existe. Por favor, elija otro.");
-                alert.showAndWait();
-            }
-        }
-    }
     @FXML
     void onEditAction(ActionEvent event) {
 
@@ -117,10 +83,6 @@ public class SettingCtrller extends CodeGeneral implements Initializable {
     }// PAGINA PRINCIPAL
 
     @FXML
-    void onCubexProAction(ActionEvent event) {
-
-    }
-    @FXML
     void onGeneralBtt(ActionEvent event) {
 
     }
@@ -131,7 +93,9 @@ public class SettingCtrller extends CodeGeneral implements Initializable {
     }
     @FXML
     void onCommunityAction(ActionEvent event) {
-
+        if(StartCtrller.isDemo){
+            demoProfilePane.setVisible(true);
+        } else {}
     }
 
     @FXML
@@ -163,14 +127,18 @@ public class SettingCtrller extends CodeGeneral implements Initializable {
         }
     }
 
-    @FXML
-    void onUpdateAction(ActionEvent event) {
 
-    }
     @FXML
     void onGithubAction() {
-        // githubBtt.setOnAction(event -> 'google.com');
-    }
+        try {
+            Desktop.getDesktop().browse(new URI("https://github.com/estelaV9"));
+            /*SE USA LA CLASE DESKTOP QUE PERMITE HACER COSAS RELACIONADAS CON EL ESCRITORIO DEL ORDENADOR
+            getDesktop() ES UN METODO QUE PROPORCIONA UNA INSTANCIA, ES DECIR, UN OBJETO DE LA CLASE DESKTOP.
+            EL METODO browse() NOS PERMITE ABRIR UNA URL EN EL NAVEGADOR WEB PREDETERMINADO*/
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    } // REDIRIGE A MI GITHUB
 
 
     /** ACCOUNT **/
@@ -185,6 +153,43 @@ public class SettingCtrller extends CodeGeneral implements Initializable {
         proBtt.setStyle("-fx-background-color :  #325743");
         personalBtt.setStyle("-fx-background-color :  #325743");
         passwordBtt.setStyle("-fx-background-color :  #325743");
+
+    }
+    @FXML
+    void onDeleteAccountAction(ActionEvent event) throws SQLException {
+        Connection connection = DatabaseConnection.conectar();
+        int opcion = JOptionPane.showConfirmDialog(null,
+                "¿Está seguro de que desea eliminar la cuenta?", "Confirmación", JOptionPane.YES_NO_OPTION);
+        if (opcion == JOptionPane.YES_OPTION) {
+            String sqlDelete = "DELETE FROM CUBE_USERS WHERE NAME_USER = ?";
+            PreparedStatement statement = connection.prepareStatement(sqlDelete);
+            statement.setString(1, RegistrationCtrller.nameUser);
+            int rowsDelete = statement.executeUpdate();
+            if (rowsDelete > 0) {
+                // SI SE BORRO EL USUARIO, MOSTRAR UN MENSAJE DE EXITO
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Eliminacion de usuario");
+                alert.setHeaderText("Eliminacion exitosa");
+                alert.setContentText("Se ha eliminado el usuario correctamente.");
+                alert.showAndWait();
+
+                try {
+                    FXMLLoader fxmlLoader = new
+                            FXMLLoader(Main.class.getResource("Start.fxml"));
+                    Parent root = fxmlLoader.load();
+                    StartCtrller controller = fxmlLoader.getController();
+                    Scene scene = new Scene(root);
+                    Stage stage = (Stage) this.deleteAccountBtt.getScene().getWindow();
+                    stage.setTitle("Start Application");
+                    stage.setScene(scene);
+                    if (!stage.isShowing()) {
+                        stage.show();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } // DESPUES DE ELIMINAR LA CUENTA, IR A LA PAGINA PRINCIAPL
+            }
+        }
     }
 
     @FXML
@@ -202,6 +207,45 @@ public class SettingCtrller extends CodeGeneral implements Initializable {
         personalBtt.setStyle("-fx-background-color :  #325743");
         passwordBtt.setStyle("-fx-background-color :   #b1c8a3");
     }
+    @FXML
+    void onUpPasswordAction(ActionEvent event) throws SQLException{
+        if (txtNewPasswordUp.getText().equals("") || txtNewPasswordConfirm.getText().equals("")) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Campos vacíos.");
+            alert.setHeaderText("¡ERROR!");
+            alert.setContentText("Por favor, completa todos los campos antes de continuar.");
+            alert.showAndWait();
+        } if(!txtNewPasswordUp.getText().equals(txtNewPasswordConfirm.getText())){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Contraseñas no coinciden.");
+            alert.setHeaderText("¡ERROR!");
+            alert.setContentText("Las contraseñas no coinciden. Por favor, verifica e intenta nuevamente.");
+            alert.showAndWait();
+        }else {
+            Connection connection = DatabaseConnection.conectar();
+
+            String sqlUpdate = "UPDATE CUBE_USERS SET PASSWORD_USER = ? WHERE NAME_USER = ?";
+            PreparedStatement statement = connection.prepareStatement(sqlUpdate);
+            if(rowsNameUp > 0){ // SI ACTUALIZO PRIMERO SU CUENTA, SE PONE EL NUEVO NOMBRE QUE HA ACTUALIZADO
+                statement.setString(1, txtNewPasswordUp.getText());
+                statement.setString(2, txtNameUser.getText());
+            } else { // SINO, SE COGE EL NOMBRE DEL LOGIN
+                statement.setString(1, txtNewPasswordUp.getText());
+                statement.setString(2, RegistrationCtrller.nameUser);
+            }
+
+            int rowsInserted = statement.executeUpdate();
+            if (rowsInserted > 0) {
+                // SI SE ACTUALIZO EL USUARIO, MOSTRAR UN MENSAJE DE EXITO
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Actualizacion de usuario");
+                alert.setHeaderText("Actualizacion exitosa");
+                alert.setContentText("Se ha actualizado el usuario correctamente.");
+                alert.showAndWait();
+            }
+        }
+    }
+
 
     @FXML
     void onPersonalAction(ActionEvent event) {
@@ -217,6 +261,45 @@ public class SettingCtrller extends CodeGeneral implements Initializable {
     }
 
     @FXML
+    void onUpdateAction(ActionEvent event) {
+        if (txtNameUser.getText().equals("") || txtEmailUser.getText().equals("") || txtPasswdUser.getText().equals("")) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Campos vacíos.");
+            alert.setHeaderText("¡ERROR!");
+            alert.setContentText("Por favor, completa todos los campos antes de continuar.");
+            alert.showAndWait();
+        } else {
+            Connection connection = DatabaseConnection.conectar();
+            try {
+                String sqlInsert = "UPDATE CUBE_USERS SET NAME_USER = ?, PASSWORD_USER = ?, MAIL = ?" +
+                        " WHERE NAME_USER = ?";
+                PreparedStatement statement = connection.prepareStatement(sqlInsert);
+                statement.setString(1, txtNameUser.getText());
+                statement.setString(2, txtPasswdUser.getText());
+                statement.setString(3, txtEmailUser.getText());
+                statement.setString(4, RegistrationCtrller.nameUser);
+
+                rowsNameUp = statement.executeUpdate();
+                if (rowsNameUp > 0) {
+                    // SI SE ACTUALIZO EL USUARIO, MOSTRAR UN MENSAJE DE EXITO
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Actualizacion de usuario");
+                    alert.setHeaderText("Actualizacion exitosa");
+                    alert.setContentText("Se ha actualizado el usuario correctamente.");
+                    alert.showAndWait();
+                }
+            } catch (SQLException e) {
+                // SI EL NOMBRE YA EXISTE, MOSTRAR UN MENSAJE DE ERROR
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error al actualizar usuario");
+                alert.setHeaderText("Nombre ya existente");
+                alert.setContentText("Ese nombre ya existe. Por favor, elija otro.");
+                alert.showAndWait();
+            }
+        }
+    }
+
+    @FXML
     void onProAction(ActionEvent event) {
         personalPane.setVisible(false);
         deletePane.setVisible(false);
@@ -226,6 +309,10 @@ public class SettingCtrller extends CodeGeneral implements Initializable {
         proBtt.setStyle("-fx-background-color :  #b1c8a3");
         personalBtt.setStyle("-fx-background-color :  #325743");
         passwordBtt.setStyle("-fx-background-color :   #325743");
+    }
+    @FXML
+    void onCubexProAction(ActionEvent event) {
+
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

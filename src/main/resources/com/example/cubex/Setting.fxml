@@ -75,16 +75,16 @@
                         <Font name="DejaVu Sans Bold" size="18.0" />
                      </font>
                   </Label>
+                  <Button fx:id="deleteAccountBtt" layoutX="122.0" layoutY="148.0" mnemonicParsing="false" onAction="#onDeleteAccountAction" prefHeight="32.0" prefWidth="146.0" style="-fx-background-color: e23b34; -fx-background-radius: 100;" text="DELETE">
+                     <font>
+                        <Font name="DejaVu Sans Bold" size="17.0" />
+                     </font>
+                  </Button>
                   <ImageView fitHeight="38.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@Imagen/warning.png" />
                      </image>
                   </ImageView>
-                  <Button fx:id="deleteBtt1" layoutX="122.0" layoutY="148.0" mnemonicParsing="false" onAction="#onDeleteAction" prefHeight="32.0" prefWidth="146.0" style="-fx-background-color: e23b34; -fx-background-radius: 100;" text="DELETE">
-                     <font>
-                        <Font name="DejaVu Sans Bold" size="17.0" />
-                     </font>
-                  </Button>
                   <Line endX="186.01171875" endY="-1.52587890625E-5" layoutX="180.0" layoutY="30.0" startX="-126.00003051757812" startY="-1.52587890625E-5" stroke="#e23b34" strokeWidth="2.0" />
                </children>
             </Pane>

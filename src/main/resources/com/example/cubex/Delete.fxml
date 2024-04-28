@@ -39,36 +39,36 @@
                   <Pane layoutY="8.0" prefHeight="268.0" prefWidth="434.0">
                      <children>
                         <Line endX="165.1767578125" endY="-1.52587890625E-5" layoutX="165.0" layoutY="35.0" startX="-100.0" strokeWidth="2.0" />
-                        <Pane fx:id="settingMenu" layoutX="94.0" layoutY="14.0" prefHeight="186.0" prefWidth="276.0" style="-fx-background-color: #204338; -fx-background-radius: 24;">
+                        <Pane fx:id="filterMenu" layoutX="104.0" layoutY="14.0" prefHeight="186.0" prefWidth="276.0" style="-fx-background-color: #204338; -fx-background-radius: 24;">
                            <children>
-                              <Button fx:id="closeSeBtt" layoutX="13.0" layoutY="135.0" mnemonicParsing="false" onAction="#onCloseSettingAction" prefHeight="31.0" prefWidth="251.0" style="-fx-background-color: #6d7b64; -fx-background-radius: 100;" text="CLOSE">
+                              <Button fx:id="closeFiBtt" layoutX="13.0" layoutY="135.0" mnemonicParsing="false" onAction="#onCloseFilterAction" prefHeight="31.0" prefWidth="251.0" style="-fx-background-color: #6d7b64; -fx-background-radius: 100;" text="CLOSE">
                                  <font>
                                     <Font name="DejaVu Sans Bold" size="17.0" />
                                  </font>
                               </Button>
-                              <Button fx:id="settingsMenuBtt" layoutX="13.0" layoutY="14.0" mnemonicParsing="false" onAction="#onSettingsMenuAction" prefHeight="31.0" prefWidth="251.0" style="-fx-background-color: #325743; -fx-background-radius: 100;" text="EXPERIENCE">
+                              <Button fx:id="expFilterBtt" layoutX="13.0" layoutY="14.0" mnemonicParsing="false" onAction="#onExpFilterAction" prefHeight="31.0" prefWidth="251.0" style="-fx-background-color: #325743; -fx-background-radius: 100;" text="EXPERIENCE">
                                  <font>
                                     <Font name="DejaVu Sans Bold" size="17.0" />
                                  </font>
                               </Button>
-                              <Button fx:id="screenBtt" layoutX="13.0" layoutY="53.0" mnemonicParsing="false" onAction="#onScreenAction" prefHeight="31.0" prefWidth="251.0" style="-fx-background-color: #325743; -fx-background-radius: 100;" text="BEST TIMES">
+                              <Button fx:id="bestFilterBtt" layoutX="13.0" layoutY="53.0" mnemonicParsing="false" onAction="#onBestFiltAction" prefHeight="31.0" prefWidth="251.0" style="-fx-background-color: #325743; -fx-background-radius: 100;" text="BEST TIMES">
                                  <font>
                                     <Font name="DejaVu Sans Bold" size="17.0" />
                                  </font>
                               </Button>
-                              <Button fx:id="signOutBtt1" layoutX="13.0" layoutY="94.0" mnemonicParsing="false" onAction="#onSignOutAction" prefHeight="31.0" prefWidth="251.0" style="-fx-background-color: #325743; -fx-background-radius: 100;" text="WORST TIMES">
+                              <Button fx:id="worstFilterBtt" layoutX="13.0" layoutY="94.0" mnemonicParsing="false" onAction="#onWorstFilterAction" prefHeight="31.0" prefWidth="251.0" style="-fx-background-color: #325743; -fx-background-radius: 100;" text="WORST TIMES">
                                  <font>
                                     <Font name="DejaVu Sans Bold" size="17.0" />
                                  </font>
                               </Button>
                            </children>
                         </Pane>
-                        <Button fx:id="proBtt" layoutX="377.0" mnemonicParsing="false" onAction="#onProAction" prefHeight="32.0" prefWidth="25.0" style="-fx-background-color: #74cc5e;">
+                        <Button fx:id="filterBtt" layoutX="386.0" mnemonicParsing="false" onAction="#onFilterAction" prefHeight="32.0" prefWidth="27.0" style="-fx-background-color: #74cc5e;">
                            <font>
                               <Font name="DejaVu Sans Bold" size="15.0" />
                            </font>
                            <graphic>
-                              <ImageView fitHeight="36.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="27.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@Imagen/filter%20(1).png" />
                                  </image>

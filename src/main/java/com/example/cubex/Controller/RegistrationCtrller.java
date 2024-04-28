@@ -33,6 +33,7 @@ public class RegistrationCtrller implements Initializable {
     @FXML private TextField txtEmailUser;
     @FXML private TextField txtNameUser;
     @FXML private PasswordField txtPasswdUser;
+    public static String nameUser;
 
     @FXML void onCancelAction(ActionEvent event) {
         emailTxt.clear();
@@ -69,6 +70,15 @@ public class RegistrationCtrller implements Initializable {
                     String message = "Please, verify your email and password and try again.";
                     labelLog.setText(message);
                 } else{
+                    String sql= "SELECT NAME_USER FROM CUBE_USERS WHERE MAIL = ?";
+                    PreparedStatement statement = connection.prepareStatement(sql);
+                    statement.setString(1, emailTxt.getText());
+                    ResultSet resultSet1 = statement.executeQuery();
+                    if(resultSet1.next()){
+                        nameUser = resultSet1.getString("NAME_USER");
+                        System.out.println(nameUser);
+                    }
+
                     try {
                         FXMLLoader fxmlLoader = new
                                 FXMLLoader(Main.class.getResource("Page.fxml"));
@@ -161,6 +171,8 @@ public class RegistrationCtrller implements Initializable {
                 PreparedStatement statementQuery = connection.prepareStatement(sqlQuery);
                 statementQuery.setString(1, txtNameUser.getText());
                 if (rowsInserted > 0) {
+                    nameUser = txtNameUser.getText();
+                    System.out.println(nameUser);
                     // SI SE INSERTO EL USUARIO, MOSTRAR UN MENSAJE DE EXITO
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Creación de usuario");
