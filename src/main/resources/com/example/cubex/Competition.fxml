@@ -48,6 +48,8 @@
                   <Font size="30.0" />
                </font>
             </Label>
+            <TextField fx:id="cuber1Txt" layoutX="93.0" layoutY="263.0" style="-fx-background-color: #b1c8a3;" />
+            <TextField fx:id="cuber2Txt" layoutX="400.0" layoutY="263.0" style="-fx-background-color: #b1c8a3;" />
          </children>
       </Pane>
       <Button layoutX="656.0" layoutY="84.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="72.0" style="-fx-background-color: #1e3728;" text="Button">
@@ -90,7 +92,7 @@
          <graphic>
             <ImageView fitHeight="36.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@Imagen/login_photo.png" />
+                  <Image url="@Imagen/loginPhotoMini.png" />
                </image>
             </ImageView>
          </graphic>

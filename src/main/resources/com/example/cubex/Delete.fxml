@@ -38,7 +38,6 @@
                <children>
                   <Pane layoutY="8.0" prefHeight="268.0" prefWidth="434.0">
                      <children>
-                        <Line endX="165.1767578125" endY="-1.52587890625E-5" layoutX="165.0" layoutY="35.0" startX="-100.0" strokeWidth="2.0" />
                         <Pane fx:id="filterMenu" layoutX="104.0" layoutY="14.0" prefHeight="186.0" prefWidth="276.0" style="-fx-background-color: #204338; -fx-background-radius: 24;">
                            <children>
                               <Button fx:id="closeFiBtt" layoutX="13.0" layoutY="135.0" mnemonicParsing="false" onAction="#onCloseFilterAction" prefHeight="31.0" prefWidth="251.0" style="-fx-background-color: #6d7b64; -fx-background-radius: 100;" text="CLOSE">
@@ -70,7 +69,7 @@
                            <graphic>
                               <ImageView fitHeight="27.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@Imagen/filter%20(1).png" />
+                                    <Image url="@Imagen/filter.png" />
                                  </image>
                               </ImageView>
                            </graphic>
@@ -102,65 +101,70 @@
       </Pane>
       <Pane fx:id="settingGMenu" prefHeight="400.0" prefWidth="270.0" style="-fx-background-color: #204338;">
          <children>
-            <Button fx:id="backBtt" layoutX="9.0" layoutY="225.0" mnemonicParsing="false" onAction="#onBackAction" prefHeight="32.0" prefWidth="251.0" style="-fx-background-color: #6d7b64; -fx-background-radius: 100;" text="BACK">
-               <font>
-                  <Font name="DejaVu Sans Bold" size="17.0" />
-               </font>
-            </Button>
-            <Button fx:id="exitBtt" layoutX="9.0" layoutY="282.0" mnemonicParsing="false" onAction="#onExitAction" prefHeight="31.0" prefWidth="251.0" style="-fx-background-color: #a82f2a; -fx-background-radius: 100;" text="EXIT">
-               <font>
-                  <Font name="DejaVu Sans Bold" size="17.0" />
-               </font>
-            </Button>
-            <Button fx:id="profileBtt" layoutX="10.0" layoutY="102.0" mnemonicParsing="false" onAction="#onProfileAction" prefHeight="31.0" prefWidth="251.0" style="-fx-background-color: #325743; -fx-background-radius: 100;" text="PROFILE">
-               <font>
-                  <Font name="DejaVu Sans Bold" size="17.0" />
-               </font>
-            </Button>
-            <Button fx:id="manualBtt" layoutX="10.0" layoutY="142.0" mnemonicParsing="false" onAction="#onManualAction" prefHeight="31.0" prefWidth="251.0" style="-fx-background-color: #325743; -fx-background-radius: 100;" text="USER MANUAL">
-               <font>
-                  <Font name="DejaVu Sans Bold" size="17.0" />
-               </font>
-            </Button>
-            <Line endX="100.0" layoutX="140.0" layoutY="271.0" startX="-100.0" stroke="#262626" strokeWidth="2.0" />
-            <Button fx:id="signOutBtt" layoutX="9.0" layoutY="183.0" mnemonicParsing="false" onAction="#onSignOutAction" prefHeight="31.0" prefWidth="251.0" style="-fx-background-color: #325743; -fx-background-radius: 100;" text="SIGN OUT">
-               <font>
-                  <Font name="DejaVu Sans Bold" size="17.0" />
-               </font>
-            </Button>
-            <Button fx:id="generalBtt" layoutX="10.0" layoutY="62.0" mnemonicParsing="false" onAction="#onGeneralBtt" prefHeight="31.0" prefWidth="251.0" style="-fx-background-color: #325743; -fx-background-radius: 100;" text="GENERAL">
-               <font>
-                  <Font name="DejaVu Sans Bold" size="17.0" />
-               </font>
-            </Button>
-            <Button fx:id="githubBtt" layoutX="50.0" layoutY="323.0" mnemonicParsing="false" onAction="#onGithubAction" prefHeight="63.0" prefWidth="170.0" style="-fx-background-color: #204338;" text="estelaV9" textFill="#201f1f">
+            <Button fx:id="githubBtt" layoutX="50.0" layoutY="346.0" mnemonicParsing="false" onAction="#onGithubAction" prefHeight="40.0" prefWidth="170.0" style="-fx-background-color: #204338;" text="estelaV9" textFill="#201f1f">
                <font>
                   <Font name="DejaVu Sans Bold" size="17.0" />
                </font>
                <graphic>
-                  <ImageView fitHeight="54.0" fitWidth="53.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="41.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@Imagen/github%20(1).png" />
+                        <Image url="@Imagen/github.png" />
                      </image>
                   </ImageView>
                </graphic>
             </Button>
-            <ImageView fitHeight="41.0" fitWidth="152.0" layoutX="24.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@Imagen/title.png" />
-               </image>
-            </ImageView>
-            <Button layoutX="185.0" mnemonicParsing="false" onAction="#onProfileAction" prefHeight="40.0" prefWidth="56.0" style="-fx-background-color: #204338;" textFill="#201f1f">
+            <Button layoutX="197.0" layoutY="1.0" mnemonicParsing="false" onAction="#onProfileAction" prefHeight="40.0" prefWidth="56.0" style="-fx-background-color: #204338;" textFill="#201f1f">
                <font>
                   <Font name="DejaVu Sans Bold" size="17.0" />
                </font>
                <graphic>
                   <ImageView fitHeight="49.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@Imagen/login_photo.png" />
+                        <Image url="@Imagen/loginPhotoMini.png" />
                      </image>
                   </ImageView>
                </graphic>
+            </Button>
+            <Button fx:id="backBtt" layoutX="9.0" layoutY="260.0" mnemonicParsing="false" onAction="#onBackAction" prefHeight="32.0" prefWidth="251.0" style="-fx-background-color: #6d7b64; -fx-background-radius: 100;" text="BACK">
+               <font>
+                  <Font name="DejaVu Sans Bold" size="17.0" />
+               </font>
+            </Button>
+            <Button fx:id="exitBtt" layoutX="9.0" layoutY="312.0" mnemonicParsing="false" onAction="#onExitAction" prefHeight="31.0" prefWidth="251.0" style="-fx-background-color: #a82f2a; -fx-background-radius: 100;" text="EXIT">
+               <font>
+                  <Font name="DejaVu Sans Bold" size="17.0" />
+               </font>
+            </Button>
+            <Button fx:id="profileBtt" layoutX="10.0" layoutY="99.0" mnemonicParsing="false" onAction="#onProfileAction" prefHeight="31.0" prefWidth="251.0" style="-fx-background-color: #325743; -fx-background-radius: 100;" text="PROFILE">
+               <font>
+                  <Font name="DejaVu Sans Bold" size="17.0" />
+               </font>
+            </Button>
+            <Button fx:id="manualBtt" layoutX="10.0" layoutY="178.0" mnemonicParsing="false" onAction="#onManualAction" prefHeight="31.0" prefWidth="251.0" style="-fx-background-color: #325743; -fx-background-radius: 100;" text="USER MANUAL">
+               <font>
+                  <Font name="DejaVu Sans Bold" size="17.0" />
+               </font>
+            </Button>
+            <Line endX="100.0" layoutX="140.0" layoutY="303.0" startX="-100.0" stroke="#262626" strokeWidth="2.0" />
+            <Button fx:id="signOutBtt" layoutX="9.0" layoutY="218.0" mnemonicParsing="false" onAction="#onSignOutAction" prefHeight="31.0" prefWidth="251.0" style="-fx-background-color: #325743; -fx-background-radius: 100;" text="SIGN OUT">
+               <font>
+                  <Font name="DejaVu Sans Bold" size="17.0" />
+               </font>
+            </Button>
+            <Button fx:id="generalBtt" layoutX="10.0" layoutY="59.0" mnemonicParsing="false" onAction="#onGeneralBtt" prefHeight="31.0" prefWidth="251.0" style="-fx-background-color: #325743; -fx-background-radius: 100;" text="GENERAL">
+               <font>
+                  <Font name="DejaVu Sans Bold" size="17.0" />
+               </font>
+            </Button>
+            <ImageView fitHeight="41.0" fitWidth="152.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Imagen/title.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="communityBtt" layoutX="9.0" layoutY="138.0" mnemonicParsing="false" onAction="#onCommunityAction" prefHeight="31.0" prefWidth="251.0" style="-fx-background-color: #325743; -fx-background-radius: 100;" text="COMMUNITY">
+               <font>
+                  <Font name="DejaVu Sans Bold" size="17.0" />
+               </font>
             </Button>
          </children>
       </Pane>

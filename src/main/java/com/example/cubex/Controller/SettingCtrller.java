@@ -95,7 +95,9 @@ public class SettingCtrller extends CodeGeneral implements Initializable {
     void onCommunityAction(ActionEvent event) {
         if(StartCtrller.isDemo){
             demoProfilePane.setVisible(true);
-        } else {}
+        } else {
+
+        }
     }
 
     @FXML
@@ -117,8 +119,6 @@ public class SettingCtrller extends CodeGeneral implements Initializable {
             txtNameUser.setStyle("-fx-prompt-text-fill: #1e3728; -fx-background-color: #6b9979;");
             txtEmailUser.setPromptText("New example@example.com");
             txtEmailUser.setStyle("-fx-prompt-text-fill: #1e3728; -fx-background-color: #6b9979;");
-            txtPasswdUser.setPromptText("New password.");
-            txtPasswdUser.setStyle("-fx-prompt-text-fill: #1e3728; -fx-background-color: #6b9979;");
 
             deleteBtt.setStyle("-fx-background-color :   #325743");
             proBtt.setStyle("-fx-background-color :  #325743");
@@ -165,6 +165,13 @@ public class SettingCtrller extends CodeGeneral implements Initializable {
             PreparedStatement statement = connection.prepareStatement(sqlDelete);
             statement.setString(1, RegistrationCtrller.nameUser);
             int rowsDelete = statement.executeUpdate();
+            if(rowsNameUp > 0){
+                statement.setString(1, txtNewPasswordUp.getText());
+                statement.setString(2, txtNameUser.getText());
+            } else { // SINO, SE COGE EL NOMBRE DEL LOGIN
+                statement.setString(1, txtNewPasswordUp.getText());
+                statement.setString(2, RegistrationCtrller.nameUser);
+            }
             if (rowsDelete > 0) {
                 // SI SE BORRO EL USUARIO, MOSTRAR UN MENSAJE DE EXITO
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -262,7 +269,8 @@ public class SettingCtrller extends CodeGeneral implements Initializable {
 
     @FXML
     void onUpdateAction(ActionEvent event) {
-        if (txtNameUser.getText().equals("") || txtEmailUser.getText().equals("") || txtPasswdUser.getText().equals("")) {
+        RadioButton seleccionado = (RadioButton) RoleUser.getSelectedToggle();
+        if (txtNameUser.getText().equals("") || txtEmailUser.getText().equals("") || RoleUser.getSelectedToggle() == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Campos vacíos.");
             alert.setHeaderText("¡ERROR!");
@@ -271,13 +279,20 @@ public class SettingCtrller extends CodeGeneral implements Initializable {
         } else {
             Connection connection = DatabaseConnection.conectar();
             try {
-                String sqlInsert = "UPDATE CUBE_USERS SET NAME_USER = ?, PASSWORD_USER = ?, MAIL = ?" +
+                String sqlInsert = "UPDATE CUBE_USERS SET NAME_USER = ?, MAIL = ?, ROLE_USER = ?" +
                         " WHERE NAME_USER = ?";
                 PreparedStatement statement = connection.prepareStatement(sqlInsert);
-                statement.setString(1, txtNameUser.getText());
-                statement.setString(2, txtPasswdUser.getText());
-                statement.setString(3, txtEmailUser.getText());
-                statement.setString(4, RegistrationCtrller.nameUser);
+                if(rowsNameUp > 0){
+                    statement.setString(1, txtNameUser.getText());
+                    statement.setString(2, txtEmailUser.getText());
+                    statement.setString(3, seleccionado.getText());
+                    statement.setString(4, txtNameUser.getText());
+                } else { // SINO, SE COGE EL NOMBRE DEL LOGIN
+                    statement.setString(1, txtNameUser.getText());
+                    statement.setString(2, txtEmailUser.getText());
+                    statement.setString(3, seleccionado.getText());
+                    statement.setString(4, RegistrationCtrller.nameUser);
+                }
 
                 rowsNameUp = statement.executeUpdate();
                 if (rowsNameUp > 0) {
@@ -318,6 +333,7 @@ public class SettingCtrller extends CodeGeneral implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         demoProfilePane.setVisible(false);
         accountPane.setVisible(false);
+
     }
 
 }

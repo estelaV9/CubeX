@@ -115,6 +115,60 @@
                   <PasswordField fx:id="txtNewPasswordUp" layoutY="65.0" prefHeight="25.0" prefWidth="237.0" style="-fx-background-color: #6b9979;" />
                </children>
             </Pane>
+            <Pane fx:id="personalPane" layoutX="17.0" layoutY="121.0" prefHeight="248.0" prefWidth="402.0">
+               <children>
+                  <Line endX="16.705047607421875" endY="10.999984741210938" layoutX="152.0" layoutY="14.0" startX="-146.00003051757812" startY="10.999984741210938" strokeWidth="2.0" />
+                  <Button layoutY="180.0" mnemonicParsing="false" onAction="#onUpdateAction" prefHeight="31.0" prefWidth="237.0" style="-fx-background-color: #74cc5e;" text="UPDATE INFO">
+                     <font>
+                        <Font name="DejaVu Sans Bold" size="15.0" />
+                     </font>
+                  </Button>
+                  <TextField fx:id="txtNameUser" layoutX="62.0" layoutY="45.0" prefHeight="25.0" prefWidth="174.0" style="-fx-background-color: #6b9979;" />
+                  <Label layoutX="5.0" layoutY="4.0" text="PERSONAL INFO">
+                     <font>
+                        <Font name="DejaVu Sans Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="txtEmailUser" layoutX="51.0" layoutY="81.0" prefHeight="25.0" prefWidth="185.0" style="-fx-background-color: #6b9979;" />
+                  <RadioButton layoutX="16.0" layoutY="132.0" mnemonicParsing="false" text="USER">
+                     <font>
+                        <Font name="DejaVu Sans Bold" size="15.0" />
+                     </font>
+                     <toggleGroup>
+                        <ToggleGroup fx:id="RoleUser" />
+                     </toggleGroup>
+                  </RadioButton>
+                  <RadioButton layoutX="111.0" layoutY="132.0" mnemonicParsing="false" text="MEMBER" toggleGroup="$RoleUser">
+                     <font>
+                        <Font name="DejaVu Sans Bold" size="15.0" />
+                     </font>
+                  </RadioButton>
+                  <Label layoutX="2.0" layoutY="84.0" text="MAIL">
+                     <font>
+                        <Font name="DejaVu Sans Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="3.0" layoutY="48.0" text="NAME">
+                     <font>
+                        <Font name="DejaVu Sans Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="136.0" fitWidth="152.0" layoutX="252.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@Imagen/loginPhoto.png" />
+                     </image>
+                  </ImageView>
+                  <Button fx:id="editBtt" layoutX="343.0" layoutY="146.0" mnemonicParsing="false" onAction="#onEditAction" prefHeight="25.0" prefWidth="29.0" style="-fx-background-radius: 100; -fx-background-color: #6b9979;">
+                     <graphic>
+                        <ImageView fitHeight="32.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@Imagen/edit.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+               </children>
+            </Pane>
             <Pane fx:id="proPane" layoutX="10.0" layoutY="111.0" prefHeight="222.0" prefWidth="405.0">
                <children>
                   <Button fx:id="onCubexProBtt" layoutX="10.0" layoutY="170.0" mnemonicParsing="false" onAction="#onCubexProAction" prefHeight="31.0" prefWidth="268.0" style="-fx-background-color: #74cc5e;" text="GET CUBEX PRO">
@@ -143,60 +197,6 @@
                         <Font name="DejaVu Sans Bold Oblique" size="15.0" />
                      </font>
                   </Label>
-               </children>
-            </Pane>
-            <Pane fx:id="personalPane" layoutX="22.0" layoutY="111.0" prefHeight="248.0" prefWidth="402.0">
-               <children>
-                  <Button layoutY="192.0" mnemonicParsing="false" onAction="#onUpdateAction" prefHeight="31.0" prefWidth="237.0" style="-fx-background-color: #74cc5e;" text="UPDATE INFO">
-                     <font>
-                        <Font name="DejaVu Sans Bold" size="15.0" />
-                     </font>
-                  </Button>
-                  <TextField fx:id="txtNameUser" layoutX="61.0" layoutY="11.0" prefHeight="25.0" prefWidth="174.0" style="-fx-background-color: #6b9979;" />
-                  <Label layoutY="82.0" text="PASSWORD">
-                     <font>
-                        <Font name="DejaVu Sans Bold" size="14.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="txtEmailUser" layoutX="50.0" layoutY="47.0" prefHeight="25.0" prefWidth="185.0" style="-fx-background-color: #6b9979;" />
-                  <PasswordField fx:id="txtPasswdUser" layoutY="100.0" prefHeight="25.0" prefWidth="237.0" style="-fx-background-color: #6b9979;" />
-                  <RadioButton layoutX="16.0" layoutY="144.0" mnemonicParsing="false" text="USER">
-                     <font>
-                        <Font name="DejaVu Sans Bold" size="15.0" />
-                     </font>
-                     <toggleGroup>
-                        <ToggleGroup fx:id="RoleUser" />
-                     </toggleGroup>
-                  </RadioButton>
-                  <RadioButton layoutX="111.0" layoutY="144.0" mnemonicParsing="false" text="MEMBER" toggleGroup="$RoleUser">
-                     <font>
-                        <Font name="DejaVu Sans Bold" size="15.0" />
-                     </font>
-                  </RadioButton>
-                  <Label layoutX="1.0" layoutY="50.0" text="MAIL">
-                     <font>
-                        <Font name="DejaVu Sans Bold" size="14.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="2.0" layoutY="14.0" text="NAME">
-                     <font>
-                        <Font name="DejaVu Sans Bold" size="14.0" />
-                     </font>
-                  </Label>
-                  <ImageView fitHeight="136.0" fitWidth="152.0" layoutX="252.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@Imagen/loginPhoto.png" />
-                     </image>
-                  </ImageView>
-                  <Button fx:id="editBtt" layoutX="343.0" layoutY="146.0" mnemonicParsing="false" onAction="#onEditAction" prefHeight="25.0" prefWidth="29.0" style="-fx-background-radius: 100; -fx-background-color: #6b9979;">
-                     <graphic>
-                        <ImageView fitHeight="32.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@Imagen/edit.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Button>
                </children>
             </Pane>
          </children>

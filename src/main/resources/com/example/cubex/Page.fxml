@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -43,6 +45,9 @@
                </graphic>
 
             </Button>
+            <Button layoutX="101.0" layoutY="258.0" mnemonicParsing="false" onAction="#start" text="START" />
+            <Button layoutX="481.0" layoutY="271.0" mnemonicParsing="false" onAction="#parar" text="Button" />
+            <Label fx:id="chrono" layoutX="293.0" layoutY="217.0" />
          </children>
       </Pane>
       <Button layoutX="656.0" layoutY="84.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="72.0" style="-fx-background-color: #1e3728;" text="Button">
@@ -85,7 +90,7 @@
          <graphic>
             <ImageView fitHeight="36.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@Imagen/loginPhoto%20(1).png" />
+                  <Image url="@Imagen/loginPhotoMini.png" />
                </image>
             </ImageView>
          </graphic>
@@ -194,5 +199,6 @@
             </Button>
          </children>
       </Pane>
+      <ComboBox fx:id="categoriesCB" layoutX="135.0" layoutY="14.0" prefHeight="44.0" prefWidth="105.0" style="-fx-background-color: #325743; -fx-prompt-text-fill: rgba(255, 0, 0, 0.5) ;" />
    </children>
 </AnchorPane>
