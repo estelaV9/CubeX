@@ -12,20 +12,20 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="740.0" style="-fx-background-color: #1e3728;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cubex.Controller.RegistrationCtrller">
    <children>
+      <Button fx:id="backBtt" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#onBackAction" prefHeight="42.0" prefWidth="46.0" style="-fx-background-color: #325743; -fx-background-radius: 100;">
+         <graphic>
+            <ImageView fitHeight="22.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Imagen/backIcon.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
       <ImageView fitHeight="78.0" fitWidth="256.0" layoutX="223.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@Imagen/title.png" />
          </image>
       </ImageView>
-      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#onCloseAction" prefHeight="42.0" prefWidth="46.0" style="-fx-background-color: #325743; -fx-background-radius: 100;">
-         <graphic>
-            <ImageView fitHeight="36.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@Imagen/close.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </Button>
       <Pane fx:id="logginVision" layoutX="181.0" layoutY="85.0" prefHeight="292.0" prefWidth="325.0">
          <children>
             <Pane layoutX="38.0" prefHeight="269.0" prefWidth="256.0" style="-fx-background-color: #325743; -fx-background-radius: 24;">
@@ -57,9 +57,9 @@
                         <Font size="13.0" />
                      </font>
                   </Button>
-                  <Label fx:id="loginMessage" layoutX="21.0" layoutY="136.0">
+                  <Label fx:id="loginMessage" layoutX="21.0" layoutY="136.0" textFill="#a82f2a">
                      <font>
-                        <Font size="13.0" />
+                        <Font name="DejaVu Sans Bold Oblique" size="13.0" />
                      </font>
                   </Label>
                   <Button fx:id="cancelBtt" layoutX="182.0" layoutY="171.0" mnemonicParsing="false" onAction="#onCancelAction" prefHeight="31.0" prefWidth="72.0" style="-fx-background-color: #325743;" text="Cancel">
@@ -154,5 +154,14 @@
             </Button>
          </children>
       </Pane>
+      <Button layoutX="674.0" layoutY="14.0" mnemonicParsing="false" onAction="#onCloseAction" prefHeight="42.0" prefWidth="46.0" style="-fx-background-color: #325743; -fx-background-radius: 100;">
+         <graphic>
+            <ImageView fitHeight="36.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Imagen/close.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
    </children>
 </AnchorPane>
