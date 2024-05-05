@@ -8,10 +8,12 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
 import java.net.URL;
@@ -24,6 +26,10 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class PageCtrller extends CodeGeneral implements Initializable {
+    @FXML
+    private Pane demoProfilePane;
+    @FXML
+    private Label chrono1;
 
     static ArrayList<String> categories = new ArrayList();
     @FXML
@@ -32,6 +38,8 @@ public class PageCtrller extends CodeGeneral implements Initializable {
     private ComboBox categoriesCB;
     @FXML
     private Label chrono;
+    @FXML
+    private Pane profilePage;
     int min = 0, seg = 0, cent = 0;
     Timeline timeline;
 
@@ -51,17 +59,17 @@ public class PageCtrller extends CodeGeneral implements Initializable {
             /*PONER LOS CEROS*/
             String timeString; // ALMACENAR EL TIEMPO
             if (seg < 10) {
-                timeString = min + ":0" + seg + ":" + cent;
+                timeString = min + ":0" + seg + "," + cent;
             } else {
-                timeString = min + ":" + seg + ":" + cent;
+                timeString = min + ":" + seg + "," + cent;
             }
 
             // CUANDO LLEGUE A 10 MINUTOS EL TIEMPO SE PARA
             if (min == 10) {
-                timeString = min + ":0" + seg + ":" + cent;
+                timeString = min + ":0" + seg + "," + cent;
                 timeline.stop();
             }
-            chrono.setText(timeString); // MOSTRAR EL TIEMPO
+            chrono1.setText(timeString); // MOSTRAR EL TIEMPO
         }));
         timeline.setCycleCount(Timeline.INDEFINITE); // DE TIEMPO INDEFINIDO
         timeline.play(); // COMENZAMOS NUESTRO TIMELINE
@@ -84,10 +92,13 @@ public class PageCtrller extends CodeGeneral implements Initializable {
         optionDemoPane.setVisible(false);
         timesMenu.setVisible(false);
         closeBtt.setVisible(false);
+        demoProfilePane.setVisible(false);
+        profilePage.setVisible(false);
         Scramble scramble = new Scramble();
         int random = (int) (Math.random() * (25 - 20 + 1) + 20);
         scramblePane.setText(scramble.generateScramble(random));
-        chrono.setText("0:00,00");
+        chrono1.setText("0:00,00");
+        chrono1.setStyle("-fx-font-size: 45px; -fx-padding: 5px; ");
         categoriesCB.setPromptText("CATEGORY");
 
         cubeCategory();

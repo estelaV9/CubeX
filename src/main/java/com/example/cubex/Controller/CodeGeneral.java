@@ -42,6 +42,18 @@ public class CodeGeneral implements Initializable {
     @FXML public Button champBtt;
     @FXML public Pane optionDemoPane;
     @FXML public Button signOutBtt;
+    @FXML
+    private Pane demoProfilePane;
+    @FXML
+    private Button editProfileBtt;
+
+
+    @FXML
+    private Pane profilePage;
+    // ATRIBUTOS SEMAFOROS PARA ABRIR Y CERRAR DESDE EL MISMO BOTON
+    boolean pulsarOption = false;
+    boolean pulsarSettings = false;
+    boolean pulsarProfile = false;
 
                             /********* GENERAL METHODS ***********/
     @FXML void manejarTeclaPresionada(KeyEvent event) {
@@ -61,6 +73,27 @@ public class CodeGeneral implements Initializable {
     } // SALIR DE LA APLICACIÓN
 
     @FXML void onProfileAction(ActionEvent event) {
+        if(!pulsarProfile){
+            if(StartCtrller.isDemo){
+                demoProfilePane.setVisible(true);
+                pulsarProfile = true;
+            } else {
+                profilePage.setVisible(true);
+                pulsarProfile = true;
+            }
+        } else {
+            if(StartCtrller.isDemo){
+                demoProfilePane.setVisible(false);
+                pulsarProfile = false;
+            } else {
+                profilePage.setVisible(false);
+                pulsarProfile = false;
+            }
+        }
+    }
+
+    @FXML
+    void onEditProfileAction(ActionEvent event) {
         try {
             FXMLLoader fxmlLoader = new
                     FXMLLoader(Main.class.getResource("Setting.fxml"));
@@ -90,17 +123,25 @@ public class CodeGeneral implements Initializable {
 
 
                                 /********* OPTIONS MENU ***********/
-    @FXML void onOptionAction(ActionEvent event) {
-        if(StartCtrller.isDemo){
-            optionMenu.setVisible(false);
-            optionDemoPane.setVisible(true);
-        } else {
-            optionMenu.setVisible(true);
-            optionDemoPane.setVisible(false);
-        }
-    } // ABRIR EL MENU DE OPCIONES
 
-    @FXML void onCloseOptionAction(ActionEvent event) {
+    @FXML void onOptionAction(ActionEvent event) {
+        if(!pulsarOption){ // SI NO SE HA PULSADO, SE ABRE EL MENU
+            if(StartCtrller.isDemo){
+                optionMenu.setVisible(false);
+                optionDemoPane.setVisible(true);
+                pulsarOption = true;
+            } else {
+                optionMenu.setVisible(true);
+                optionDemoPane.setVisible(false);
+                pulsarOption = true;
+            }
+        } else { // SI SE HA PULSADO, SE CIERRA EL MENU
+            onCloseOptionAction();
+            pulsarOption = false;
+        }
+    } // MENU DE OPCIONES
+
+    @FXML void onCloseOptionAction() {
         if(StartCtrller.isDemo){
             optionDemoPane.setVisible(false);
         } else {
@@ -149,10 +190,17 @@ public class CodeGeneral implements Initializable {
 
                                 /********* SETTINGS MENU ***********/
     @FXML void onSettingsAction(ActionEvent event) {
-        settingMenu.setVisible(true);
+        if(!pulsarSettings){ // SI NO SE HA PULSADO, SE ABRE EL MENU
+            settingMenu.setVisible(true);
+            pulsarSettings = true;
+        } else { // SI SE HA PULSADO, SE CIERRA EL MENU
+            onCloseSettingAction();
+            pulsarSettings = false;
+        }
+
     }// ABRIR EL MENU DE AJUSTES
 
-    @FXML void onCloseSettingAction(ActionEvent event) {
+    @FXML void onCloseSettingAction() {
         settingMenu.setVisible(false);
     } // CERRAR EL MENU DE AJUSTES
 
