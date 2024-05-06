@@ -1,5 +1,7 @@
 package com.example.cubex.model;
 
+import javafx.fxml.FXML;
+
 import java.time.LocalDate;
 
 public class Session {
@@ -7,6 +9,7 @@ public class Session {
     private int idUser;
     private String nameSession;
     private LocalDate registrationDate;
+
 
     public Session(int idUser, String nameSession, LocalDate registrationDate) {
         this.idUser = idUser;

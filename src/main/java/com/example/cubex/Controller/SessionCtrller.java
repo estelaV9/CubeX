@@ -1,5 +1,6 @@
 package com.example.cubex.Controller;
 
+import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -23,11 +24,14 @@ public class SessionCtrller extends CodeGeneral implements Initializable {
     private Pane demoProfilePane;
     @FXML
     private Pane profilePage;
+    @FXML
+    private Pane SessionPane;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         CodeGeneral.onFalseMenus(demoProfilePane, profilePage, settingMenu, optionMenu, optionDemoPane, nameSession);
         sessionName.setPromptText("Name of Session");
         sessionName.setStyle("-fx-prompt-text-fill: #9B9B9B; -fx-background-color: #b1c8a3;");
+
     }
     @FXML void onAddSessionAction(ActionEvent event) {
         nameSession.setVisible(true);
