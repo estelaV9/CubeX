@@ -101,7 +101,7 @@ public class SettingCtrller extends CodeGeneral implements Initializable {
     }
 
     @FXML
-    void onProfileAction(ActionEvent event) {
+    void onProfileAction() {
         if(StartCtrller.isDemo){
             demoProfilePane.setVisible(true);
             accountPane.setVisible(false);
@@ -333,7 +333,7 @@ public class SettingCtrller extends CodeGeneral implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         demoProfilePane.setVisible(false);
         accountPane.setVisible(false);
-
+        onProfileAction();
     }
 
 }
