@@ -9,5 +9,7 @@ module com.example.cubex {
     opens com.example.cubex to javafx.fxml;
     exports com.example.cubex;
     exports com.example.cubex.Controller;
+    exports com.example.cubex.model;
     opens com.example.cubex.Controller to javafx.fxml;
+    opens com.example.cubex.model to javafx.fxml;
 }
