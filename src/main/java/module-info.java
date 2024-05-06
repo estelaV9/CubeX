@@ -12,4 +12,6 @@ module com.example.cubex {
     exports com.example.cubex.model;
     opens com.example.cubex.Controller to javafx.fxml;
     opens com.example.cubex.model to javafx.fxml;
+    exports com.example.cubex.DAO;
+    opens com.example.cubex.DAO to javafx.fxml;
 }

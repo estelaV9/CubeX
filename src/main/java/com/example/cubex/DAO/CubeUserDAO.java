@@ -1,7 +1,8 @@
-package com.example.cubex.model;
+package com.example.cubex.DAO;
 
 import com.example.cubex.Controller.RegistrationCtrller;
 import com.example.cubex.Database.DatabaseConnection;
+import com.example.cubex.model.CubeUser;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
 
