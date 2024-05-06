@@ -11,7 +11,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="740.0" style="-fx-background-color: #1e3728;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cubex.Controller.PageCtrller">
+<AnchorPane prefHeight="400.0" prefWidth="740.0" style="-fx-background-color: #1e3728;" stylesheets="@Style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cubex.Controller.PageCtrller">
    <children>
       <ImageView fitHeight="50.0" fitWidth="186.0" layoutX="277.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -23,7 +23,7 @@
             <!-- //cuando el foco este en timer se activa el evento y el metodo para saber que tecla se ha presionado -->
 
             <TextField fx:id="scramblePane" editable="false" layoutX="40.0" layoutY="24.0" prefHeight="99.0" prefWidth="563.0" style="-fx-background-color: #b1c8a3; -fx-alignment: center;  -fx-font-size: 20px;" />
-            <TextField fx:id="chronoPane" editable="false" layoutX="197.0" layoutY="158.0" prefHeight="99.0" prefWidth="247.0" style="-fx-background-color: #b1c8a3; -fx-alignment: center;">
+            <TextField fx:id="chronoPane" editable="false" layoutX="197.0" layoutY="158.0" prefHeight="99.0" prefWidth="247.0" style="-fx-background-color: #b1c8a3;">
                <font>
                   <Font name="DejaVu Sans Bold" size="24.0" />
                </font></TextField>
@@ -204,7 +204,7 @@
             </Button>
          </children>
       </Pane>
-      <ComboBox fx:id="categoriesCB" layoutX="135.0" layoutY="14.0" prefHeight="44.0" prefWidth="105.0" style="-fx-background-color: #325743; -fx-prompt-text-fill: rgba(255, 0, 0, 0.5) ;" />
+      <ComboBox fx:id="categoriesCB" layoutX="135.0" layoutY="14.0" prefHeight="44.0" prefWidth="105.0" style="-fx-background-color: #325743;" />
       <Pane fx:id="profilePage" layoutX="67.0" layoutY="66.0" prefHeight="254.0" prefWidth="444.0" style="-fx-background-color: #204338; -fx-background-radius: 24;">
          <children>
             <Label layoutX="12.0" layoutY="7.0" text="Demo Mode: Limited Access" textFill="#6d7b64">

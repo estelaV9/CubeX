@@ -9,3 +9,44 @@
         -fx-stroke-width: 2px; /* Ancho del contorno */
 }
 
+
+
+/****************************** POPUP COMBOBOX *****************************/
+.combo-box .list-cell {
+    -fx-text-fill:  #323232;
+} /* DEFINE EL COLOR DEL TEXTO DE LAS FILAS DEL COMBOBOX */
+
+.combo-box-popup .list-view .list-cell{
+    -fx-background-color:  #b1c8a3;
+} /* DEFINE EL COLOR DE FONDO DEL POPUP DEL COMBOBOX */
+
+.combo-box-popup .list-view{
+    -fx-background-color:  #1e3728;
+} /* DEFINE EL COLOR DEL MARCO DEL POPUP */
+
+.combo-box-popup .list-view .list-cell:filled:selected, .combo-box-popup .list-view .list-cell:filled:selected:hover{
+    -fx-background-color: #325743;
+} /* EFECTO PARA RESALTAR EL FONDO CUANDO UNA OPCION ESTE SELECCIONADA */
+
+.combo-box-popup .list-view .list-cell:filled:hover{
+    -fx-background-color: #325743;
+} /* EFECTO PARA CAMBIAR EL COLOR DE FONDO CUANDO EL MOUSE PASA POR ENCIMA DE UNA OPCION DEL COMBOBOX */
+
+.combo-box .scroll-bar {
+    -fx-background-color: #325743;
+} /* DEFINIR EL COLOR DEL FONDO DEL SCROLL DEL POPUP */
+
+.combo-box .scroll-bar .increment-button {
+    -fx-background-color: #b1c8a3;
+} /* DEFINIR EL COLOR DEL BOTON DEL UP SCROLL */
+
+.combo-box .scroll-bar .decrement-button {
+    -fx-background-color: #b1c8a3;
+}/* DEFINIR EL COLOR DEL BOTON DEL DOWN SCROLL */
+
+.combo-box .scroll-bar .thumb {
+    -fx-background-color: #b1c8a3;
+} /* DEFINIR EL COLOR DEL PROPIO BOTON DE SCROLL */
+
+
+

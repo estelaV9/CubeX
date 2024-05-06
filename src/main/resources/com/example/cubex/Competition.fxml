@@ -11,7 +11,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="740.0" style="-fx-background-color: #1e3728;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cubex.Controller.CompetitionCtrller">
+<AnchorPane prefHeight="400.0" prefWidth="740.0" style="-fx-background-color: #1e3728;" stylesheets="@Style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cubex.Controller.CompetitionCtrller">
    <children>
       <ImageView fitHeight="50.0" fitWidth="186.0" layoutX="277.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
          <image>

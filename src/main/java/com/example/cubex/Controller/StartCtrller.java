@@ -79,6 +79,8 @@ public class StartCtrller {
             Stage stage = (Stage) this.logBtt.getScene().getWindow();
             stage.setTitle("Application Page");
             stage.setScene(scene);
+
+
             if (!stage.isShowing()) {
                 stage.show();
             }
