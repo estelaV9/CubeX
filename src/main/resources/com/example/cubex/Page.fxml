@@ -151,35 +151,6 @@
             </Button>
          </children>
       </Pane>
-      <Pane fx:id="optionDemoPane" layoutX="8.0" layoutY="67.0" prefHeight="213.0" prefWidth="276.0" style="-fx-background-color: #204338; -fx-background-radius: 24;">
-         <children>
-            <Button fx:id="closeOpBtt1" layoutX="14.0" layoutY="169.0" mnemonicParsing="false" onAction="#onCloseOptionAction" prefHeight="31.0" prefWidth="251.0" style="-fx-background-color: #6d7b64; -fx-background-radius: 100;" text="CLOSE">
-               <font>
-                  <Font name="DejaVu Sans Bold" size="17.0" />
-               </font>
-            </Button>
-            <Button fx:id="timerBtt1" layoutX="13.0" layoutY="14.0" mnemonicParsing="false" onAction="#onTimerAction" prefHeight="31.0" prefWidth="251.0" style="-fx-background-color: #325743; -fx-background-radius: 100;" text="TIMER">
-               <font>
-                  <Font name="DejaVu Sans Bold" size="17.0" />
-               </font>
-            </Button>
-            <Button fx:id="solvesBtt1" layoutX="14.0" layoutY="53.0" mnemonicParsing="false" onAction="#onSolvesAction" prefHeight="31.0" prefWidth="251.0" style="-fx-background-color: #325743; -fx-background-radius: 100;" text="SOLVES">
-               <font>
-                  <Font name="DejaVu Sans Bold" size="17.0" />
-               </font>
-            </Button>
-            <Button fx:id="sessionBtt1" layoutX="14.0" layoutY="92.0" mnemonicParsing="false" onAction="#onSessionAction" prefHeight="31.0" prefWidth="251.0" style="-fx-background-color: #325743; -fx-background-radius: 100;" text="SESSIONS">
-               <font>
-                  <Font name="DejaVu Sans Bold" size="17.0" />
-               </font>
-            </Button>
-            <Button fx:id="compeBtt1" layoutX="14.0" layoutY="131.0" mnemonicParsing="false" onAction="#onCompeAction" prefHeight="31.0" prefWidth="251.0" style="-fx-background-color: #325743; -fx-background-radius: 100;" text="COMPETITION">
-               <font>
-                  <Font name="DejaVu Sans Bold" size="17.0" />
-               </font>
-            </Button>
-         </children>
-      </Pane>
       <Pane fx:id="optionMenu" layoutX="8.0" layoutY="67.0" prefHeight="214.0" prefWidth="276.0" style="-fx-background-color: #204338; -fx-background-radius: 24;">
          <children>
             <Button fx:id="closeOpBtt" layoutX="14.0" layoutY="171.0" mnemonicParsing="false" onAction="#onCloseOptionAction" prefHeight="31.0" prefWidth="251.0" style="-fx-background-color: #6d7b64; -fx-background-radius: 100;" text="CLOSE">
@@ -203,6 +174,30 @@
                </font>
             </Button>
             <Button fx:id="champBtt" layoutX="13.0" layoutY="131.0" mnemonicParsing="false" onAction="#onChampAction" prefHeight="31.0" prefWidth="251.0" style="-fx-background-color: #325743; -fx-background-radius: 100;" text="CHAMPIONSHIP">
+               <font>
+                  <Font name="DejaVu Sans Bold" size="17.0" />
+               </font>
+            </Button>
+         </children>
+      </Pane>
+      <Pane fx:id="optionDemoPane" layoutX="8.0" layoutY="67.0" prefHeight="172.0" prefWidth="276.0" style="-fx-background-color: #204338; -fx-background-radius: 24;">
+         <children>
+            <Button fx:id="closeOpBtt1" layoutX="14.0" layoutY="129.0" mnemonicParsing="false" onAction="#onCloseOptionAction" prefHeight="31.0" prefWidth="251.0" style="-fx-background-color: #6d7b64; -fx-background-radius: 100;" text="CLOSE">
+               <font>
+                  <Font name="DejaVu Sans Bold" size="17.0" />
+               </font>
+            </Button>
+            <Button fx:id="timerBtt1" layoutX="13.0" layoutY="14.0" mnemonicParsing="false" onAction="#onTimerAction" prefHeight="31.0" prefWidth="251.0" style="-fx-background-color: #325743; -fx-background-radius: 100;" text="TIMER">
+               <font>
+                  <Font name="DejaVu Sans Bold" size="17.0" />
+               </font>
+            </Button>
+            <Button fx:id="sessionBtt1" layoutX="14.0" layoutY="52.0" mnemonicParsing="false" onAction="#onSessionAction" prefHeight="31.0" prefWidth="251.0" style="-fx-background-color: #325743; -fx-background-radius: 100;" text="SESSIONS">
+               <font>
+                  <Font name="DejaVu Sans Bold" size="17.0" />
+               </font>
+            </Button>
+            <Button fx:id="compeBtt1" layoutX="14.0" layoutY="91.0" mnemonicParsing="false" onAction="#onCompeAction" prefHeight="31.0" prefWidth="251.0" style="-fx-background-color: #325743; -fx-background-radius: 100;" text="COMPETITION">
                <font>
                   <Font name="DejaVu Sans Bold" size="17.0" />
                </font>

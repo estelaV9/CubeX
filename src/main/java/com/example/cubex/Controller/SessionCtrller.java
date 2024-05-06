@@ -18,12 +18,14 @@ public class SessionCtrller extends CodeGeneral implements Initializable {
     @FXML private Pane nameSession;
     @FXML private ChoiceBox<?> methodCube;
     @FXML private ChoiceBox<?> typeCube;
+
+    @FXML
+    private Pane demoProfilePane;
+    @FXML
+    private Pane profilePage;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        settingMenu.setVisible(false);
-        optionMenu.setVisible(false);
-        optionDemoPane.setVisible(false);
-        nameSession.setVisible(false);
+        CodeGeneral.onFalseMenus(demoProfilePane, profilePage, settingMenu, optionMenu, optionDemoPane, nameSession);
         sessionName.setPromptText("Name of Session");
         sessionName.setStyle("-fx-prompt-text-fill: #9B9B9B; -fx-background-color: #b1c8a3;");
     }

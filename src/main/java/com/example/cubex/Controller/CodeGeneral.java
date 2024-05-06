@@ -1,6 +1,9 @@
 package com.example.cubex.Controller;
 
+import com.example.cubex.Database.DatabaseConnection;
 import com.example.cubex.Main;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -8,14 +11,22 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class CodeGeneral implements Initializable {
@@ -30,7 +41,6 @@ public class CodeGeneral implements Initializable {
     @FXML public Pane optionMenu;
     @FXML public Button profileBtt;
     @FXML public TextField scramblePane;
-    @FXML public Button screenBtt;
     @FXML public Button sessionBtt;
     @FXML public Pane settingMenu;
     @FXML public Button settingsBtt;
@@ -43,17 +53,23 @@ public class CodeGeneral implements Initializable {
     @FXML public Pane optionDemoPane;
     @FXML public Button signOutBtt;
     @FXML
-    private Pane demoProfilePane;
-    @FXML
     private Button editProfileBtt;
-
-
     @FXML
-    private Pane profilePage;
+    public Pane demoProfilePane;
+    @FXML
+    public Pane profilePage;
+
+
     // ATRIBUTOS SEMAFOROS PARA ABRIR Y CERRAR DESDE EL MISMO BOTON
     boolean pulsarOption = false;
     boolean pulsarSettings = false;
     boolean pulsarProfile = false;
+    static ArrayList<String> categories = new ArrayList(); // ARRAYLIST CON CATEGORIAS
+    static int min = 0;
+    static int seg = 0;
+    static int cent = 0;
+    static Timeline timeline;
+
 
                             /********* GENERAL METHODS ***********/
     @FXML void manejarTeclaPresionada(KeyEvent event) {
@@ -94,22 +110,9 @@ public class CodeGeneral implements Initializable {
 
     @FXML
     void onEditProfileAction(ActionEvent event) {
-        try {
-            FXMLLoader fxmlLoader = new
-                    FXMLLoader(Main.class.getResource("Setting.fxml"));
-            Parent root = fxmlLoader.load();
-            SettingCtrller controller = fxmlLoader.getController();
-            Scene scene = new Scene(root);
-            Stage stage = (Stage) this.profileBtt.getScene().getWindow();
-            stage.setTitle("Settings");
-            stage.setScene(scene);
-            if (!stage.isShowing()) {
-                stage.show();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        onSettingsMenuAction();
     }
+
                                 /********* TIMES MENU ***********/
     @FXML void onOpenMenuAction(ActionEvent event) {
         timesMenu.setVisible(true);
@@ -149,7 +152,7 @@ public class CodeGeneral implements Initializable {
         }
     } // CERRAR EL MENU DE OPCIONES
 
-    @FXML void onSettingsMenuAction(ActionEvent event) {
+    @FXML void onSettingsMenuAction() {
         try {
             FXMLLoader fxmlLoader = new
                     FXMLLoader(Main.class.getResource("Setting.fxml"));
@@ -184,9 +187,6 @@ public class CodeGeneral implements Initializable {
         }
     }
 
-    @FXML void onScreenAction(ActionEvent event) {
-
-    }
 
                                 /********* SETTINGS MENU ***********/
     @FXML void onSettingsAction(ActionEvent event) {
@@ -197,7 +197,6 @@ public class CodeGeneral implements Initializable {
             onCloseSettingAction();
             pulsarSettings = false;
         }
-
     }// ABRIR EL MENU DE AJUSTES
 
     @FXML void onCloseSettingAction() {
@@ -240,9 +239,6 @@ public class CodeGeneral implements Initializable {
         }
     }// IR A LA PAGINA DE SESIONES
 
-    @FXML void onSolvesAction(ActionEvent event) {
-
-    } // IR A LA PAGINA DE RESOLUCIONES
 
     @FXML void onTimerAction(ActionEvent event) {
         try {
@@ -265,6 +261,89 @@ public class CodeGeneral implements Initializable {
     @FXML void onChampAction(ActionEvent event) {
 
     }
+
+    public static String scramble(){
+        Scramble scramble = new Scramble();
+        int random = (int) (Math.random() * (25 - 20 + 1) + 20);
+        return scramble.generateScramble(random);
+    } // GENERAR EL SCRAMBLE
+
+    public static void cubeCategory(ComboBox categoriesCB){
+        categoriesCB.setPromptText("CATEGORY");
+        categoriesCB.setStyle("-fx-background-color: #325743; -fx-text-fill: red;");
+
+        // METER EN UN ARRAYLIST LAS CATEGORIAS
+        Connection connection = DatabaseConnection.conectar();
+        try {
+            String sqlCount = "SELECT COUNT(ID_TYPE) FROM CUBE_TYPE";
+            PreparedStatement statement1 = connection.prepareStatement(sqlCount);
+            ResultSet resultSet = statement1.executeQuery();
+
+            int count = 0;
+            if (resultSet.next()) {
+                count = resultSet.getInt(1);
+            }
+
+            String sqlCat = "SELECT NAME_TYPE FROM CUBE_TYPE";
+            PreparedStatement statement = connection.prepareStatement(sqlCat);
+            ResultSet resultSet1 = statement.executeQuery();
+            while (resultSet1.next()) {
+                categories.add(resultSet1.getString(1));
+            }
+            categoriesCB.getItems().addAll(categories);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    } // METER LAS CATEGORIAS DE LOS CUBOS EN UN ARRAYLIST
+
+    public static void start(Label chrono) {
+        timeline = new Timeline(new KeyFrame(Duration.millis(10), event1 -> {
+            cent++;
+            // CUANDO LLEGUE A 100 MILISEGUNDOS SE HACE UN SEGUNDO
+            if (cent > 99) {
+                seg++;
+                cent = 0;
+                if (seg > 59) {
+                    min++;
+                    seg = 0;
+                }
+            }
+            /*PONER LOS CEROS*/
+            String timeString; // ALMACENAR EL TIEMPO
+            if (seg < 10) {
+                timeString = min + ":0" + seg + "," + cent;
+            } else {
+                timeString = min + ":" + seg + "," + cent;
+            }
+
+            // CUANDO LLEGUE A 10 MINUTOS EL TIEMPO SE PARA
+            if (min == 10) {
+                timeString = min + ":0" + seg + "," + cent;
+                timeline.stop();
+            }
+            chrono.setText(timeString); // MOSTRAR EL TIEMPO
+        }));
+        timeline.setCycleCount(Timeline.INDEFINITE); // DE TIEMPO INDEFINIDO
+        timeline.play(); // COMENZAMOS NUESTRO TIMELINE
+    }
+
+    public static void parar() throws SQLException {
+        timeline.stop();
+
+
+    }
+
+    public static void onFalseMenus
+            (Pane demoProfilePane, Pane profilePage, Pane settingMenu, Pane optionMenu,
+             Pane optionDemoPane, Pane nameSession){
+        demoProfilePane.setVisible(false);
+        profilePage.setVisible(false);
+        settingMenu.setVisible(false);
+        optionMenu.setVisible(false);
+        optionDemoPane.setVisible(false);
+        nameSession.setVisible(false);
+    } // CERRAR LOS POPUPS
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

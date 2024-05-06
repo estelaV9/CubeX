@@ -30,8 +30,6 @@ public class PageCtrller extends CodeGeneral implements Initializable {
     private Pane demoProfilePane;
     @FXML
     private Label chrono1;
-
-    static ArrayList<String> categories = new ArrayList();
     @FXML
     private TextField chronoPane;
     @FXML
@@ -40,98 +38,26 @@ public class PageCtrller extends CodeGeneral implements Initializable {
     private Label chrono;
     @FXML
     private Pane profilePage;
-    int min = 0, seg = 0, cent = 0;
-    Timeline timeline;
+
+
 
     @FXML
     void start(ActionEvent event) {
-        timeline = new Timeline(new KeyFrame(Duration.millis(10), event1 -> {
-            cent++;
-            // CUANDO LLEGUE A 100 MILISEGUNDOS SE HACE UN SEGUNDO
-            if (cent > 99) {
-                seg++;
-                cent = 0;
-                if (seg > 59) {
-                    min++;
-                    seg = 0;
-                }
-            }
-            /*PONER LOS CEROS*/
-            String timeString; // ALMACENAR EL TIEMPO
-            if (seg < 10) {
-                timeString = min + ":0" + seg + "," + cent;
-            } else {
-                timeString = min + ":" + seg + "," + cent;
-            }
-
-            // CUANDO LLEGUE A 10 MINUTOS EL TIEMPO SE PARA
-            if (min == 10) {
-                timeString = min + ":0" + seg + "," + cent;
-                timeline.stop();
-            }
-            chrono1.setText(timeString); // MOSTRAR EL TIEMPO
-        }));
-        timeline.setCycleCount(Timeline.INDEFINITE); // DE TIEMPO INDEFINIDO
-        timeline.play(); // COMENZAMOS NUESTRO TIMELINE
+        CodeGeneral.start(chrono1);
     }
 
     @FXML
     void parar(ActionEvent event) throws SQLException {
-        timeline.stop();
-        /*Connection connection = DatabaseConnection.conectar();
-        String sqlInsert = "INSERT TIMER_TRAINING VALUES (?, ?, ?, ?);";
-        PreparedStatement statement = connection.prepareStatement(sqlInsert);
-        statement.setString(1, scramblePane.getText());*/
-
+        CodeGeneral.parar();
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        settingMenu.setVisible(false);
-        optionMenu.setVisible(false);
-        optionDemoPane.setVisible(false);
-        timesMenu.setVisible(false);
         closeBtt.setVisible(false);
-        demoProfilePane.setVisible(false);
-        profilePage.setVisible(false);
-        Scramble scramble = new Scramble();
-        int random = (int) (Math.random() * (25 - 20 + 1) + 20);
-        scramblePane.setText(scramble.generateScramble(random));
+        CodeGeneral.onFalseMenus(demoProfilePane, profilePage, settingMenu, optionMenu, optionDemoPane, timesMenu);
+        scramblePane.setText(CodeGeneral.scramble());
+        CodeGeneral.cubeCategory(categoriesCB);
         chrono1.setText("0:00,00");
         chrono1.setStyle("-fx-font-size: 45px; -fx-padding: 5px; ");
-        categoriesCB.setPromptText("CATEGORY");
-
-        cubeCategory();
-        categoriesCB.getItems().addAll(categories);
-        categoriesCB.setStyle("-fx-background-color: #325743; ");
-
-
-}
-
-
-    public static void cubeCategory(){
-        // METER EN UN ARRAYLIST LAS CATEGORIAS
-        Connection connection = DatabaseConnection.conectar();
-        try {
-            String sqlCount = "SELECT COUNT(ID_TYPE) FROM CUBE_TYPE";
-            PreparedStatement statement1 = connection.prepareStatement(sqlCount);
-            ResultSet resultSet = statement1.executeQuery();
-
-            int count = 0;
-            if (resultSet.next()) {
-                count = resultSet.getInt(1);
-            }
-
-            String sqlCat = "SELECT NAME_TYPE FROM CUBE_TYPE";
-            PreparedStatement statement = connection.prepareStatement(sqlCat);
-            ResultSet resultSet1 = statement.executeQuery();
-            while (resultSet1.next()) {
-                categories.add(resultSet1.getString(1));
-            }
-
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
     }
 }
