@@ -12,7 +12,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="740.0" style="-fx-background-color: #1e3728;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cubex.Controller.SessionCtrller">
+<AnchorPane prefHeight="400.0" prefWidth="740.0" style="-fx-background-color: #1e3728;" stylesheets="@Style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cubex.Controller.SessionCtrller">
    <children>
       <Button layoutX="645.0" layoutY="97.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="72.0" style="-fx-background-color: #1e3728;" text="Button">
          <graphic>
@@ -37,12 +37,12 @@
                   <Font name="DejaVu Sans Bold" size="57.0" />
                </font>
             </Button>
-            <ScrollPane fx:id="scroll" hbarPolicy="NEVER" layoutX="163.0" layoutY="8.0" prefHeight="296.0" prefWidth="500.0" vbarPolicy="ALWAYS">
+            <ScrollPane fx:id="scroll" hbarPolicy="NEVER" layoutX="384.0" layoutY="9.0" prefHeight="295.0" prefWidth="276.0" vbarPolicy="ALWAYS">
                <content>
-                  <AnchorPane fx:id="paneScroll" minHeight="0.0" minWidth="0.0" prefHeight="294.0" prefWidth="498.0" style="-fx-background-color: #325743;" stylesheets="@Style.css" />
+                  <AnchorPane fx:id="paneScroll" minHeight="0.0" minWidth="0.0" prefHeight="295.0" prefWidth="485.0" style="-fx-background-color: #325743;" />
                </content>
             </ScrollPane>
-            <Pane fx:id="nameSession" layoutX="183.0" layoutY="33.0" prefHeight="248.0" prefWidth="256.0" style="-fx-background-color: #325743; -fx-background-radius: 24; -fx-border-color: black; -fx-border-radius: 24;">
+            <Pane fx:id="nameSession" layoutX="67.0" layoutY="33.0" prefHeight="248.0" prefWidth="256.0" style="-fx-background-color: #325743; -fx-background-radius: 24; -fx-border-color: black; -fx-border-radius: 24;">
                <children>
                   <Button fx:id="createSessionBtt" layoutX="17.0" layoutY="202.0" mnemonicParsing="false" onAction="#onCreateSessionAction" prefHeight="31.0" prefWidth="166.0" style="-fx-background-color: #74cc5e;" text="Create">
                      <font>

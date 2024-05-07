@@ -53,43 +53,24 @@
 
 
 /****************************** SCROLLPANE *****************************/
-
-.scroll-pane .list-cell {
-    -fx-text-fill: #323232;
-}
-
-.scroll-pane-popup .list-view .list-cell {
-    -fx-background-color: #b1c8a3;
-}
-
-.scroll-pane-popup .list-view {
-    -fx-background-color: #1e3728;
-}
-
-.scroll-pane-popup .list-view .list-cell:filled:selected,
-.scroll-pane-popup .list-view .list-cell:filled:selected:hover {
+.scroll-pane {
     -fx-background-color: #325743;
-}
-
-.scroll-pane-popup .list-view .list-cell:filled:hover {
-    -fx-background-color: #325743;
-}
-
+} /* DEFINE EL COLOR DEL RECUADRO DEL SCROLLPANE */
 .scroll-pane .scroll-bar {
     -fx-background-color: #325743;
-}
+} /* DEFINIR EL COLOR DEL FONDO DEL SCROLL */
 
 .scroll-pane .scroll-bar .increment-button {
     -fx-background-color: #b1c8a3;
-}
+} /* DEFINIR EL COLOR DEL BOTON DE ARRIBA DEL SCROLL */
 
 .scroll-pane .scroll-bar .decrement-button {
     -fx-background-color: #b1c8a3;
-}
+} /* DEFINIR EL COLOR DEL BOTON DE ABAJO DEL SCROLL */
 
 .scroll-pane .scroll-bar .thumb {
     -fx-background-color: #b1c8a3;
-}
+} /* DEFINIR EL COLOR DEL BOTON DEL SCROLL */
 
 
 

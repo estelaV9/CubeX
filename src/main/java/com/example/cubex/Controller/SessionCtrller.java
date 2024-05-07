@@ -33,6 +33,8 @@ public class SessionCtrller extends CodeGeneral implements Initializable {
     private Pane profilePage;
     @FXML
     private Pane SessionPane;
+    @FXML
+    private ScrollPane scroll;
     private double nextPaneY = 10; // Posición Y del próximo panel
 
 
@@ -42,6 +44,8 @@ public class SessionCtrller extends CodeGeneral implements Initializable {
         CodeGeneral.onFalseMenus(demoProfilePane, profilePage, settingMenu, optionMenu, optionDemoPane, nameSession);
         sessionName.setPromptText("Name of Session");
         sessionName.setStyle("-fx-prompt-text-fill: #9B9B9B; -fx-background-color: #b1c8a3;");
+        scroll.setFitToWidth(false);
+        paneScroll.prefWidth(50);
     }
 
 
@@ -51,10 +55,11 @@ public class SessionCtrller extends CodeGeneral implements Initializable {
     @FXML void onCreateSessionAction(ActionEvent event) {
         nameSession.setVisible(false);
         Pane newPane = new Pane();
-        newPane.setLayoutX(10); // Puedes ajustar el espaciado horizontal aquí
+        newPane.setLayoutX(10); // ESPACIADO HORIZONTAL
         newPane.setLayoutY(nextPaneY);
-        newPane.setPrefHeight(220); // Ajusta según tus necesidades
-        newPane.setPrefWidth(220); // Ajusta según tus necesidades
+        // TAMANIO DEL PANEL
+        newPane.setPrefHeight(220);
+        newPane.setPrefWidth(220);
         newPane.setStyle("-fx-background-color:  #325743; -fx-background-radius: 24; -fx-border-color: black; -fx-border-radius: 24;");
 
         // Agregar elementos al nuevo panel
