@@ -72,7 +72,7 @@ public class SettingCtrller extends CodeGeneral implements Initializable {
             PageCtrller controller = fxmlLoader.getController();
             Scene scene = new Scene(root);
             Stage stage = (Stage) this.backBtt.getScene().getWindow();
-            stage.setTitle("Application Page");
+            stage.setTitle("Timer Page");
             stage.setScene(scene);
             if (!stage.isShowing()) {
                 stage.show();

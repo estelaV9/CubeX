@@ -160,7 +160,7 @@ public class CodeGeneral implements Initializable {
             SettingCtrller controller = fxmlLoader.getController();
             Scene scene = new Scene(root);
             Stage stage = (Stage) this.settingMenu.getScene().getWindow();
-            stage.setTitle("Settings");
+            stage.setTitle("Settings Page");
             stage.setScene(scene);
             if (!stage.isShowing()) {
                 stage.show();
@@ -248,7 +248,7 @@ public class CodeGeneral implements Initializable {
             PageCtrller controller = fxmlLoader.getController();
             Scene scene = new Scene(root);
             Stage stage = (Stage) this.timerBtt.getScene().getWindow();
-            stage.setTitle("Application Page");
+            stage.setTitle("Timer Page");
             stage.setScene(scene);
             if (!stage.isShowing()) {
                 stage.show();

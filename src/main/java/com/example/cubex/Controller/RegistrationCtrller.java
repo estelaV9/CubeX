@@ -212,7 +212,7 @@ public class RegistrationCtrller implements Initializable {
             PageCtrller controller = fxmlLoader.getController();
             Scene scene = new Scene(root);
             Stage stage = (Stage) this.signBtt.getScene().getWindow();
-            stage.setTitle("Application Page");
+            stage.setTitle("Timer Page");
             stage.setScene(scene);
             if (!stage.isShowing()) {
                 stage.show();
