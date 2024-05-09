@@ -1,7 +1,10 @@
 package com.example.cubex.Controller;
 
+import com.example.cubex.DAO.CubeUserDAO;
 import com.example.cubex.Database.DatabaseConnection;
 import com.example.cubex.Main;
+import com.example.cubex.model.CacheStatic;
+import com.example.cubex.model.CubeUser;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -54,7 +57,27 @@ public class SettingCtrller extends CodeGeneral implements Initializable {
     @FXML private PasswordField txtPasswdUser;
     @FXML private Button upPasswordBtt;
     @FXML private Button deleteAccountBtt;
-    int rowsNameUp;
+
+    @FXML
+    private TextField cardNumberTxt;
+
+    @FXML
+    private TextField cvcTxt;
+
+    @FXML
+    private TextField fullNameTxt;
+
+    @FXML
+    private Label loginMessage;
+
+    @FXML
+    private TextField mmyyTxt;
+
+    @FXML
+    private Pane startProPane;
+
+
+
 
 
     @FXML
@@ -153,48 +176,28 @@ public class SettingCtrller extends CodeGeneral implements Initializable {
         proBtt.setStyle("-fx-background-color :  #325743");
         personalBtt.setStyle("-fx-background-color :  #325743");
         passwordBtt.setStyle("-fx-background-color :  #325743");
-
     }
     @FXML
     void onDeleteAccountAction(ActionEvent event) throws SQLException {
-        Connection connection = DatabaseConnection.conectar();
         int opcion = JOptionPane.showConfirmDialog(null,
                 "¿Está seguro de que desea eliminar la cuenta?", "Confirmación", JOptionPane.YES_NO_OPTION);
         if (opcion == JOptionPane.YES_OPTION) {
-            String sqlDelete = "DELETE FROM CUBE_USERS WHERE NAME_USER = ?";
-            PreparedStatement statement = connection.prepareStatement(sqlDelete);
-            statement.setString(1, RegistrationCtrller.nameUser);
-            int rowsDelete = statement.executeUpdate();
-            if(rowsNameUp > 0){
-                statement.setString(1, txtNewPasswordUp.getText());
-                statement.setString(2, txtNameUser.getText());
-            } else { // SINO, SE COGE EL NOMBRE DEL LOGIN
-                statement.setString(1, txtNewPasswordUp.getText());
-                statement.setString(2, RegistrationCtrller.nameUser);
-            }
-            if (rowsDelete > 0) {
-                // SI SE BORRO EL USUARIO, MOSTRAR UN MENSAJE DE EXITO
+            CubeUserDAO.deleteUser(CacheStatic.cubeUser.getMail());
+            if(CubeUserDAO.successfulDelete){
+                // SI SE ELIMINA EL USUARIO SE MUESTRA EL MENSAJE
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Eliminacion de usuario");
-                alert.setHeaderText("Eliminacion exitosa");
+                alert.setTitle("Eliminación de usuario");
+                alert.setHeaderText("Eliminación exitosa");
                 alert.setContentText("Se ha eliminado el usuario correctamente.");
                 alert.showAndWait();
-
-                try {
-                    FXMLLoader fxmlLoader = new
-                            FXMLLoader(Main.class.getResource("Start.fxml"));
-                    Parent root = fxmlLoader.load();
-                    StartCtrller controller = fxmlLoader.getController();
-                    Scene scene = new Scene(root);
-                    Stage stage = (Stage) this.deleteAccountBtt.getScene().getWindow();
-                    stage.setTitle("Start Application");
-                    stage.setScene(scene);
-                    if (!stage.isShowing()) {
-                        stage.show();
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } // DESPUES DE ELIMINAR LA CUENTA, IR A LA PAGINA PRINCIAPL
+                openMainPage(); // SE VA A LA PAGINA PARA QUE SE REGISTRE
+            } else {
+                // SI NO SE ENCONTRO USUARIO SE MUESTRA UN MENSAJE (POR SI ACASO)
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error al eliminar usuario");
+                alert.setHeaderText("Error");
+                alert.setContentText("No se encontró el usuario para eliminar.");
+                alert.showAndWait();
             }
         }
     }
@@ -229,25 +232,19 @@ public class SettingCtrller extends CodeGeneral implements Initializable {
             alert.setContentText("Las contraseñas no coinciden. Por favor, verifica e intenta nuevamente.");
             alert.showAndWait();
         }else {
-            Connection connection = DatabaseConnection.conectar();
-
-            String sqlUpdate = "UPDATE CUBE_USERS SET PASSWORD_USER = ? WHERE NAME_USER = ?";
-            PreparedStatement statement = connection.prepareStatement(sqlUpdate);
-            if(rowsNameUp > 0){ // SI ACTUALIZO PRIMERO SU CUENTA, SE PONE EL NUEVO NOMBRE QUE HA ACTUALIZADO
-                statement.setString(1, txtNewPasswordUp.getText());
-                statement.setString(2, txtNameUser.getText());
-            } else { // SINO, SE COGE EL NOMBRE DEL LOGIN
-                statement.setString(1, txtNewPasswordUp.getText());
-                statement.setString(2, RegistrationCtrller.nameUser);
-            }
-
-            int rowsInserted = statement.executeUpdate();
-            if (rowsInserted > 0) {
+            CubeUserDAO.modifyPassword(txtNewPasswordUp.getText(), CacheStatic.cubeUser.getMail());
+            if(CubeUserDAO.successfulModify){
                 // SI SE ACTUALIZO EL USUARIO, MOSTRAR UN MENSAJE DE EXITO
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Actualizacion de usuario");
                 alert.setHeaderText("Actualizacion exitosa");
                 alert.setContentText("Se ha actualizado el usuario correctamente.");
+                alert.showAndWait();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error al modificar usuario");
+                alert.setHeaderText("Error");
+                alert.setContentText("No se pudo modificar la contraseña.");
                 alert.showAndWait();
             }
         }
@@ -277,46 +274,37 @@ public class SettingCtrller extends CodeGeneral implements Initializable {
             alert.setContentText("Por favor, completa todos los campos antes de continuar.");
             alert.showAndWait();
         } else {
-            Connection connection = DatabaseConnection.conectar();
-            try {
-                String sqlInsert = "UPDATE CUBE_USERS SET NAME_USER = ?, MAIL = ?, ROLE_USER = ?" +
-                        " WHERE NAME_USER = ?";
-                PreparedStatement statement = connection.prepareStatement(sqlInsert);
-                if(rowsNameUp > 0){
-                    statement.setString(1, txtNameUser.getText());
-                    statement.setString(2, txtEmailUser.getText());
-                    statement.setString(3, seleccionado.getText());
-                    statement.setString(4, txtNameUser.getText());
-                } else { // SINO, SE COGE EL NOMBRE DEL LOGIN
-                    statement.setString(1, txtNameUser.getText());
-                    statement.setString(2, txtEmailUser.getText());
-                    statement.setString(3, seleccionado.getText());
-                    statement.setString(4, RegistrationCtrller.nameUser);
+            /****COMPROBACIONES PARA CONVERTIR EN PRO****/
+            if (seleccionado.getText().equals("MEMBER")) {
+                onProAction();
+                if(CubeUserDAO.successfulModifyProUser){
+                    CubeUserDAO.modifyUser(txtNameUser.getText(), txtEmailUser.getText(), seleccionado.getText(),
+                            CacheStatic.cubeUser.getMail());
+                    if (CubeUserDAO.successfulModifyUser) {
+                        // SI SE ACTUALIZO EL USUARIO, MOSTRAR UN MENSAJE DE EXITO
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Actualizacion de usuario");
+                        alert.setHeaderText("Actualizacion exitosa");
+                        alert.setContentText("Se ha actualizado el usuario correctamente.");
+                        alert.showAndWait();
+                    } else {
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Actualizacion de usuario");
+                        alert.setHeaderText("Actualizacion fallida");
+                        alert.setContentText("No se ha actualizado el usuario correctamente.");
+                        alert.showAndWait();
+                    }
                 }
+            } else {
 
-                rowsNameUp = statement.executeUpdate();
-                if (rowsNameUp > 0) {
-                    // SI SE ACTUALIZO EL USUARIO, MOSTRAR UN MENSAJE DE EXITO
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Actualizacion de usuario");
-                    alert.setHeaderText("Actualizacion exitosa");
-                    alert.setContentText("Se ha actualizado el usuario correctamente.");
-                    alert.showAndWait();
-                }
-            } catch (SQLException e) {
-                // SI EL NOMBRE YA EXISTE, MOSTRAR UN MENSAJE DE ERROR
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error al actualizar usuario");
-                alert.setHeaderText("Nombre ya existente");
-                alert.setContentText("Ese nombre ya existe. Por favor, elija otro.");
-                alert.showAndWait();
             }
         }
     }
 
     @FXML
-    void onProAction(ActionEvent event) {
+    void onProAction() {
         personalPane.setVisible(false);
+        startProPane.setVisible(false);
         deletePane.setVisible(false);
         proPane.setVisible(true);
         passwordPane.setVisible(false);
@@ -327,8 +315,59 @@ public class SettingCtrller extends CodeGeneral implements Initializable {
     }
     @FXML
     void onCubexProAction(ActionEvent event) {
-
+        startProPane.setVisible(true);
+        cardNumberTxt.setStyle("-fx-prompt-text-fill: #1e3728; -fx-background-color: #6b9979;");
+        fullNameTxt.setStyle("-fx-prompt-text-fill: #1e3728; -fx-background-color: #6b9979;");
+        mmyyTxt.setStyle("-fx-prompt-text-fill: #1e3728; -fx-background-color: #6b9979;");
+        cvcTxt.setStyle("-fx-prompt-text-fill: #1e3728; -fx-background-color: #6b9979;");
     }
+
+    @FXML
+    void onStartProAction(ActionEvent event) {
+        // COMPROBACIONES
+        CubeUserDAO.modifyPro(CacheStatic.cubeUser.getMail());
+        if(CubeUserDAO.successfulModifyProUser){
+            // SI SE ACTUALIZO EL USUARIO, MOSTRAR UN MENSAJE DE EXITO
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Actualizacion de usuario");
+            alert.setHeaderText("Actualizacion exitosa");
+            alert.setContentText("Se ha convertido en member correctamente.");
+            alert.showAndWait();
+            startProPane.setVisible(false);
+        } else {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Actualizacion de user pro");
+            alert.setHeaderText("Actualizacion fallida");
+            alert.setContentText("No se ha podido actualizar porque ese usuario ya es miembro.");
+            alert.showAndWait();
+        }
+    }
+
+    @FXML
+    void onExitStartProAction(ActionEvent event) {
+        startProPane.setVisible(false);
+    }
+
+
+
+    public void openMainPage() {
+        try {
+            FXMLLoader fxmlLoader = new
+                    FXMLLoader(Main.class.getResource("Start.fxml"));
+            Parent root = fxmlLoader.load();
+            StartCtrller controller = fxmlLoader.getController();
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) this.deleteAccountBtt.getScene().getWindow();
+            stage.setTitle("Start Application");
+            stage.setScene(scene);
+            if (!stage.isShowing()) {
+                stage.show();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         demoProfilePane.setVisible(false);

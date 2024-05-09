@@ -1,5 +1,28 @@
 /*REALIZADO POR : ESTELA DE VEGA MARTIN 1ºDAM*/
 /**************DISENIO FISICO CUBE_X***********/
+select * from CUBE_USERS;
+
+insert into cube_users (NAME_USER, PASSWORD_USER, MAIL, REGISTRATION_DATE)
+    VALUES ('a', 'Ps.contains(8)', 'a@gmail.com', current_date() );
+insert into cube_users (NAME_USER, PASSWORD_USER, MAIL, REGISTRATION_DATE)
+    VALUES ('b', 'Ps.contains(8)', 'b@gmail.com', current_date() );
+insert into cube_users (NAME_USER, PASSWORD_USER, MAIL, REGISTRATION_DATE)
+    VALUES ('n', 'Ps.contains(8)', 'n@gmail.com', current_date() );
+insert into cube_users (NAME_USER, PASSWORD_USER, MAIL, REGISTRATION_DATE)
+    VALUES ('m', 'Ps.contains(8)', 'm@gmail.com', current_date() );
+insert into cube_users (NAME_USER, PASSWORD_USER, MAIL, REGISTRATION_DATE)
+    VALUES ('j', 'Ps.contains(8)', 'j@gmail.com', current_date() );
+insert into cube_users (NAME_USER, PASSWORD_USER, MAIL, REGISTRATION_DATE)
+    VALUES ('k', 'Ps.contains(8)', 'k@gmail.com', current_date() );
+insert into cube_users (NAME_USER, PASSWORD_USER, MAIL, REGISTRATION_DATE)
+    VALUES ('l', 'Ps.contains(8)', 'l@gmail.com', current_date() );
+insert into cube_users (NAME_USER, PASSWORD_USER, MAIL, REGISTRATION_DATE)
+    VALUES ('s', 'Ps.contains(8)', 'ñ@gmail.com', current_date() );
+insert into cube_users (NAME_USER, PASSWORD_USER, MAIL, REGISTRATION_DATE)
+    VALUES ('p', 'Ps.contains(8)', 'p@gmail.com', current_date() );
+insert into cube_users (NAME_USER, PASSWORD_USER, MAIL, REGISTRATION_DATE)
+    VALUES ('o', 'Ps.contains(8)', 'o@gmail.com', current_date() );
+
 DROP DATABASE IF EXISTS CubeX_DB;
 CREATE DATABASE CubeX_DB;
 USE CubeX_DB;

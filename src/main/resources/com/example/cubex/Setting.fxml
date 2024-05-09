@@ -181,7 +181,7 @@
                         <Font name="DejaVu Sans Bold" size="14.0" />
                      </font>
                   </Label>
-                  <Label layoutX="108.0" layoutY="43.0" text="5$/MONTH" textFill="#316b22">
+                  <Label layoutX="108.0" layoutY="43.0" text="\$4.99/MONTH" textFill="#316b22">
                      <font>
                         <Font name="DejaVu Sans Bold" size="15.0" />
                      </font>
@@ -197,6 +197,53 @@
                         <Font name="DejaVu Sans Bold Oblique" size="15.0" />
                      </font>
                   </Label>
+                  <Pane fx:id="startProPane" layoutX="84.0" layoutY="-45.0" prefHeight="300.0" prefWidth="258.0" style="-fx-background-color: #325743; -fx-background-radius: 24; -fx-border-color: black; -fx-border-radius: 24;">
+                     <children>
+                        <Button layoutX="32.0" layoutY="252.0" mnemonicParsing="false" onAction="#onStartProAction" prefHeight="31.0" prefWidth="183.0" style="-fx-background-color: #74cc5e;" text="START MY CUBEX PRO">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Button>
+                        <Label layoutX="13.0" layoutY="70.0" text="Terms and conditions apply. &#10;Open only to users who haven't&#10;already tried Pro." textAlignment="CENTER">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="45.0" layoutY="19.0" text="PRO" textFill="#74cc5e">
+                           <font>
+                              <Font name="DejaVu Sans Bold" size="15.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="loginMessage" layoutX="21.0" layoutY="136.0">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="46.0" layoutY="39.0" style="-fx-underline: true;" text="\$4.99/MONTH">
+                           <font>
+                              <Font name="System Bold" size="21.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="78.0" fitWidth="72.0" layoutX="-9.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@Imagen/cubexIcon.png" />
+                           </image>
+                        </ImageView>
+                        <TextField fx:id="cardNumberTxt" layoutX="14.0" layoutY="143.0" prefHeight="25.0" prefWidth="231.0" promptText="Card Number" style="-fx-background-color: #b1c8a3;" />
+                        <TextField fx:id="fullNameTxt" layoutX="14.0" layoutY="179.0" prefHeight="25.0" prefWidth="231.0" promptText="Full name" style="-fx-background-color: #b1c8a3;" />
+                        <TextField fx:id="mmyyTxt" layoutX="14.0" layoutY="216.0" prefHeight="25.0" prefWidth="109.0" promptText="MM/YY" style="-fx-background-color: #b1c8a3;" />
+                        <TextField fx:id="cvcTxt" layoutX="136.0" layoutY="216.0" prefHeight="25.0" prefWidth="109.0" promptText="CVC" style="-fx-background-color: #b1c8a3;" />
+                        <Button layoutX="208.0" layoutY="15.0" mnemonicParsing="false" onAction="#onExitStartProAction" prefHeight="25.0" prefWidth="35.0" style="-fx-background-color: #325743; -fx-background-radius: 100;">
+                           <graphic>
+                              <ImageView fitHeight="22.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true" style="-fx-rotate: 180;">
+                                 <image>
+                                    <Image url="@Imagen/backIcon.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                     </children>
+                  </Pane>
                </children>
             </Pane>
          </children>

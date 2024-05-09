@@ -1,5 +1,6 @@
 package com.example.cubex.Controller;
 
+import com.example.cubex.model.CacheStatic;
 import com.example.cubex.model.CubeUser;
 import com.example.cubex.DAO.CubeUserDAO;
 import com.example.cubex.Main;
@@ -56,11 +57,11 @@ public class RegistrationCtrller implements Initializable {
             alert.setContentText("Por favor, ingrese un correo válido.\nFor example : example@example.com");
             alert.showAndWait();
         } else if (isValidPassword(passwordTxt.getText())) {
+            CacheStatic.cubeUser = new CubeUser(passwordTxt.getText(), emailTxt.getText());
+            CubeUserDAO.logearUsuario(emailTxt.getText(), passwordTxt.getText());
             if(CubeUserDAO.invalidLogin){
                 loginMessage.setText("Invalid login");
             } else {
-                CubeUser cubeUser = new CubeUser(passwordTxt.getText(), emailTxt.getText());
-                CubeUserDAO.logearUsuario(cubeUser);
                 openMainPage();
             }
         }
@@ -89,10 +90,24 @@ public class RegistrationCtrller implements Initializable {
             alert.setContentText("Por favor, ingrese un correo válido.\nFor example : example@example.com");
             alert.showAndWait();
         } else if (isValidPassword(txtPasswdUser.getText())) {
-            CubeUser cubeUser = new CubeUser(txtNameUser.getText(), txtPasswdUser.getText(), txtEmailUser.getText(), currentDate);
-            CubeUserDAO.insertarUsuarios(cubeUser);
+            CacheStatic.cubeUser = new CubeUser(txtNameUser.getText(), txtPasswdUser.getText(), txtEmailUser.getText(), currentDate);
+            CubeUserDAO.insertarUsuarios(CacheStatic.cubeUser.getNameUser(), CacheStatic.cubeUser.getPasswordUser(),
+                    CacheStatic.cubeUser.getMail(), CacheStatic.cubeUser.getRegistrationDate());
             if(CubeUserDAO.successfulCreation){
+                // SI SE INSERTO EL USUARIO, MOSTRAR UN MENSAJE DE EXITO
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Creación de usuario");
+                alert.setHeaderText("Creación exitosa");
+                alert.setContentText("Se ha creado el usuario correctamente.");
+                alert.showAndWait();
+                // IR A LA PAGINA PRINCIPAL DESPUES DE HABER CREADO EL USUARIO
                 openMainPage();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Creación de usuario");
+                alert.setHeaderText("Creación fallida");
+                alert.setContentText("No se ha creado el usuario correctamente.");
+                alert.showAndWait();
             }
         }
     } // CREAR UNA CUENTA
@@ -141,7 +156,7 @@ public class RegistrationCtrller implements Initializable {
             alert.showAndWait();
             return false;
         }
-    }
+    } // VALIDAR LA CONTRASEÑA
 
     @FXML
     void onSignAction() {
@@ -156,7 +171,6 @@ public class RegistrationCtrller implements Initializable {
         txtEmailUser.setStyle("-fx-prompt-text-fill: #9B9B9B; -fx-background-color: #b1c8a3;");
         txtPasswdUser.setStyle("-fx-prompt-text-fill: #9B9B9B; -fx-background-color: #b1c8a3;");
         txtConfirmPsswd.setStyle("-fx-prompt-text-fill: #9B9B9B; -fx-background-color: #b1c8a3;");
-
     } // APARIENCIA DEL SIGN UP
 
     @FXML
@@ -220,7 +234,7 @@ public class RegistrationCtrller implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
+    } // IR A LA PAGINA PRINCIPAL
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

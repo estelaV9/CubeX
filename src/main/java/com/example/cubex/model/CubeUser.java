@@ -1,5 +1,7 @@
 package com.example.cubex.model;
 
+import javafx.scene.control.TextField;
+
 import java.time.LocalDate;
 
 public class CubeUser {
@@ -11,6 +13,10 @@ public class CubeUser {
     private String mail;
     private LocalDate registrationDate;
     private String urlImagen;
+
+    public CubeUser(String nameUser) {
+        this.nameUser = nameUser;
+    }
 
     public CubeUser(String passwordUser, String mail) {
         this.passwordUser = passwordUser;
@@ -33,6 +39,8 @@ public class CubeUser {
         this.registrationDate = registrationDate;
         this.urlImagen = urlImagen;
     }
+
+
 
     public enum Role{ USER, MEMBER; }
 
