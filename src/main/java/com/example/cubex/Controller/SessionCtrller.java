@@ -1,5 +1,6 @@
 package com.example.cubex.Controller;
 
+import com.example.cubex.DAO.CubeUserDAO;
 import javafx.animation.TranslateTransition;
 import javafx.application.Application;
 import javafx.collections.ListChangeListener;
@@ -51,6 +52,7 @@ public class SessionCtrller extends CodeGeneral implements Initializable {
     @FXML void onAddSessionAction(ActionEvent event) {
         demoProfilePane.setVisible(false);
         nameSession.setVisible(true);
+        CubeUserDAO.listUser();
     }
     @FXML void onCreateSessionAction() {
         if(StartCtrller.isDemo) {

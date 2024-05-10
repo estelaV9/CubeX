@@ -22,6 +22,12 @@ public class CubeUser {
         this.passwordUser = passwordUser;
         this.mail = mail;
     }
+    public CubeUser(String nameUser, int level, String roleUser) {
+        this.nameUser = nameUser;
+        this.levelUser = level;
+        this.roleUser = Role.valueOf(roleUser);
+
+    }
 
     public CubeUser(String nameUser, String passwordUser, String mail, LocalDate registrationDate) {
         this.nameUser = nameUser;
@@ -39,6 +45,7 @@ public class CubeUser {
         this.registrationDate = registrationDate;
         this.urlImagen = urlImagen;
     }
+
 
 
 

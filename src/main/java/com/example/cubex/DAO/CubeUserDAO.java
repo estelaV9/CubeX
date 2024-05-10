@@ -17,11 +17,10 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.lang.invoke.StringConcatFactory;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 public class CubeUserDAO {
@@ -133,7 +132,7 @@ public class CubeUserDAO {
         }
     }
 
-    public static void modifyUser (String nameUser, String newMailUser, String roleUser, String mailUser) {
+    public static void modifyUser(String nameUser, String newMailUser, String roleUser, String mailUser) {
         try {
             Connection connection = DatabaseConnection.conectar();
             String sqlUpdate = "UPDATE CUBE_USERS SET NAME_USER = ?, MAIL = ?, ROLE_USER = ?" +
@@ -159,7 +158,7 @@ public class CubeUserDAO {
     }
 
 
-    public static void modifyPro (String mailUser){
+    public static void modifyPro(String mailUser) {
         try {
             Connection connection = DatabaseConnection.conectar();
             String sqlUpdate = "UPDATE CUBE_USERS SET ROLE_USER = 'MEMBER' WHERE MAIL = ?" +
@@ -181,8 +180,30 @@ public class CubeUserDAO {
         }
     }
 
-    public static void userList (){
+    public static List<CubeUser> listUser() {
+        List<CubeUser> users = new ArrayList<>();
+        // Obtenemos la conexión utilizando DatabaseManager
+        try {
+            Connection connection = DatabaseConnection.conectar();
+            String sql = "SELECT NAME_USER, LEVEL_USER, ROLE_USER FROM CUBE_USERS";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            ResultSet resultSet = statement.executeQuery();
 
+            while (resultSet.next()) {
+                String nameUser = resultSet.getString("NAME_USER");
+                int level = resultSet.getInt("LEVEL_USER");
+                String roleUser = resultSet.getString("ROLE_USER");
+                CubeUser cubeUser = new CubeUser(nameUser, level, roleUser);
+                users.add(cubeUser);
+
+            }
+            for (CubeUser x : users){
+                System.out.println(x);
+            }
+        } catch (SQLException e) {
+            System.out.println("error " + e);
+        }
+        return users;
     }
 
 }
