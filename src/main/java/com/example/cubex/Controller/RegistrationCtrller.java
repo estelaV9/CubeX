@@ -1,5 +1,6 @@
 package com.example.cubex.Controller;
 
+import com.example.cubex.Validator.Validator;
 import com.example.cubex.model.CacheStatic;
 import com.example.cubex.model.CubeUser;
 import com.example.cubex.DAO.CubeUserDAO;
@@ -50,13 +51,13 @@ public class RegistrationCtrller implements Initializable {
             alert.setHeaderText("¡ERROR!");
             alert.setContentText("Por favor, completa todos los campos antes de continuar.");
             alert.showAndWait();
-        } else if (!isValidMail(emailTxt.getText())) {
+        } else if (!Validator.isValidMail(emailTxt.getText())) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Correo no válido.");
             alert.setHeaderText("¡ERROR!");
             alert.setContentText("Por favor, ingrese un correo válido.\nFor example : example@example.com");
             alert.showAndWait();
-        } else if (isValidPassword(passwordTxt.getText())) {
+        } else if (Validator.isValidPassword(passwordTxt.getText())) {
             CacheStatic.cubeUser = new CubeUser(passwordTxt.getText(), emailTxt.getText());
             CubeUserDAO.logearUsuario(emailTxt.getText(), passwordTxt.getText());
             if(CubeUserDAO.invalidLogin){
@@ -83,13 +84,13 @@ public class RegistrationCtrller implements Initializable {
             alert.setHeaderText("¡ERROR!");
             alert.setContentText("Las contraseñas no coinciden. Por favor, verifica e intenta nuevamente.");
             alert.showAndWait();
-        } else if (!isValidMail(txtEmailUser.getText())) {
+        } else if (!Validator.isValidMail(txtEmailUser.getText())) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Correo no válido.");
             alert.setHeaderText("¡ERROR!");
             alert.setContentText("Por favor, ingrese un correo válido.\nFor example : example@example.com");
             alert.showAndWait();
-        } else if (isValidPassword(txtPasswdUser.getText())) {
+        } else if (Validator.isValidPassword(txtPasswdUser.getText())) {
             CacheStatic.cubeUser = new CubeUser(txtNameUser.getText(), txtPasswdUser.getText(), txtEmailUser.getText(), currentDate);
             CubeUserDAO.insertarUsuarios(CacheStatic.cubeUser.getNameUser(), CacheStatic.cubeUser.getPasswordUser(),
                     CacheStatic.cubeUser.getMail(), CacheStatic.cubeUser.getRegistrationDate());
@@ -112,51 +113,6 @@ public class RegistrationCtrller implements Initializable {
         }
     } // CREAR UNA CUENTA
 
-    private boolean isValidMail(String mail) {
-        Pattern pattern =
-                Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)" + // INDICAMOS QUE PUEDA TENER CARACTERES MAY,MIN. NUM, ETC
-                        "*@" // LUEGO DEBE CONTENER UN @
-                        + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]{2,})$"); //DEBE TENER UN PUNTO Y LUEGO TENER MIN 2 CARACTERES DESPUES DE ESE PUNTO
-        // LLAMAMOS A LA CLASE PATTERN Y USAMOS EL METODO MATCHER. Y PASAMOS COMO PARAMETRO EL CORREO
-        Matcher matcher = pattern.matcher(mail);
-        // SI ENCUENTRA COINCIDENCIA CON EL CORREO Y LA EXPRESION REGULAR
-        return matcher.find();
-    } // VALIDAR CON EXPRESIONES REGULARES EL MAIL (texto) @ (texto) . (texto)
-
-    public boolean isValidPassword(String password) {
-        if (password.length() >= 8) { // TIENE QUE TENER MINIMO 8 CARACTERES
-            boolean mayuscula = false;
-            boolean numero = false;
-            boolean especial = false;
-
-            // TIENE QUE CONTENER CARACTERES ESPECIALES
-            Pattern special = Pattern.compile("[?!¡@¿.,´)]");
-            Matcher hasSpecial = special.matcher(password);
-
-            // RECORRER LA CONTRASEÑA ARA VALIDAR QUE TIENE TODOS LOS REQUISITOS
-            for (int i = 0; i < password.length(); i++) {
-                char l = password.charAt(i);
-                // SE USA LA CLASE Character PARA OBTENER INFORMACION SOBRE LOS CARACTERES
-                if (Character.isDigit(l)) {// CONTIENE MINIMO UN NUMERO.
-                    numero = true;
-                }
-                if (Character.isUpperCase(l)) { // CONTIENE MINIMO UNA MAYUSCULA
-                    mayuscula = true;
-                }
-                if (hasSpecial.find()) { // CONTIENE CARACTERES ESPECIALES
-                    especial = true;
-                }
-            }
-            return numero && mayuscula && especial;
-        } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Contraseña no válida.");
-            alert.setHeaderText("¡ERROR!");
-            alert.setContentText("Por favor, ingrese una contraseña válida.\nFor example : Ps.contains(8).");
-            alert.showAndWait();
-            return false;
-        }
-    } // VALIDAR LA CONTRASEÑA
 
     @FXML
     void onSignAction() {

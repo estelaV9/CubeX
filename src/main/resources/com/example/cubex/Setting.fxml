@@ -199,12 +199,12 @@
                   </Label>
                   <Pane fx:id="startProPane" layoutX="84.0" layoutY="-45.0" prefHeight="300.0" prefWidth="258.0" style="-fx-background-color: #325743; -fx-background-radius: 24; -fx-border-color: black; -fx-border-radius: 24;">
                      <children>
-                        <Button layoutX="32.0" layoutY="252.0" mnemonicParsing="false" onAction="#onStartProAction" prefHeight="31.0" prefWidth="183.0" style="-fx-background-color: #74cc5e;" text="START MY CUBEX PRO">
+                        <Button layoutX="32.0" layoutY="260.0" mnemonicParsing="false" onAction="#onStartProAction" prefHeight="31.0" prefWidth="183.0" style="-fx-background-color: #74cc5e;" text="START MY CUBEX PRO">
                            <font>
                               <Font size="15.0" />
                            </font>
                         </Button>
-                        <Label layoutX="13.0" layoutY="70.0" text="Terms and conditions apply. &#10;Open only to users who haven't&#10;already tried Pro." textAlignment="CENTER">
+                        <Label layoutX="13.0" layoutY="68.0" text="Terms and conditions apply. &#10;Open only to users who haven't&#10;already tried Pro." textAlignment="CENTER">
                            <font>
                               <Font size="15.0" />
                            </font>
@@ -229,10 +229,10 @@
                               <Image url="@Imagen/cubexIcon.png" />
                            </image>
                         </ImageView>
-                        <TextField fx:id="cardNumberTxt" layoutX="14.0" layoutY="143.0" prefHeight="25.0" prefWidth="231.0" promptText="Card Number" style="-fx-background-color: #b1c8a3;" />
-                        <TextField fx:id="fullNameTxt" layoutX="14.0" layoutY="179.0" prefHeight="25.0" prefWidth="231.0" promptText="Full name" style="-fx-background-color: #b1c8a3;" />
-                        <TextField fx:id="mmyyTxt" layoutX="14.0" layoutY="216.0" prefHeight="25.0" prefWidth="109.0" promptText="MM/YY" style="-fx-background-color: #b1c8a3;" />
-                        <TextField fx:id="cvcTxt" layoutX="136.0" layoutY="216.0" prefHeight="25.0" prefWidth="109.0" promptText="CVC" style="-fx-background-color: #b1c8a3;" />
+                        <TextField fx:id="cardNumberTxt" layoutX="14.0" layoutY="138.0" prefHeight="25.0" prefWidth="231.0" promptText="Card Number" style="-fx-background-color: #b1c8a3;" />
+                        <TextField fx:id="fullNameTxt" layoutX="14.0" layoutY="174.0" prefHeight="25.0" prefWidth="231.0" promptText="Full name" style="-fx-background-color: #b1c8a3;" />
+                        <TextField fx:id="mmyyTxt" layoutX="14.0" layoutY="211.0" prefHeight="25.0" prefWidth="109.0" promptText="MM/YY" style="-fx-background-color: #b1c8a3;" />
+                        <TextField fx:id="cvcTxt" layoutX="136.0" layoutY="211.0" prefHeight="25.0" prefWidth="109.0" promptText="CVC" style="-fx-background-color: #b1c8a3;" />
                         <Button layoutX="208.0" layoutY="15.0" mnemonicParsing="false" onAction="#onExitStartProAction" prefHeight="25.0" prefWidth="35.0" style="-fx-background-color: #325743; -fx-background-radius: 100;">
                            <graphic>
                               <ImageView fitHeight="22.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true" style="-fx-rotate: 180;">
@@ -242,6 +242,11 @@
                               </ImageView>
                            </graphic>
                         </Button>
+                        <Label fx:id="invalidProLabel" layoutX="87.0" layoutY="238.0" prefHeight="17.0" prefWidth="84.0" textFill="#a82f2a">
+                           <font>
+                              <Font name="System Bold Italic" size="12.0" />
+                           </font>
+                        </Label>
                      </children>
                   </Pane>
                </children>

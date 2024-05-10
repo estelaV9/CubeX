@@ -3,6 +3,7 @@ package com.example.cubex.Controller;
 import com.example.cubex.DAO.CubeUserDAO;
 import com.example.cubex.Database.DatabaseConnection;
 import com.example.cubex.Main;
+import com.example.cubex.Validator.Validator;
 import com.example.cubex.model.CacheStatic;
 import com.example.cubex.model.CubeUser;
 import javafx.event.ActionEvent;
@@ -29,34 +30,62 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class SettingCtrller extends CodeGeneral implements Initializable {
-    @FXML private ToggleGroup RoleUser;
-    @FXML private Pane accountPane;
-    @FXML private Label accountTitle;
-    @FXML private Button backBtt;
-    @FXML private Button communityBtt;
-    @FXML private Button deleteBtt;
-    @FXML private Button deleteBtt1;
-    @FXML private Pane deletePane;
-    @FXML private Pane demoProfilePane;
-    @FXML private Button editBtt;
-    @FXML private Button generalBtt;
-    @FXML private Button githubBtt;
-    @FXML private Button manualBtt;
-    @FXML private Button onCubexProBtt;
-    @FXML private Button passwordBtt;
-    @FXML private Pane passwordPane;
-    @FXML private Button personalBtt;
-    @FXML private Pane personalPane;
-    @FXML private Button proBtt;
-    @FXML private Pane proPane;
-    @FXML private Pane settingGMenu;
-    @FXML private TextField txtEmailUser;
-    @FXML private TextField txtNameUser;
-    @FXML private PasswordField txtNewPasswordConfirm;
-    @FXML private PasswordField txtNewPasswordUp;
-    @FXML private PasswordField txtPasswdUser;
-    @FXML private Button upPasswordBtt;
-    @FXML private Button deleteAccountBtt;
+    @FXML
+    private ToggleGroup RoleUser;
+    @FXML
+    private Pane accountPane;
+    @FXML
+    private Label accountTitle;
+    @FXML
+    private Button backBtt;
+    @FXML
+    private Button communityBtt;
+    @FXML
+    private Button deleteBtt;
+    @FXML
+    private Button deleteBtt1;
+    @FXML
+    private Pane deletePane;
+    @FXML
+    private Pane demoProfilePane;
+    @FXML
+    private Button editBtt;
+    @FXML
+    private Button generalBtt;
+    @FXML
+    private Button githubBtt;
+    @FXML
+    private Button manualBtt;
+    @FXML
+    private Button onCubexProBtt;
+    @FXML
+    private Button passwordBtt;
+    @FXML
+    private Pane passwordPane;
+    @FXML
+    private Button personalBtt;
+    @FXML
+    private Pane personalPane;
+    @FXML
+    private Button proBtt;
+    @FXML
+    private Pane proPane;
+    @FXML
+    private Pane settingGMenu;
+    @FXML
+    private TextField txtEmailUser;
+    @FXML
+    private TextField txtNameUser;
+    @FXML
+    private PasswordField txtNewPasswordConfirm;
+    @FXML
+    private PasswordField txtNewPasswordUp;
+    @FXML
+    private PasswordField txtPasswdUser;
+    @FXML
+    private Button upPasswordBtt;
+    @FXML
+    private Button deleteAccountBtt;
 
     @FXML
     private TextField cardNumberTxt;
@@ -75,9 +104,8 @@ public class SettingCtrller extends CodeGeneral implements Initializable {
 
     @FXML
     private Pane startProPane;
-
-
-
+    @FXML
+    private Label invalidProLabel;
 
 
     @FXML
@@ -114,9 +142,10 @@ public class SettingCtrller extends CodeGeneral implements Initializable {
     void onManualAction(ActionEvent event) {
 
     }
+
     @FXML
     void onCommunityAction(ActionEvent event) {
-        if(StartCtrller.isDemo){
+        if (StartCtrller.isDemo) {
             demoProfilePane.setVisible(true);
         } else {
 
@@ -125,10 +154,10 @@ public class SettingCtrller extends CodeGeneral implements Initializable {
 
     @FXML
     void onProfileAction() {
-        if(StartCtrller.isDemo){
+        if (StartCtrller.isDemo) {
             demoProfilePane.setVisible(true);
             accountPane.setVisible(false);
-        } else{
+        } else {
             System.out.println(accountTitle);
             accountTitle.setStyle("-fx-fill: red;"); // -fx-stroke: black; -fx-stroke-width: 2px;");
             demoProfilePane.setVisible(false);
@@ -164,7 +193,9 @@ public class SettingCtrller extends CodeGeneral implements Initializable {
     } // REDIRIGE A MI GITHUB
 
 
-    /** ACCOUNT **/
+    /**
+     * ACCOUNT
+     **/
 
     @FXML
     void onDeleteAction(ActionEvent event) {
@@ -177,13 +208,14 @@ public class SettingCtrller extends CodeGeneral implements Initializable {
         personalBtt.setStyle("-fx-background-color :  #325743");
         passwordBtt.setStyle("-fx-background-color :  #325743");
     }
+
     @FXML
     void onDeleteAccountAction(ActionEvent event) throws SQLException {
         int opcion = JOptionPane.showConfirmDialog(null,
                 "¿Está seguro de que desea eliminar la cuenta?", "Confirmación", JOptionPane.YES_NO_OPTION);
         if (opcion == JOptionPane.YES_OPTION) {
             CubeUserDAO.deleteUser(CacheStatic.cubeUser.getMail());
-            if(CubeUserDAO.successfulDelete){
+            if (CubeUserDAO.successfulDelete) {
                 // SI SE ELIMINA EL USUARIO SE MUESTRA EL MENSAJE
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Eliminación de usuario");
@@ -209,7 +241,7 @@ public class SettingCtrller extends CodeGeneral implements Initializable {
         passwordPane.setVisible(true);
         deletePane.setVisible(false);
         txtNewPasswordUp.setPromptText("New password.");
-        txtNewPasswordUp .setStyle("-fx-prompt-text-fill: #1e3728; -fx-background-color: #6b9979;");
+        txtNewPasswordUp.setStyle("-fx-prompt-text-fill: #1e3728; -fx-background-color: #6b9979;");
         txtNewPasswordConfirm.setPromptText("Confirm password.");
         txtNewPasswordConfirm.setStyle("-fx-prompt-text-fill: #1e3728; -fx-background-color: #6b9979;");
         deleteBtt.setStyle("-fx-background-color :   #325743");
@@ -217,23 +249,25 @@ public class SettingCtrller extends CodeGeneral implements Initializable {
         personalBtt.setStyle("-fx-background-color :  #325743");
         passwordBtt.setStyle("-fx-background-color :   #b1c8a3");
     }
+
     @FXML
-    void onUpPasswordAction(ActionEvent event) throws SQLException{
-        if (txtNewPasswordUp.getText().equals("") || txtNewPasswordConfirm.getText().equals("")) {
+    void onUpPasswordAction(ActionEvent event) {
+        if (txtNewPasswordUp.getText().isEmpty() || txtNewPasswordConfirm.getText().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Campos vacíos.");
             alert.setHeaderText("¡ERROR!");
             alert.setContentText("Por favor, completa todos los campos antes de continuar.");
             alert.showAndWait();
-        } if(!txtNewPasswordUp.getText().equals(txtNewPasswordConfirm.getText())){
+        }
+        if (!txtNewPasswordUp.getText().equals(txtNewPasswordConfirm.getText())) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Contraseñas no coinciden.");
             alert.setHeaderText("¡ERROR!");
             alert.setContentText("Las contraseñas no coinciden. Por favor, verifica e intenta nuevamente.");
             alert.showAndWait();
-        }else {
+        } else if (Validator.isValidPassword(txtNewPasswordUp.getText())) {
             CubeUserDAO.modifyPassword(txtNewPasswordUp.getText(), CacheStatic.cubeUser.getMail());
-            if(CubeUserDAO.successfulModify){
+            if (CubeUserDAO.successfulModify) {
                 // SI SE ACTUALIZO EL USUARIO, MOSTRAR UN MENSAJE DE EXITO
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Actualizacion de usuario");
@@ -267,17 +301,23 @@ public class SettingCtrller extends CodeGeneral implements Initializable {
     @FXML
     void onUpdateAction(ActionEvent event) {
         RadioButton seleccionado = (RadioButton) RoleUser.getSelectedToggle();
-        if (txtNameUser.getText().equals("") || txtEmailUser.getText().equals("") || RoleUser.getSelectedToggle() == null) {
+        if (txtNameUser.getText().isEmpty() || txtEmailUser.getText().isEmpty() || RoleUser.getSelectedToggle() == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Campos vacíos.");
             alert.setHeaderText("¡ERROR!");
             alert.setContentText("Por favor, completa todos los campos antes de continuar.");
             alert.showAndWait();
+        } else if (!Validator.isValidMail(txtEmailUser.getText())) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Correo no válido.");
+            alert.setHeaderText("¡ERROR!");
+            alert.setContentText("Por favor, ingrese un correo válido.\nFor example : example@example.com");
+            alert.showAndWait();
         } else {
             /****COMPROBACIONES PARA CONVERTIR EN PRO****/
             if (seleccionado.getText().equals("MEMBER")) {
                 onProAction();
-                if(CubeUserDAO.successfulModifyProUser){
+                if (CubeUserDAO.successfulModifyProUser) {
                     CubeUserDAO.modifyUser(txtNameUser.getText(), txtEmailUser.getText(), seleccionado.getText(),
                             CacheStatic.cubeUser.getMail());
                     if (CubeUserDAO.successfulModifyUser) {
@@ -313,6 +353,7 @@ public class SettingCtrller extends CodeGeneral implements Initializable {
         personalBtt.setStyle("-fx-background-color :  #325743");
         passwordBtt.setStyle("-fx-background-color :   #325743");
     }
+
     @FXML
     void onCubexProAction(ActionEvent event) {
         startProPane.setVisible(true);
@@ -324,22 +365,41 @@ public class SettingCtrller extends CodeGeneral implements Initializable {
 
     @FXML
     void onStartProAction(ActionEvent event) {
-        // COMPROBACIONES
-        CubeUserDAO.modifyPro(CacheStatic.cubeUser.getMail());
-        if(CubeUserDAO.successfulModifyProUser){
-            // SI SE ACTUALIZO EL USUARIO, MOSTRAR UN MENSAJE DE EXITO
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Actualizacion de usuario");
-            alert.setHeaderText("Actualizacion exitosa");
-            alert.setContentText("Se ha convertido en member correctamente.");
+        if (cardNumberTxt.getText().isEmpty() || fullNameTxt.getText().isEmpty() || cvcTxt.getText().isEmpty()
+                || mmyyTxt.getText().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Campos vacíos.");
+            alert.setHeaderText("¡ERROR!");
+            alert.setContentText("Por favor, completa todos los campos antes de continuar.");
             alert.showAndWait();
-            startProPane.setVisible(false);
+        } else if (!Validator.isValidNameCard(fullNameTxt.getText())){
+            invalidProLabel.setText("Invalid name");
+        } else if (!cardNumberTxt.getText().matches("\\d+") && !cvcTxt.getText().matches("\\d+")
+            && cardNumberTxt.getText().contains(" ")) {
+            // COMPROBAR QUE EN EL NUMERO DE LA TARJETA Y EL CVC SOLO TENGA NUMEROS
+            invalidProLabel.setText("Only numbers without spaces");
+        } else if (!Validator.isValidCard(Long.parseLong(cardNumberTxt.getText()))) {
+            invalidProLabel.setText("Invalid card");
+        } else if (!Validator.isValidCvc(Integer.parseInt(cvcTxt.getText()))) {
+            invalidProLabel.setText("Invalid cvc");
         } else {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Actualizacion de user pro");
-            alert.setHeaderText("Actualizacion fallida");
-            alert.setContentText("No se ha podido actualizar porque ese usuario ya es miembro.");
-            alert.showAndWait();
+            invalidProLabel.setText("");
+            CubeUserDAO.modifyPro(CacheStatic.cubeUser.getMail());
+            if (CubeUserDAO.successfulModifyProUser) {
+                // SI SE ACTUALIZO EL USUARIO, MOSTRAR UN MENSAJE DE EXITO
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Actualizacion de usuario");
+                alert.setHeaderText("Actualizacion exitosa");
+                alert.setContentText("Se ha convertido en member correctamente.");
+                alert.showAndWait();
+                startProPane.setVisible(false);
+            } else {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Actualizacion de user pro");
+                alert.setHeaderText("Actualizacion fallida");
+                alert.setContentText("No se ha podido actualizar porque ese usuario ya es miembro.");
+                alert.showAndWait();
+            }
         }
     }
 
@@ -347,7 +407,6 @@ public class SettingCtrller extends CodeGeneral implements Initializable {
     void onExitStartProAction(ActionEvent event) {
         startProPane.setVisible(false);
     }
-
 
 
     public void openMainPage() {
