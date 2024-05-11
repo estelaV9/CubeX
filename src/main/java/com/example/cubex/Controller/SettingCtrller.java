@@ -1,11 +1,13 @@
 package com.example.cubex.Controller;
 
 import com.example.cubex.DAO.CubeUserDAO;
+import com.example.cubex.DAO.MemberDAO;
 import com.example.cubex.Database.DatabaseConnection;
 import com.example.cubex.Main;
 import com.example.cubex.Validator.Validator;
 import com.example.cubex.model.CacheStatic;
 import com.example.cubex.model.CubeUser;
+import com.example.cubex.model.Member;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -27,6 +29,7 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 public class SettingCtrller extends CodeGeneral implements Initializable {
@@ -374,14 +377,15 @@ public class SettingCtrller extends CodeGeneral implements Initializable {
             alert.showAndWait();
         } else if (!Validator.isValidNameCard(fullNameTxt.getText())){
             invalidProLabel.setText("Invalid name");
-        } else if (!cardNumberTxt.getText().matches("\\d+") && !cvcTxt.getText().matches("\\d+")
-            && cardNumberTxt.getText().contains(" ")) {
+        } /*else if (!Validator.noNumber) {
             // COMPROBAR QUE EN EL NUMERO DE LA TARJETA Y EL CVC SOLO TENGA NUMEROS
-            invalidProLabel.setText("Only numbers without spaces");
-        } else if (!Validator.isValidCard(Long.parseLong(cardNumberTxt.getText()))) {
+            invalidProLabel.setText("Only numbers");
+        }*/ else if (!Validator.isValidCard(Long.parseLong(cardNumberTxt.getText()))) {
             invalidProLabel.setText("Invalid card");
         } else if (!Validator.isValidCvc(Integer.parseInt(cvcTxt.getText()))) {
             invalidProLabel.setText("Invalid cvc");
+        } else if(!Validator.isValidMY(mmyyTxt.getText())) {
+            invalidProLabel.setText("Invalid MM/YY");
         } else {
             invalidProLabel.setText("");
             CubeUserDAO.modifyPro(CacheStatic.cubeUser.getMail());
@@ -392,6 +396,14 @@ public class SettingCtrller extends CodeGeneral implements Initializable {
                 alert.setHeaderText("Actualizacion exitosa");
                 alert.setContentText("Se ha convertido en member correctamente.");
                 alert.showAndWait();
+                String nombreUsuario = CacheStatic.cubeUser.getNameUser(); // Obtener el nombre de usuario actual
+                String contraseña = CacheStatic.cubeUser.getPasswordUser(); // Obtener la contraseña del usuario actual
+                String correoElectronico = CacheStatic.cubeUser.getMail(); // Obtener el correo electrónico del usuario actual
+                LocalDate fechaActual = LocalDate.now(); // Obtener la fecha actual
+
+                // Llamar al método para insertar un nuevo miembro en la base de datos
+                MemberDAO.insertNewMember(nombreUsuario, contraseña, correoElectronico, fechaActual);
+
                 startProPane.setVisible(false);
             } else {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);

@@ -1,16 +1,20 @@
 package com.example.cubex.model;
 
+import com.example.cubex.DAO.MemberDAO;
+
 import java.time.LocalDate;
 
 public class Member extends CubeUser{
     private int idMember;
-    private int idUser;
+    private int idUserMember;
     private int discount;
     private LocalDate registrationDate;
 
-    public Member(String nameUser, String passwordUser, int levelUser, Role roleUser, String mail, LocalDate registrationDate, String urlImagen, int idUser, int discount, LocalDate registrationDate1) {
+
+
+    public Member(String nameUser, String passwordUser, int levelUser, Role roleUser, String mail, LocalDate registrationDate, String urlImagen, int idUserMember, int discount, LocalDate registrationDate1) {
         super(nameUser, passwordUser, levelUser, roleUser, mail, registrationDate, urlImagen);
-        this.idUser = idUser;
+        this.idUserMember = MemberDAO.seleccionarUser(mail);
         this.discount = discount;
         this.registrationDate = registrationDate1;
     }
@@ -19,7 +23,7 @@ public class Member extends CubeUser{
     public String toString() {
         return "Member{" +
                 "idMember=" + idMember +
-                ", idUser=" + idUser +
+                ", idUser=" + idUserMember +
                 ", discount=" + discount +
                 ", registrationDate=" + registrationDate +
                 '}';
@@ -33,12 +37,12 @@ public class Member extends CubeUser{
         this.idMember = idMember;
     }
 
-    public int getIdUser() {
-        return idUser;
+    public int getIdUserMember() {
+        return idUserMember;
     }
 
-    public void setIdUser(int idUser) {
-        this.idUser = idUser;
+    public void setIdUserMember(int idUserMember) {
+        this.idUserMember = idUserMember;
     }
 
     public int getDiscount() {

@@ -7,6 +7,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Validator {
+    public static boolean noNumber;
+
     public static boolean isValidMail(String mail) {
         Pattern pattern =
                 Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)" + // INDICAMOS QUE PUEDA TENER CARACTERES MAY,MIN. NUM, ETC
@@ -57,11 +59,15 @@ public class Validator {
     public static boolean isValidCard(long cardNumber) {
         int sumaPares = 0, imparMulti, digito, sumaImpares = 0;
         boolean isValid = false;
+        // noNumber = true;
         // CONVERTIR EL NUMERO A CADENA PARA PODER OPERAR MEJORAR Y SE LE CONCATENA UN CERO DELANTE PARA QUE EN EL BUCLE
         // EL 1 SEA EL PRIMER NUMERO DEL CARDNUMBER. POR EJEMPLO, SI EL CARDNUMBER EMPIEZA POR 4, SE LE AÑADE UN 0 (04)
         // Y EN EL BUCLE EL PRIMERO QUE ES NUMERO IMPAR SEA 4
         String cardString = 0 + String.valueOf(cardNumber);
 
+        /*if (!isNumber(cardString)) {
+            noNumber = false;
+        }*/
         // SE USA EL ALGORITMO DE LUHN PARA VALIDAR LA TARJETA
         // SE VERIFICA QUE LA LONGUITUD DEL NUMERO DE LA TARJETA ESTE ENTRE 16 Y 19
         if (cardString.length() <= 19 && cardString.length() >= 16) {
@@ -94,20 +100,22 @@ public class Validator {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Numero de tarjeta no válida.");
             alert.setHeaderText("¡ERROR!");
-            alert.setContentText("Por favor, ingrese un numero de tarjeta válida.\nFor example : 4000123456789017..");
+            alert.setContentText("Por favor, ingrese un numero de tarjeta válida.\nFor example : 4000123456789017");
             alert.showAndWait();
         }
         return isValid;
     } // VALIDAR NUMERO DE LA TARJETA
 
 
-
     public static boolean isValidCvc(int cvcNumber) {
         int sumaPares = 0, imparMulti, digito, sumaImpares = 0;
         boolean isValid = false;
+        // noNumber = true;
         // SE APLICA LOS MISMOS PASOS Y EL ALGORITMO DE LUHN PARA VALIDAR EL CVC
         String cvcString = 0 + String.valueOf(cvcNumber);
-
+        /*if (!isNumber(cvcString)) {
+            noNumber = false;
+        }*/
         // SE VERIFICA QUE LA LONGUITUD DEL CVC DE LA TARJETA ESTE ENTRE 3 Y 4
         if (cvcString.length() <= 4 && cvcString.length() >= 3) {
             for (int i = 1; i <= cvcString.length() - 1; i++) {
@@ -136,7 +144,7 @@ public class Validator {
             alert.showAndWait();
         }
         return isValid;
-    } // VALIDAR NUMERO DE CVC
+} // VALIDAR NUMERO DE CVC
 
 
     public static boolean isValidNameCard(String fullName) {
@@ -149,5 +157,17 @@ public class Validator {
         // SI ENCUENTRA COINCIDENCIA CON EL CORREO Y LA EXPRESION REGULAR
         return matcher.find();
     } // VALIDAR NOMBRE DEL PROPIETARIO DE LA TARJETA
+
+    public static boolean isNumber(String aux) {
+        Pattern pattern = Pattern.compile("\\d+");
+        Matcher matcher = pattern.matcher(aux);
+        return matcher.find();
+    } // VALIDAR QUE SOLO TENGA NUMEROS EN LA TARJETA
+
+    public static boolean isValidMY(String aux) {
+        Pattern pattern = Pattern.compile("\\d{2}/\\d{2}"); // DOS NUMEROS SEGUIDO DE UNA BARRA Y OTROS DOS NUMEROS
+        Matcher matcher = pattern.matcher(aux);
+        return matcher.find();
+    } // VALIDAR FECHA VENCIMIENTO
 
 }

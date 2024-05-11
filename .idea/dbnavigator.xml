@@ -17,16 +17,16 @@
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="5b73ea76-82e7-4d05-bb90-8111de872e03">
-      <console name="CubeX_DB" type="STANDARD" schema="cubex_db" session="Main"><![CDATA[select * from cube_users;]]></console>
+      <console name="CubeX_DB" type="STANDARD" schema="cubex_db" session="Main"><![CDATA[select * from cube_users;
+
+select * from cube_users where idUser = (select * from members where idUser = 12);]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseEditorStateManager">
     <last-used-providers />
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files>
-      <object connection-id="5b73ea76-82e7-4d05-bb90-8111de872e03" object-ref="consoles/CubeX_DB" />
-    </open-files>
+    <open-files />
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
     <connection id="5b73ea76-82e7-4d05-bb90-8111de872e03" />
