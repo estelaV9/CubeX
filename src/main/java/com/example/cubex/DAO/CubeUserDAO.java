@@ -203,4 +203,28 @@ public class CubeUserDAO {
         return users;
     }
 
+    public static void dataProfile (String mail){
+        try {
+            Connection connection = DatabaseConnection.conectar();
+            String sql = "SELECT NAME_USER, LEVEL_USER, ROLE_USER, REGISTRATION_DATE FROM CUBE_USERS" +
+                    " WHERE MAIL = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, mail);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                String nameUser = resultSet.getString("NAME_USER");
+                int level = resultSet.getInt("LEVEL_USER");
+                String roleUser = resultSet.getString("ROLE_USER");
+                Date date = resultSet.getDate("REGISTRATION_DATE");
+                CacheStatic.cubeUser.setNameUser(nameUser);
+                CacheStatic.cubeUser.setLevelUser(level);
+                CacheStatic.cubeUser.setRoleUser(CubeUser.Role.valueOf(roleUser));
+                CacheStatic.cubeUser.setRegistrationDate(date.toLocalDate());
+            }
+        } catch (SQLException e) {
+            System.out.println("error " + e);
+        }
+    }
+
 }

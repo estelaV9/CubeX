@@ -1,7 +1,10 @@
 package com.example.cubex.Controller;
 
+import com.example.cubex.DAO.CubeUserDAO;
 import com.example.cubex.Database.DatabaseConnection;
 import com.example.cubex.Main;
+import com.example.cubex.model.CacheStatic;
+import com.example.cubex.model.CubeUser;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
@@ -14,6 +17,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -60,6 +64,19 @@ public class CodeGeneral implements Initializable {
     public Pane profilePage;
     @FXML
     public Pane communityPane;
+    @FXML
+    private TextField levelProfileTxt;
+
+    @FXML
+    private Label userProfiletxt;
+    @FXML
+    private ImageView proProfileImg;
+
+    @FXML
+    private Label proProfileTxt;
+
+    @FXML
+    private Label dateProfileTxt;
 
 
     // ATRIBUTOS SEMAFOROS PARA ABRIR Y CERRAR DESDE EL MISMO BOTON
@@ -97,6 +114,17 @@ public class CodeGeneral implements Initializable {
                 pulsarProfile = true;
             } else {
                 profilePage.setVisible(true);
+                CubeUserDAO.dataProfile(CacheStatic.cubeUser.getMail());
+                if(CacheStatic.cubeUser.getRoleUser() == CubeUser.Role.valueOf("MEMBER")){
+                    proProfileImg.setVisible(true);
+                    proProfileTxt.setVisible(true);
+                } else {
+                    proProfileImg.setVisible(false);
+                    proProfileTxt.setVisible(false);
+                }
+                userProfiletxt.setText(CacheStatic.cubeUser.getNameUser());
+                dateProfileTxt.setText("Joined on " + CacheStatic.cubeUser.getRegistrationDate());
+                levelProfileTxt.setText(String.valueOf(CacheStatic.cubeUser.getLevelUser()));
                 pulsarProfile = true;
             }
         } else {

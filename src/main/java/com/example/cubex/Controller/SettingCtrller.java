@@ -131,10 +131,13 @@ public class SettingCtrller extends CodeGeneral implements Initializable {
 
     @FXML
     private Pane filterMenu;
-    static boolean pulsarFilter;
-
     @FXML
     private ScrollPane scrollPane;
+    @FXML
+    private Label invalidProLabel;
+    LocalDate localDate = LocalDate.now();
+    static boolean pulsarFilter;
+
 
     @FXML
     void onAvgFilterAction(ActionEvent event) {
@@ -312,17 +315,6 @@ public class SettingCtrller extends CodeGeneral implements Initializable {
     }
 
 
-
-
-
-
-
-
-    @FXML
-    private Label invalidProLabel;
-    LocalDate localDate = LocalDate.now();
-
-
     @FXML
     void onEditAction(ActionEvent event) {
 
@@ -348,10 +340,6 @@ public class SettingCtrller extends CodeGeneral implements Initializable {
         }
     }// PAGINA PRINCIPAL
 
-    @FXML
-    void onGeneralBtt(ActionEvent event) {
-
-    }
 
     @FXML
     void onManualAction(ActionEvent event) {
