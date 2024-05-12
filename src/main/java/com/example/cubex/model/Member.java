@@ -11,10 +11,15 @@ public class Member extends CubeUser{
     private LocalDate registrationDate;
 
 
+    public Member(String mail, int idUserMember, LocalDate registrationDate) {
+        super(mail);
+        this.idUserMember = MemberDAO.insertIdUser(mail);
+        this.registrationDate = registrationDate;
+    }
 
     public Member(String nameUser, String passwordUser, int levelUser, Role roleUser, String mail, LocalDate registrationDate, String urlImagen, int idUserMember, int discount, LocalDate registrationDate1) {
         super(nameUser, passwordUser, levelUser, roleUser, mail, registrationDate, urlImagen);
-        this.idUserMember = MemberDAO.seleccionarUser(mail);
+        this.idUserMember = MemberDAO.insertIdUser(mail);
         this.discount = discount;
         this.registrationDate = registrationDate1;
     }

@@ -197,7 +197,7 @@ public class CubeUserDAO {
                 users.add(cubeUser);
 
             }
-            for (CubeUser x : users){
+            for (CubeUser x : users) {
                 System.out.println(x);
             }
         } catch (SQLException e) {

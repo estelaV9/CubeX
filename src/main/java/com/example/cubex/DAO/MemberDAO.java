@@ -6,14 +6,12 @@ import com.example.cubex.model.CubeUser;
 import com.example.cubex.model.Member;
 import javafx.scene.control.Alert;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDate;
 
 public class MemberDAO {
-    public static int seleccionarUser(String mail) {
+    public static boolean isMember = false;
+    public static int insertIdUser(String mail) {
         String sql = "SELECT ID_USER FROM CUBE_USERS WHERE MAIL = ? AND ROLE_USER = 'MEMBER';";
         int idUser = -1;
         try {
@@ -23,6 +21,12 @@ public class MemberDAO {
             ResultSet consulta = sentencia.executeQuery();
             if (consulta.next()) {
                 idUser = consulta.getInt("ID_USER");
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error al convertir en miembro.");
+                alert.setHeaderText("¡ERROR!");
+                alert.setContentText("Error al convertir en miembro");
+                alert.showAndWait();
             }
             con.close();
         } catch (SQLException e) {
@@ -35,36 +39,50 @@ public class MemberDAO {
         return idUser;
     }
 
-
-    public static void insertNewMember(String nameUser, String passwordUser, String mail) {
-        String insertMemberQuery = "INSERT INTO MEMBERS (ID_USER, DISCOUNT, REGISTRATION_DATE) VALUES (LAST_INSERT_ID(), 0, ?)";
-
-        try (Connection con = DatabaseConnection.conectar();
-             PreparedStatement userStatement = con.prepareStatement(insertUserQuery);
-             PreparedStatement memberStatement = con.prepareStatement(insertMemberQuery)) {
-
-            // Setear parámetros para la inserción en CUBE_USERS
-            userStatement.setString(1, nameUser);
-            userStatement.setString(2, passwordUser);
-            userStatement.setString(3, mail);
-            userStatement.setDate(4, java.sql.Date.valueOf(LocalDate.now())); // Obtener la fecha actual
-
-            // Ejecutar la inserción en CUBE_USERS
-            userStatement.executeUpdate();
-
-            // Setear parámetros para la inserción en MEMBERS
-            memberStatement.setDate(1, java.sql.Date.valueOf(LocalDate.now())); // Obtener la fecha actual
-
-            // Ejecutar la inserción en MEMBERS
-            memberStatement.executeUpdate();
-
-            // Mostrar mensaje de éxito
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Nuevo miembro creado");
-            alert.setHeaderText("Éxito");
-            alert.setContentText("Se ha creado un nuevo miembro correctamente.");
+    public static void insertMember(int idUser, LocalDate date) {
+        String sql = "INSERT INTO MEMBERS (ID_USER, REGISTRATION_DATE) VALUES (?, ?);";
+        try {
+            Connection con = DatabaseConnection.conectar();
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.setInt(1, idUser);
+            statement.setString(2, String.valueOf(date));
+            int rowsInserted = statement.executeUpdate();
+            if (rowsInserted > 0) {
+                isMember = true;
+            } else {
+                isMember = false;
+            }
+            con.close();
+        } catch (SQLException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error de conexión.");
+            alert.setHeaderText("¡ERROR!");
+            alert.setContentText("Error al conectar a la base de datos: " + e.getMessage());
             alert.showAndWait();
-
         }
     }
+
+    public static boolean selectMember (String mail) {
+        String sqlQuery = "SELECT * FROM MEMBERS WHERE ID_USER = (SELECT ID_USER FROM CUBE_USERS WHERE MAIL = ?);";
+        boolean isMemberUser = false;
+        try {
+            Connection con = DatabaseConnection.conectar();
+            PreparedStatement statement = con.prepareStatement(sqlQuery);
+            statement.setString(1, mail);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                isMemberUser = true;
+            }
+            con.close();
+        } catch (SQLException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error de conexión.");
+            alert.setHeaderText("¡ERROR!");
+            alert.setContentText("Error al conectar a la base de datos: " + e.getMessage());
+            alert.showAndWait();
+        }
+        return isMemberUser;
+    } // SABER SI UN USUARIO ES MIEMBRO O NO
+
+
 }

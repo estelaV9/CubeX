@@ -14,8 +14,9 @@ public class CubeUser {
     private LocalDate registrationDate;
     private String urlImagen;
 
-    public CubeUser(String nameUser) {
-        this.nameUser = nameUser;
+
+    public CubeUser(String mail) {
+        this.mail = mail;
     }
 
     public CubeUser(String passwordUser, String mail) {

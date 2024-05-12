@@ -109,6 +109,7 @@ public class SettingCtrller extends CodeGeneral implements Initializable {
     private Pane startProPane;
     @FXML
     private Label invalidProLabel;
+    LocalDate localDate = LocalDate.now();
 
 
     @FXML
@@ -275,7 +276,7 @@ public class SettingCtrller extends CodeGeneral implements Initializable {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Actualizacion de usuario");
                 alert.setHeaderText("Actualizacion exitosa");
-                alert.setContentText("Se ha actualizado el usuario correctamente.");
+                alert.setContentText("Se ha actualizado la contraseña correctamente.");
                 alert.showAndWait();
             } else {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -317,29 +318,32 @@ public class SettingCtrller extends CodeGeneral implements Initializable {
             alert.setContentText("Por favor, ingrese un correo válido.\nFor example : example@example.com");
             alert.showAndWait();
         } else {
-            /****COMPROBACIONES PARA CONVERTIR EN PRO****/
-            if (seleccionado.getText().equals("MEMBER")) {
-                onProAction();
-                if (CubeUserDAO.successfulModifyProUser) {
-                    CubeUserDAO.modifyUser(txtNameUser.getText(), txtEmailUser.getText(), seleccionado.getText(),
-                            CacheStatic.cubeUser.getMail());
-                    if (CubeUserDAO.successfulModifyUser) {
-                        // SI SE ACTUALIZO EL USUARIO, MOSTRAR UN MENSAJE DE EXITO
-                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                        alert.setTitle("Actualizacion de usuario");
-                        alert.setHeaderText("Actualizacion exitosa");
-                        alert.setContentText("Se ha actualizado el usuario correctamente.");
-                        alert.showAndWait();
-                    } else {
-                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                        alert.setTitle("Actualizacion de usuario");
-                        alert.setHeaderText("Actualizacion fallida");
-                        alert.setContentText("No se ha actualizado el usuario correctamente.");
-                        alert.showAndWait();
-                    }
-                }
+            CubeUser.Role role;
+            if(seleccionado.getText().equals("USER")){
+                role = CubeUser.Role.USER;
             } else {
+                role = CubeUser.Role.MEMBER;
+            }
 
+            if (seleccionado.getText().equals("MEMBER") && !MemberDAO.selectMember(CacheStatic.cubeUser.getMail())) {
+                onProAction();
+            } else {
+                CubeUserDAO.modifyUser(txtNameUser.getText(), txtEmailUser.getText(), String.valueOf(role), CacheStatic.cubeUser.getMail());
+                if(CubeUserDAO.successfulModifyUser){
+                    CacheStatic.cubeUser.setMail(txtEmailUser.getText());
+                    // SI SE ACTUALIZO EL USUARIO, MOSTRAR UN MENSAJE DE EXITO
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Actualizacion de usuario");
+                    alert.setHeaderText("Actualizacion exitosa");
+                    alert.setContentText("Se ha actualizado el usuario correctamente.");
+                    alert.showAndWait();
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error al modificar usuario");
+                    alert.setHeaderText("Error");
+                    alert.setContentText("No se pudo modificar el usuario.");
+                    alert.showAndWait();
+                }
             }
         }
     }
@@ -358,7 +362,7 @@ public class SettingCtrller extends CodeGeneral implements Initializable {
     }
 
     @FXML
-    void onCubexProAction(ActionEvent event) {
+    void onCubexProAction() {
         startProPane.setVisible(true);
         cardNumberTxt.setStyle("-fx-prompt-text-fill: #1e3728; -fx-background-color: #6b9979;");
         fullNameTxt.setStyle("-fx-prompt-text-fill: #1e3728; -fx-background-color: #6b9979;");
@@ -367,7 +371,7 @@ public class SettingCtrller extends CodeGeneral implements Initializable {
     }
 
     @FXML
-    void onStartProAction(ActionEvent event) {
+    void onStartProAction() {
         if (cardNumberTxt.getText().isEmpty() || fullNameTxt.getText().isEmpty() || cvcTxt.getText().isEmpty()
                 || mmyyTxt.getText().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -389,21 +393,14 @@ public class SettingCtrller extends CodeGeneral implements Initializable {
         } else {
             invalidProLabel.setText("");
             CubeUserDAO.modifyPro(CacheStatic.cubeUser.getMail());
-            if (CubeUserDAO.successfulModifyProUser) {
+            MemberDAO.insertMember(MemberDAO.insertIdUser(CacheStatic.cubeUser.getMail()), localDate);
+            if (CubeUserDAO.successfulModifyProUser && MemberDAO.isMember) {
                 // SI SE ACTUALIZO EL USUARIO, MOSTRAR UN MENSAJE DE EXITO
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Actualizacion de usuario");
                 alert.setHeaderText("Actualizacion exitosa");
                 alert.setContentText("Se ha convertido en member correctamente.");
                 alert.showAndWait();
-                String nombreUsuario = CacheStatic.cubeUser.getNameUser(); // Obtener el nombre de usuario actual
-                String contraseña = CacheStatic.cubeUser.getPasswordUser(); // Obtener la contraseña del usuario actual
-                String correoElectronico = CacheStatic.cubeUser.getMail(); // Obtener el correo electrónico del usuario actual
-                LocalDate fechaActual = LocalDate.now(); // Obtener la fecha actual
-
-                // Llamar al método para insertar un nuevo miembro en la base de datos
-                MemberDAO.insertNewMember(nombreUsuario, contraseña, correoElectronico, fechaActual);
-
                 startProPane.setVisible(false);
             } else {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
