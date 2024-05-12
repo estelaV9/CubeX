@@ -9,12 +9,21 @@ public class Session {
     private int idUser;
     private String nameSession;
     private LocalDate registrationDate;
+    private int idType;
 
-
-    public Session(int idUser, String nameSession, LocalDate registrationDate) {
+    public Session(int idUser, String nameSession, LocalDate registrationDate, int idType) {
         this.idUser = idUser;
         this.nameSession = nameSession;
         this.registrationDate = registrationDate;
+        this.idType = idType;
+    }
+
+    public int getIdType() {
+        return idType;
+    }
+
+    public void setIdType(int idType) {
+        this.idType = idType;
     }
 
     public int getIdSession() {

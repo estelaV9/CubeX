@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
@@ -39,7 +39,7 @@
             </Button>
             <ScrollPane fx:id="scroll" hbarPolicy="NEVER" layoutX="384.0" layoutY="9.0" prefHeight="295.0" prefWidth="276.0" vbarPolicy="ALWAYS">
                <content>
-                  <AnchorPane fx:id="paneScroll" minHeight="0.0" minWidth="0.0" prefHeight="295.0" prefWidth="485.0" style="-fx-background-color: #325743;" />
+                  <AnchorPane fx:id="paneScroll" minHeight="0.0" minWidth="0.0" prefHeight="294.0" prefWidth="275.0" style="-fx-background-color: #325743;" />
                </content>
             </ScrollPane>
             <Pane fx:id="nameSession" layoutX="67.0" layoutY="33.0" prefHeight="248.0" prefWidth="256.0" style="-fx-background-color: #325743; -fx-background-radius: 24; -fx-border-color: black; -fx-border-radius: 24;">
@@ -75,15 +75,10 @@
                         <Font name="System Bold" size="21.0" />
                      </font>
                   </Label>
-                  <Label layoutX="24.0" layoutY="142.0" text="Method of cube">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                  </Label>
-                  <ChoiceBox fx:id="typeCube" layoutX="13.0" layoutY="112.0" prefHeight="25.0" prefWidth="235.0" style="-fx-background-color: #b1c8a3;" />
-                  <ChoiceBox fx:id="methodCube" layoutX="13.0" layoutY="163.0" prefHeight="25.0" prefWidth="235.0" style="-fx-background-color: #b1c8a3;" />
+                  <ComboBox fx:id="categoriesCB" layoutX="14.0" layoutY="113.0" prefHeight="26.0" prefWidth="235.0" style="-fx-background-color: #b1c8a3;" />
                </children>
             </Pane>
+            <Button layoutX="139.0" layoutY="282.0" mnemonicParsing="false" onAction="#onReloadAction" text="Button" />
          </children>
       </Pane>
       <Button layoutX="14.0" layoutY="309.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" prefHeight="50.0" prefWidth="72.0" style="-fx-background-color: #1e3728;" text="Button">
