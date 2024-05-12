@@ -17,6 +17,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.lang.invoke.StringConcatFactory;
+import java.security.PublicKey;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -30,6 +31,7 @@ public class CubeUserDAO {
     public static boolean successfulModifyUser = false;
     public static boolean successfulModifyProUser = false;
     public static boolean invalidLogin = false;
+    public static List<CubeUser> users = new ArrayList<>();
 
     public static void insertarUsuarios(String nameUser, String passwdUser, String mailUser, LocalDate registration) {
         String sqlInsert = "INSERT INTO cube_users (NAME_USER, PASSWORD_USER, MAIL, REGISTRATION_DATE) " +
@@ -180,9 +182,7 @@ public class CubeUserDAO {
         }
     }
 
-    public static List<CubeUser> listUser() {
-        List<CubeUser> users = new ArrayList<>();
-        // Obtenemos la conexión utilizando DatabaseManager
+    public static List<CubeUser> listUser(String option , String category) {
         try {
             Connection connection = DatabaseConnection.conectar();
             String sql = "SELECT NAME_USER, LEVEL_USER, ROLE_USER FROM CUBE_USERS";
@@ -196,9 +196,6 @@ public class CubeUserDAO {
                 CubeUser cubeUser = new CubeUser(nameUser, level, roleUser);
                 users.add(cubeUser);
 
-            }
-            for (CubeUser x : users) {
-                System.out.println(x);
             }
         } catch (SQLException e) {
             System.out.println("error " + e);

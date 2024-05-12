@@ -52,7 +52,6 @@ public class SessionCtrller extends CodeGeneral implements Initializable {
     @FXML void onAddSessionAction(ActionEvent event) {
         demoProfilePane.setVisible(false);
         nameSession.setVisible(true);
-        CubeUserDAO.listUser();
     }
     @FXML void onCreateSessionAction() {
         if(StartCtrller.isDemo) {
@@ -74,7 +73,7 @@ public class SessionCtrller extends CodeGeneral implements Initializable {
             newPane.setPrefWidth(220);
             newPane.setStyle("-fx-background-color:  #325743; -fx-background-radius: 24; -fx-border-color: black; -fx-border-radius: 24;");
 
-            // Agregar elementos al nuevo panel
+            // SE CREAN LOS ELEMENTOS
             Label createSessionLabel = new Label("NAME");
             createSessionLabel.setLayoutX(79);
             createSessionLabel.setLayoutY(8);
@@ -112,7 +111,7 @@ public class SessionCtrller extends CodeGeneral implements Initializable {
             delete.setStyle("-fx-background-color: #a82f2a; -fx-font-family: DejaVu Sans; -fx-font-weight: bold; -fx-font-size: 15px;");
 
 
-            // Agregar los elementos al nuevo panel
+            // SE AGREGAN TODOS AL NUEVO PANEL
             newPane.getChildren().addAll(
                     typeCubeLabel,
                     methodCubeLabel,
@@ -120,13 +119,13 @@ public class SessionCtrller extends CodeGeneral implements Initializable {
                     details, use, delete
             );
 
-            // Aumentar la posición Y para el próximo panel
-            nextPaneY += newPane.getPrefHeight() + 10; // 10 es el espacio entre paneles
+            // SE AUMENTA LA POSICION Y EN EL PROXIMO PANEL
+            nextPaneY += newPane.getPrefHeight() + 10;
 
-            // Agregar el nuevo panel al panel scrollable
+            // SE AGREGA EL NUEVO PANEL AL PANEL DEL SCROLLPANE
             paneScroll.getChildren().add(newPane);
 
-            // Si el nuevo panel está fuera del área visible, ajustar el tamaño del panel scrollable
+            // SI EL NUEVO PANEL ESTA FUERA DEL AREA VISIBLE, SE AJUSTA EL TAMAÑO DEL PANE DEL SCROLLPANE
             if (nextPaneY > paneScroll.getPrefHeight()) {
                 paneScroll.setPrefHeight(nextPaneY + 10); // 10 es el espacio adicional para evitar bordes cortados
             }

@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.image.Image?>
@@ -13,7 +15,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="740.0" style="-fx-background-color: #1e3728;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cubex.Controller.SettingCtrller">
+<AnchorPane prefHeight="400.0" prefWidth="740.0" style="-fx-background-color: #1e3728;" stylesheets="@Style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cubex.Controller.SettingCtrller">
    <children>
       <Pane fx:id="demoProfilePane" layoutX="303.0" layoutY="85.0" prefHeight="248.0" prefWidth="416.0">
          <children>
@@ -289,7 +291,7 @@
                   <Font name="DejaVu Sans Bold" size="17.0" />
                </font>
             </Button>
-            <Button fx:id="profileBtt" layoutX="10.0" layoutY="61.0" mnemonicParsing="false" onAction="#onProfileAction" prefHeight="31.0" prefWidth="251.0" style="-fx-background-color: #325743; -fx-background-radius: 100;" text="PROFILE">
+            <Button fx:id="profileBtt" layoutX="10.0" layoutY="61.0" mnemonicParsing="false" onAction="#onProfileSetAction" prefHeight="31.0" prefWidth="251.0" style="-fx-background-color: #325743; -fx-background-radius: 100;" text="PROFILE">
                <font>
                   <Font name="DejaVu Sans Bold" size="17.0" />
                </font>
@@ -315,6 +317,80 @@
                   <Font name="DejaVu Sans Bold" size="17.0" />
                </font>
             </Button>
+         </children>
+      </Pane>
+      <Pane fx:id="communityPane" layoutX="287.0" layoutY="11.0" prefHeight="375.0" prefWidth="434.0">
+         <children>
+            <Pane layoutY="99.0" prefHeight="276.0" prefWidth="434.0" style="-fx-background-color: #b1c8a3; -fx-background-radius: 5;">
+               <children>
+                  <Pane layoutY="8.0" prefHeight="268.0" prefWidth="434.0">
+                     <children>
+                        <Button fx:id="filterBtt" layoutX="386.0" mnemonicParsing="false" onAction="#onFilterAction" prefHeight="32.0" prefWidth="27.0" style="-fx-background-color: #74cc5e;">
+                           <font>
+                              <Font name="DejaVu Sans Bold" size="15.0" />
+                           </font>
+                           <graphic>
+                              <ImageView fitHeight="27.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@Imagen/filter.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <ComboBox fx:id="categoriesCB" layoutX="32.0" layoutY="8.0" prefHeight="26.0" prefWidth="164.0" style="-fx-background-color: #325743;" />
+                        <ScrollPane fx:id="scrollPane" hbarPolicy="NEVER" layoutX="32.0" layoutY="45.0" prefHeight="200.0" prefWidth="347.0">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="198.0" prefWidth="332.0" style="-fx-background-color: #325743;" />
+                           </content>
+                        </ScrollPane>
+                        <Pane fx:id="filterMenu" layoutX="110.0" layoutY="5.0" prefHeight="186.0" prefWidth="276.0" style="-fx-background-color: #204338; -fx-background-radius: 24;">
+                           <children>
+                              <Button fx:id="closeFiBtt" layoutX="13.0" layoutY="135.0" mnemonicParsing="false" onAction="#onCloseFilterAction" prefHeight="31.0" prefWidth="251.0" style="-fx-background-color: #6d7b64; -fx-background-radius: 100;" text="CLOSE">
+                                 <font>
+                                    <Font name="DejaVu Sans Bold" size="17.0" />
+                                 </font>
+                              </Button>
+                              <Button layoutX="13.0" layoutY="54.0" mnemonicParsing="false" onAction="#onAvgFilterAction" prefHeight="31.0" prefWidth="251.0" style="-fx-background-color: #325743; -fx-background-radius: 100;" text="BEST AVERAGE">
+                                 <font>
+                                    <Font name="DejaVu Sans Bold" size="17.0" />
+                                 </font>
+                              </Button>
+                              <Button layoutX="13.0" layoutY="14.0" mnemonicParsing="false" onAction="#onBestFilterAction" prefHeight="31.0" prefWidth="251.0" style="-fx-background-color: #325743; -fx-background-radius: 100;" text="BEST TIMES">
+                                 <font>
+                                    <Font name="DejaVu Sans Bold" size="17.0" />
+                                 </font>
+                              </Button>
+                              <Button layoutX="13.0" layoutY="94.0" mnemonicParsing="false" onAction="#onChampFilterAction" prefHeight="31.0" prefWidth="251.0" style="-fx-background-color: #325743; -fx-background-radius: 100;" text="BEST CHAMPIONS">
+                                 <font>
+                                    <Font name="DejaVu Sans Bold" size="17.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                        </Pane>
+                     </children>
+                  </Pane>
+               </children>
+            </Pane>
+            <Label layoutX="101.0" layoutY="14.0" styleClass="labelTitle" stylesheets="@Style.css" text="COMMUNITY" textFill="#6d7b64">
+               <font>
+                  <Font name="DejaVu Sans Bold" size="33.0" />
+               </font>
+            </Label>
+            <Button fx:id="userTops" layoutY="63.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="220.0" style="-fx-background-color: #325743; -fx-border-radius: 0;" text="USER TOPS">
+               <font>
+                  <Font name="DejaVu Sans Bold" size="18.0" />
+               </font>
+            </Button>
+            <Pane layoutX="215.0" layoutY="62.0" prefHeight="46.0" prefWidth="220.0" style="-fx-background-color: #325743;">
+               <children>
+                  <TextField layoutX="50.0" layoutY="7.0" prefHeight="32.0" prefWidth="152.0" promptText="SEARCH FOR USERNAME" style="-fx-background-color: #6d7b64;" />
+                  <ImageView fitHeight="46.0" fitWidth="50.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@Imagen/searchIcon.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
          </children>
       </Pane>
    </children>

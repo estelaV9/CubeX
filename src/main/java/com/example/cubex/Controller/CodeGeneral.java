@@ -58,6 +58,8 @@ public class CodeGeneral implements Initializable {
     public Pane demoProfilePane;
     @FXML
     public Pane profilePage;
+    @FXML
+    public Pane communityPane;
 
 
     // ATRIBUTOS SEMAFOROS PARA ABRIR Y CERRAR DESDE EL MISMO BOTON
@@ -273,7 +275,7 @@ public class CodeGeneral implements Initializable {
         categoriesCB.setStyle("-fx-background-color: #325743; -fx-text-fill: red;");
 
         // METER EN UN ARRAYLIST LAS CATEGORIAS
-        /*Connection connection = DatabaseConnection.conectar();
+        Connection connection = DatabaseConnection.conectar();
         try {
             String sqlCount = "SELECT COUNT(ID_TYPE) FROM CUBE_TYPE";
             PreparedStatement statement1 = connection.prepareStatement(sqlCount);
@@ -293,7 +295,7 @@ public class CodeGeneral implements Initializable {
             categoriesCB.getItems().addAll(categories);
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        }*/
+        }
     } // METER LAS CATEGORIAS DE LOS CUBOS EN UN ARRAYLIST
 
     public static void start(Label chrono) {

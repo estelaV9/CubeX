@@ -17,8 +17,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import javax.swing.*;
@@ -31,6 +34,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
+import javafx.geometry.Insets;
 
 public class SettingCtrller extends CodeGeneral implements Initializable {
     @FXML
@@ -107,6 +111,213 @@ public class SettingCtrller extends CodeGeneral implements Initializable {
 
     @FXML
     private Pane startProPane;
+
+    @FXML
+    private ComboBox<?> categoriesCB;
+
+    @FXML
+    private Button closeFiBtt;
+
+    @FXML
+    public Pane communityPane;
+
+    @FXML
+    private Button expFilterBtt;
+
+    @FXML
+    private Button filterBtt;
+    @FXML
+    private Button userTops;
+
+    @FXML
+    private Pane filterMenu;
+    static boolean pulsarFilter;
+
+    @FXML
+    private ScrollPane scrollPane;
+
+    @FXML
+    void onAvgFilterAction(ActionEvent event) {
+        onCloseFilterAction();
+        String category = String.valueOf(categoriesCB.getSelectionModel().getSelectedItem());
+        int contador = 0;
+        CubeUserDAO.users = CubeUserDAO.listUser("average", category);
+
+        // SE CREAN 4 VBOX PARA CADA COLUMNS
+        VBox vbox1 = new VBox();
+        VBox vbox2 = new VBox();
+        VBox vbox3 = new VBox();
+        VBox vbox4 = new VBox();
+
+
+        //ESPACIO VERTICAL ENTRE LOS ELEMENTOS DE LAS COLUMNAS
+        vbox1.setSpacing(10);
+        vbox2.setSpacing(10);
+        vbox3.setSpacing(10);
+        vbox4.setSpacing(10);
+
+        // ITERAR SOBRE LA LISTA DE USUARIOS Y CREAR UN LABEL POR CADA UNO
+        for (CubeUser user : CubeUserDAO.users) {
+            contador++;
+            // SE CREA UN LABEL POR CADA COLUMNA
+            Label label1 = new Label(String.valueOf(contador));
+            Label label2 = new Label(user.getNameUser());
+            Label label3 = new Label(String.valueOf(user.getLevelUser()));
+            Label label4 = new Label(String.valueOf(user.getRoleUser()));
+
+            // SE LES DA UN ESTILO
+            label1.setStyle("-fx-font-size: 17px; -fx-text-fill: black;");
+            label2.setStyle("-fx-font-size: 17px; -fx-text-fill: black;");
+            label3.setStyle("-fx-font-size: 17px; -fx-text-fill: black;");
+            label4.setStyle("-fx-font-size: 17px; -fx-text-fill: black;");
+
+            // SE AGREGAN LOS LABELS A LAS COLUMNAS CORRESPONDIENTES
+            vbox1.getChildren().add(label1);
+            vbox2.getChildren().add(label2);
+            vbox3.getChildren().add(label3);
+            vbox4.getChildren().add(label4);
+        }
+
+        // SE CREAN UN HBOX QUE CONTENGAN LAS 4 COLUMNAS
+        HBox hbox = new HBox(vbox1, vbox2, vbox3, vbox4);
+        hbox.setSpacing(20); // ESPACIO HORIZONTAL ENTRE LAS COLUMNAS
+        hbox.setStyle("-fx-background-color :  #325743");
+
+
+        // SE AGREGA EL HBOX AL SCROLLPANE
+        scrollPane.setContent(hbox);
+        scrollPane.setFitToWidth(true);
+    }
+
+    @FXML
+    void onBestFilterAction(ActionEvent event) {
+        onCloseFilterAction();
+        String category = String.valueOf(categoriesCB.getSelectionModel().getSelectedItem());
+        int contador = 0;
+        CubeUserDAO.users = CubeUserDAO.listUser("average", category);
+
+        // SE CREAN 4 VBOX PARA CADA COLUMNS
+        VBox vbox1 = new VBox();
+        VBox vbox2 = new VBox();
+        VBox vbox3 = new VBox();
+        VBox vbox4 = new VBox();
+
+
+        //ESPACIO VERTICAL ENTRE LOS ELEMENTOS DE LAS COLUMNAS
+        vbox1.setSpacing(10);
+        vbox2.setSpacing(10);
+        vbox3.setSpacing(10);
+        vbox4.setSpacing(10);
+
+        // ITERAR SOBRE LA LISTA DE USUARIOS Y CREAR UN LABEL POR CADA UNO
+        for (CubeUser user : CubeUserDAO.users) {
+            contador++;
+            // SE CREA UN LABEL POR CADA COLUMNA
+            Label label1 = new Label(String.valueOf(contador));
+            Label label2 = new Label(user.getNameUser());
+            Label label3 = new Label(String.valueOf(user.getLevelUser()));
+            Label label4 = new Label(String.valueOf(user.getRoleUser()));
+
+            // SE LES DA UN ESTILO
+            label1.setStyle("-fx-font-size: 17px; -fx-text-fill: black;");
+            label2.setStyle("-fx-font-size: 17px; -fx-text-fill: black;");
+            label3.setStyle("-fx-font-size: 17px; -fx-text-fill: black;");
+            label4.setStyle("-fx-font-size: 17px; -fx-text-fill: black;");
+
+            // SE AGREGAN LOS LABELS A LAS COLUMNAS CORRESPONDIENTES
+            vbox1.getChildren().add(label1);
+            vbox2.getChildren().add(label2);
+            vbox3.getChildren().add(label3);
+            vbox4.getChildren().add(label4);
+        }
+
+        // SE CREAN UN HBOX QUE CONTENGAN LAS 4 COLUMNAS
+        HBox hbox = new HBox(vbox1, vbox2, vbox3, vbox4);
+        hbox.setSpacing(20); // ESPACIO HORIZONTAL ENTRE LAS COLUMNAS
+        hbox.setStyle("-fx-background-color :  #325743");
+
+
+        // SE AGREGA EL HBOX AL SCROLLPANE
+        scrollPane.setContent(hbox);
+        scrollPane.setFitToWidth(true);
+    } // FILTRAR POR MEJOR
+
+    @FXML
+    void onCloseFilterAction() {
+        filterMenu.setVisible(false);
+    } // CERRAR EL MENU DE FILTROS
+
+    @FXML
+    void onChampFilterAction(ActionEvent event) {
+        onCloseFilterAction();
+        String category = String.valueOf(categoriesCB.getSelectionModel().getSelectedItem());
+        int contador = 0;
+        CubeUserDAO.users = CubeUserDAO.listUser("average", category);
+
+        // SE CREAN 4 VBOX PARA CADA COLUMNS
+        VBox vbox1 = new VBox();
+        VBox vbox2 = new VBox();
+        VBox vbox3 = new VBox();
+        VBox vbox4 = new VBox();
+
+
+        //ESPACIO VERTICAL ENTRE LOS ELEMENTOS DE LAS COLUMNAS
+        vbox1.setSpacing(10);
+        vbox2.setSpacing(10);
+        vbox3.setSpacing(10);
+        vbox4.setSpacing(10);
+
+        // ITERAR SOBRE LA LISTA DE USUARIOS Y CREAR UN LABEL POR CADA UNO
+        for (CubeUser user : CubeUserDAO.users) {
+            contador++;
+            // SE CREA UN LABEL POR CADA COLUMNA
+            Label label1 = new Label(String.valueOf(contador));
+            Label label2 = new Label(user.getNameUser());
+            Label label3 = new Label(String.valueOf(user.getLevelUser()));
+            Label label4 = new Label(String.valueOf(user.getRoleUser()));
+
+            // SE LES DA UN ESTILO
+            label1.setStyle("-fx-font-size: 17px; -fx-text-fill: black;");
+            label2.setStyle("-fx-font-size: 17px; -fx-text-fill: black;");
+            label3.setStyle("-fx-font-size: 17px; -fx-text-fill: black;");
+            label4.setStyle("-fx-font-size: 17px; -fx-text-fill: black;");
+
+            // SE AGREGAN LOS LABELS A LAS COLUMNAS CORRESPONDIENTES
+            vbox1.getChildren().add(label1);
+            vbox2.getChildren().add(label2);
+            vbox3.getChildren().add(label3);
+            vbox4.getChildren().add(label4);
+        }
+
+        // SE CREAN UN HBOX QUE CONTENGAN LAS 4 COLUMNAS
+        HBox hbox = new HBox(vbox1, vbox2, vbox3, vbox4);
+        hbox.setSpacing(20); // ESPACIO HORIZONTAL ENTRE LAS COLUMNAS
+        hbox.setStyle("-fx-background-color :  #325743");
+
+
+        // SE AGREGA EL HBOX AL SCROLLPANE
+        scrollPane.setContent(hbox);
+        scrollPane.setFitToWidth(true);
+    } // FILTRAR POR CAMPEONATO
+
+    @FXML
+    void onFilterAction(ActionEvent event) {
+        if(!pulsarFilter){
+            filterMenu.setVisible(true);
+            pulsarFilter = true;
+        } else {
+            onCloseFilterAction();
+            pulsarFilter = false;
+        }
+    }
+
+
+
+
+
+
+
+
     @FXML
     private Label invalidProLabel;
     LocalDate localDate = LocalDate.now();
@@ -152,17 +363,21 @@ public class SettingCtrller extends CodeGeneral implements Initializable {
         if (StartCtrller.isDemo) {
             demoProfilePane.setVisible(true);
         } else {
-
+            communityPane.setVisible(true);
+            accountPane.setVisible(false);
+            filterMenu.setVisible(false);
+            userTops.setStyle("-fx-background-color: #b1c8a3;");
         }
     }
 
     @FXML
-    void onProfileAction() {
+    void onProfileSetAction() {
         if (StartCtrller.isDemo) {
             demoProfilePane.setVisible(true);
             accountPane.setVisible(false);
+            communityPane.setVisible(false);
         } else {
-            System.out.println(accountTitle);
+            communityPane.setVisible(false);
             accountTitle.setStyle("-fx-fill: red;"); // -fx-stroke: black; -fx-stroke-width: 2px;");
             demoProfilePane.setVisible(false);
             accountPane.setVisible(true);
@@ -440,7 +655,9 @@ public class SettingCtrller extends CodeGeneral implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         demoProfilePane.setVisible(false);
         accountPane.setVisible(false);
-        onProfileAction();
+        communityPane.setVisible(false);
+        onProfileSetAction();
+        CodeGeneral.cubeCategory(categoriesCB);
     }
 
 }
