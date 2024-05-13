@@ -78,7 +78,14 @@
                   <ComboBox fx:id="categoriesCB" layoutX="14.0" layoutY="113.0" prefHeight="26.0" prefWidth="235.0" style="-fx-background-color: #b1c8a3;" />
                </children>
             </Pane>
-            <Button layoutX="139.0" layoutY="282.0" mnemonicParsing="false" onAction="#onReloadAction" text="Button" />
+            <Button fx:id="reloadBtt" layoutX="337.0" layoutY="9.0" mnemonicParsing="false" onAction="#onReloadAction" prefHeight="39.0" prefWidth="36.0" style="-fx-background-color: #325743;">
+               <graphic>
+                  <ImageView fitHeight="34.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@Imagen/reload.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
          </children>
       </Pane>
       <Button layoutX="14.0" layoutY="309.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" prefHeight="50.0" prefWidth="72.0" style="-fx-background-color: #1e3728;" text="Button">

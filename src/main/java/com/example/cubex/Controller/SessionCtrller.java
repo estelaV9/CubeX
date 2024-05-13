@@ -13,6 +13,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 
+import javax.print.attribute.standard.PrinterName;
 import javax.swing.*;
 import java.net.URL;
 import java.sql.Connection;
@@ -29,6 +30,8 @@ public class SessionCtrller extends CodeGeneral implements Initializable {
     private Button cancelSessionBtt;
     @FXML
     private Button createSessionBtt;
+    @FXML
+    private Button reloadBtt;
     @FXML
     private Pane nameSession;
     @FXML
@@ -47,7 +50,7 @@ public class SessionCtrller extends CodeGeneral implements Initializable {
     private double nextPaneY = 10; // Posición Y del próximo panel
     private static int contadorCreate = 0; // CONTADOR PARA VER CUANTAS VECES CREA UNA SESION EL USUARIO DEMO
     LocalDate localDate = LocalDate.now();
-    String category;
+    String category, sessionToDelete;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -59,6 +62,9 @@ public class SessionCtrller extends CodeGeneral implements Initializable {
         if(!StartCtrller.isDemo){
             // SI NO ES UN USUARIO DEMO, SE CARGAN LAS SESIONES DEL USUARIO
             loadSession();
+            reloadBtt.setVisible(true);
+        } else {
+            reloadBtt.setVisible(false);
         }
     }
 
@@ -111,11 +117,9 @@ public class SessionCtrller extends CodeGeneral implements Initializable {
 
     } // CREAR LAS SESIONES CON UN PANEL DE SESION
 
-    Pane newPane;
-    Label createSessionLabel;
 
     public Pane createSessions(String sessionName, String category) {
-        newPane = new Pane();
+        Pane newPane = new Pane();
         newPane.setLayoutX(10); // ESPACIADO HORIZONTAL
         newPane.setLayoutY(nextPaneY);
         // TAMANIO DEL PANEL
@@ -124,7 +128,7 @@ public class SessionCtrller extends CodeGeneral implements Initializable {
         newPane.setStyle("-fx-background-color:  #325743; -fx-background-radius: 24; -fx-border-color: black; -fx-border-radius: 24;");
 
         // SE CREAN LOS ELEMENTOS
-        createSessionLabel = new Label(sessionName);
+        Label createSessionLabel = new Label(sessionName);
         createSessionLabel.setLayoutX(79);
         createSessionLabel.setLayoutY(8);
         createSessionLabel.setStyle("-fx-underline: true; -fx-font-family: DejaVu Sans; -fx-font-weight: bold; -fx-font-size: 21px;");
@@ -170,9 +174,18 @@ public class SessionCtrller extends CodeGeneral implements Initializable {
         delete.setPrefHeight(31);
         delete.setStyle("-fx-background-color: #a82f2a; -fx-font-family: DejaVu Sans; -fx-font-weight: bold; -fx-font-size: 15px;");
 
+        // PARA PODER ELIMINAR DE LA BASE DE DATOS LA SESION, PRIMERO SE LE ASIGNA EL NOMBRE DE LA SESION A USERDATA
+        // USERDATA ES UNA PROPIEDAD QUE PERMITE ADJUNTAR CUALQUIER OBJETO A UN NODO, EN ESTE CASO, EL BOTON DELETE AL LABEL
+        // QUE CONTIENE EL NOMBRE DE LA SESSION
+        // COMO ESTOY CREANDO UN BOTON POR CADA SESION Y EL METODO setUserData SE LLAMA DENTRO DE ESTE CICLO, CADA BOTON DELETE
+        // TENDRA ASOCIADO UN NOMBRE DE LA SESION YA QUE CADA INSTANCIA DEL BOTON ES INDEPENDIENTE Y ASI NO SE SOBREESCRIBEN VALORES
+        delete.setUserData(sessionName);
 
         delete.setOnAction(event -> {
-            onDeleteSession(createSessionLabel.getText());
+            // OBTENER EL NODO QUE DISPARO EL EBVENTO, SE OBTIENE LE VALOR USERDATA, RECUPERANDO ASI EL NOMBRE DE LA SESION
+            // PARA SABER QUE SESION ELIMINAR
+            sessionToDelete = (String) ((Button) event.getSource()).getUserData();
+            onDeleteSession(sessionToDelete); // LLAMAR AL METODO PARA ELIMINARLO
             Button deleteButton = (Button) event.getSource(); // OBTENER EL BOTON DELETE QUE ACTIVO EL EVENTO
             Pane sessionPane = (Pane) deleteButton.getParent(); // OBTENER EL PANEL DE SESION QUE CONTIENE EL BOTON DELETE
             paneScroll.getChildren().remove(sessionPane);
