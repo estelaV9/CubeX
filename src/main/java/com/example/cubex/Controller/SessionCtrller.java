@@ -6,6 +6,8 @@ import com.example.cubex.model.CacheStatic;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.print.PageOrientation;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -47,7 +49,8 @@ public class SessionCtrller extends CodeGeneral implements Initializable {
     private ComboBox categoriesCB;
     @FXML
     private ScrollPane scroll;
-    private double nextPaneY = 10; // Posición Y del próximo panel
+    private double nextPaneY = 10; // POSICION Y DEL PROXIMO PANEL
+    double newHeight = 0; // NUEVA POSICION Y SI SE ELIMINA ALGUN PANEL
     private static int contadorCreate = 0; // CONTADOR PARA VER CUANTAS VECES CREA UNA SESION EL USUARIO DEMO
     LocalDate localDate = LocalDate.now();
     String category, sessionToDelete;
@@ -204,7 +207,7 @@ public class SessionCtrller extends CodeGeneral implements Initializable {
 
         // SI EL NUEVO PANEL ESTA FUERA DEL AREA VISIBLE, SE AJUSTA EL TAMAÑO DEL PANE DEL SCROLLPANE
         if (nextPaneY > paneScroll.getPrefHeight()) {
-            paneScroll.setPrefHeight(nextPaneY + 10); // 10 es el espacio adicional para evitar bordes cortados
+            paneScroll.setPrefHeight(nextPaneY + 10); // ESPACIO ADIVIONAL PRA EVITAR BORDES CORTADOS
         }
         return newPane;
     } // CREAR UN NUEVO PANEL DE SESSION
@@ -246,7 +249,6 @@ public class SessionCtrller extends CodeGeneral implements Initializable {
                 contadorCreate = 0;
             } else {
                 if (SessionDAO.deleteSession(nameSession)) {
-                    System.out.println(nameSession);
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Sesion eliminada.");
                     alert.setHeaderText("Eliminación exitosa");
@@ -277,6 +279,18 @@ public class SessionCtrller extends CodeGeneral implements Initializable {
     void onReloadAction(ActionEvent event) {
         paneScroll.getChildren().clear();
         nextPaneY = 10;
+        // PARA DARLE UNA ALTURA NUEVA Y QEU NO QEUDE EL ESPACIO DEL PANEL ELIMINADO :
+        // SE RECORRE LA LISTA DE NODOS QUE TIENE EL PANE SCROLL, COMO YA NO TIENE EL PANEL ELIMINADO, ENTONCES NO
+        // VA A CONTAR LA ALTURA DE ESE PANEL, ENTONCES QUEDARIA LA ALTURA DE SOLO LOS PANELES DE SESIONES QEU NO
+        // ESTAN ELIMINADOS
+        for (Node child : paneScroll.getChildren()) {
+            // POR CADA HIJO SE VERIFICA SI ES UNA INSTANCIA DEL PANEL
+            if (child instanceof Pane) {
+                // SI EL NODO ES UN HIJO , SE OBTIENE SU ALTURA Y SE LE SUMA A LA NUEVA ALTURA CON UN ESPACIO ADICIONAL
+                newHeight += ((Pane) child).getPrefHeight() + 10; // 10 es el espacio adicional entre paneles
+            }
+        }
+        paneScroll.setPrefHeight(newHeight); // SE ESTABLECE LA NUEVA ALTURA
         loadSession();
     } // ACTUALIZAR SESIONES (POR SI HA BORRADO NO TENER UN HUECO VACIO
 
