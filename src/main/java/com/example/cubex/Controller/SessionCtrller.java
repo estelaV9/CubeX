@@ -52,6 +52,7 @@ public class SessionCtrller extends CodeGeneral implements Initializable {
     private double nextPaneY = 10; // POSICION Y DEL PROXIMO PANEL
     double newHeight = 0; // NUEVA POSICION Y SI SE ELIMINA ALGUN PANEL
     private static int contadorCreate = 0; // CONTADOR PARA VER CUANTAS VECES CREA UNA SESION EL USUARIO DEMO
+
     LocalDate localDate = LocalDate.now();
     String category, sessionToDelete;
 
@@ -62,12 +63,9 @@ public class SessionCtrller extends CodeGeneral implements Initializable {
         sessionName.setStyle("-fx-prompt-text-fill: #9B9B9B; -fx-background-color: #b1c8a3;");
         paneScroll.prefWidth(50);
         CodeGeneral.cubeCategory(categoriesCB);
-        if(!StartCtrller.isDemo){
+        if(!StartCtrller.isDemo) {
             // SI NO ES UN USUARIO DEMO, SE CARGAN LAS SESIONES DEL USUARIO
             loadSession();
-            reloadBtt.setVisible(true);
-        } else {
-            reloadBtt.setVisible(false);
         }
     }
 
@@ -191,7 +189,8 @@ public class SessionCtrller extends CodeGeneral implements Initializable {
             onDeleteSession(sessionToDelete); // LLAMAR AL METODO PARA ELIMINARLO
             Button deleteButton = (Button) event.getSource(); // OBTENER EL BOTON DELETE QUE ACTIVO EL EVENTO
             Pane sessionPane = (Pane) deleteButton.getParent(); // OBTENER EL PANEL DE SESION QUE CONTIENE EL BOTON DELETE
-            paneScroll.getChildren().remove(sessionPane);
+            paneScroll.getChildren().remove(sessionPane); // SE ELIMINA
+            onReloadAction(); // CUANDO SE ELIMINA SE ACTUALIZA LAS SESIONES
         }); // ELIMINAR EL PANEL DEL SCROLLPANE
 
 
@@ -276,9 +275,22 @@ public class SessionCtrller extends CodeGeneral implements Initializable {
     } // CANCELAR SESSION
 
     @FXML
-    void onReloadAction(ActionEvent event) {
-        paneScroll.getChildren().clear();
-        nextPaneY = 10;
+    void onReloadAction() {
+        if(!StartCtrller.isDemo){
+            loadSession();
+        }
+            paneScroll.setStyle("-fx-background-color :  #325743");
+            nextPaneY = 10;
+            paneScroll.setPrefHeight(alturaPanel()); // SE ESTABLECE LA NUEVA ALTURA
+
+
+    } // ACTUALIZAR SESIONES (POR SI HA BORRADO NO TENER UN HUECO VACIO
+
+    public double alturaPanel(){
+        boolean isPanel = false;
+        int contadorPanels = 0; // SI HAY SOLO UN PANEL SE HACE EL PANEL Y UN POCO DE LO QUE QUEDA
+        double restoEntrePanel = 0; // SI HAY UN PANEL, SE COGE LA ALTURA DE ESE PANEL MAS LA RESTA ENTRE
+                                    // EL TOTAL DEL PANEL PRINCIPAL Y LA ALTURA DEL PANEL DE SESSION
         // PARA DARLE UNA ALTURA NUEVA Y QEU NO QEUDE EL ESPACIO DEL PANEL ELIMINADO :
         // SE RECORRE LA LISTA DE NODOS QUE TIENE EL PANE SCROLL, COMO YA NO TIENE EL PANEL ELIMINADO, ENTONCES NO
         // VA A CONTAR LA ALTURA DE ESE PANEL, ENTONCES QUEDARIA LA ALTURA DE SOLO LOS PANELES DE SESIONES QEU NO
@@ -288,11 +300,21 @@ public class SessionCtrller extends CodeGeneral implements Initializable {
             if (child instanceof Pane) {
                 // SI EL NODO ES UN HIJO , SE OBTIENE SU ALTURA Y SE LE SUMA A LA NUEVA ALTURA CON UN ESPACIO ADICIONAL
                 newHeight += ((Pane) child).getPrefHeight() + 10; // 10 es el espacio adicional entre paneles
+                isPanel = true;
+                contadorPanels++;
             }
         }
-        paneScroll.setPrefHeight(newHeight); // SE ESTABLECE LA NUEVA ALTURA
-        loadSession();
-    } // ACTUALIZAR SESIONES (POR SI HA BORRADO NO TENER UN HUECO VACIO
+
+        if(isPanel && contadorPanels == 1){
+            restoEntrePanel = 294 - newHeight;
+            return newHeight + restoEntrePanel;
+        } else if (isPanel && contadorPanels > 1){
+            return newHeight;
+        }else {
+            return 294; // SI NO HAY NINGUN PANEL SE QUEDA EL TAMAÑO ESTANDAR
+        }
+
+    }
 
 
 

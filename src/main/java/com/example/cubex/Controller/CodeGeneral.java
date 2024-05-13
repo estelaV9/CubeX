@@ -26,10 +26,7 @@ import javafx.util.Duration;
 import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -45,6 +42,7 @@ public class CodeGeneral implements Initializable {
     @FXML public Pane optionMenu;
     @FXML public Button profileBtt;
     @FXML public TextField scramblePane;
+    @FXML public Label scrambleLabel;
     @FXML public Button sessionBtt;
     @FXML public Pane settingMenu;
     @FXML public Button settingsBtt;
@@ -326,6 +324,9 @@ public class CodeGeneral implements Initializable {
         }
     } // METER LAS CATEGORIAS DE LOS CUBOS EN UN ARRAYLIST
 
+
+    private static Timeline timeline1;
+    private static Timeline timeline2;
     public static void start(Label chrono) {
         timeline = new Timeline(new KeyFrame(Duration.millis(10), event1 -> {
             cent++;
@@ -355,12 +356,22 @@ public class CodeGeneral implements Initializable {
         }));
         timeline.setCycleCount(Timeline.INDEFINITE); // DE TIEMPO INDEFINIDO
         timeline.play(); // COMENZAMOS NUESTRO TIMELINE
+
+        // Asignar la timeline al Label correspondiente
+        if (chrono.getId().equals("chrono1Label")) {
+            timeline1 = timeline;
+        } else if (chrono.getId().equals("chrono2Label")) {
+            timeline2 = timeline;
+        }
     }
 
-    public static void parar() throws SQLException {
-        timeline.stop();
-
-
+    public static void parar(Label chrono) {
+        // Detener la Timeline asociada al Label proporcionado
+        if (chrono.getId().equals("chrono1Label") && timeline1 != null) {
+            timeline1.stop();
+        } else if (chrono.getId().equals("chrono2Label") && timeline2 != null) {
+            timeline2.stop();
+        }
     }
 
     public static void onFalseMenus

@@ -47,17 +47,15 @@ public class PageCtrller extends CodeGeneral implements Initializable {
     }
 
     @FXML
-    void parar(ActionEvent event) throws SQLException {
-        CodeGeneral.parar();
+    void parar(ActionEvent event) {
+        CodeGeneral.parar(chrono1);
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         closeBtt.setVisible(false);
         CodeGeneral.onFalseMenus(demoProfilePane, profilePage, settingMenu, optionMenu, optionDemoPane, timesMenu);
-        scramblePane.setText(CodeGeneral.scramble());
+        scrambleLabel.setText(CodeGeneral.scramble());
         CodeGeneral.cubeCategory(categoriesCB);
-        chrono1.setText("0:00,00");
-        chrono1.setStyle("-fx-font-size: 45px; -fx-padding: 5px; ");
     }
 }

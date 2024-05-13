@@ -20,9 +20,6 @@
       </ImageView>
       <Pane layoutX="36.0" layoutY="70.0" prefHeight="312.0" prefWidth="674.0" style="-fx-background-color: #325743; -fx-background-radius: 24;">
          <children>
-            <!-- //cuando el foco este en timer se activa el evento y el metodo para saber que tecla se ha presionado -->
-
-            <TextField fx:id="scramblePane" editable="false" layoutX="40.0" layoutY="24.0" prefHeight="99.0" prefWidth="563.0" style="-fx-background-color: #b1c8a3; -fx-alignment: center;  -fx-font-size: 20px;" />
             <Button fx:id="openBtt" layoutX="627.0" layoutY="270.0" mnemonicParsing="false" onAction="#onOpenMenuAction" style="-fx-background-color: #325743; -fx-background-radius: 100;">
                <graphic>
                   <ImageView fitHeight="34.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
@@ -42,33 +39,49 @@
                </graphic>
 
             </Button>
-            <TextField fx:id="chrono2Pane" editable="false" layoutX="375.0" layoutY="156.0" prefHeight="99.0" prefWidth="200.0" style="-fx-background-color: #b1c8a3;" />
-            <TextField fx:id="chrono1Pane" editable="false" layoutX="67.0" layoutY="156.0" prefHeight="99.0" prefWidth="200.0" style="-fx-background-color: #b1c8a3;" />
-            <Label layoutX="301.0" layoutY="183.0" text="VS">
+            <Label layoutX="304.0" layoutY="191.0" text="VS">
                <font>
                   <Font size="30.0" />
                </font>
             </Label>
-            <TextField fx:id="cuber1Txt" layoutX="93.0" layoutY="263.0" style="-fx-background-color: #b1c8a3;" />
-            <TextField fx:id="cuber2Txt" layoutX="400.0" layoutY="263.0" style="-fx-background-color: #b1c8a3;" />
-            <Label fx:id="chrono1Label" layoutX="93.0" layoutY="170.0" prefHeight="53.0" prefWidth="164.0">
+            <TextField fx:id="cuber1Txt" layoutX="93.0" layoutY="144.0" style="-fx-background-color: #b1c8a3;" />
+            <TextField fx:id="cuber2Txt" layoutX="400.0" layoutY="144.0" style="-fx-background-color: #b1c8a3;" />
+            <Label fx:id="chrono2Label" alignment="CENTER" contentDisplay="CENTER" layoutX="381.0" layoutY="177.0" prefHeight="72.0" prefWidth="186.0" style="-fx-background-color: #b1c8a3; -fx-background-radius: 5;">
                <font>
-                  <Font size="36.0" />
+                  <Font size="45.0" />
                </font>
             </Label>
-            <Label fx:id="chrono2Label" layoutX="400.0" layoutY="170.0" prefHeight="44.0" prefWidth="164.0">
+            <Label fx:id="chrono1Label" alignment="CENTER" contentDisplay="CENTER" layoutX="74.0" layoutY="177.0" prefHeight="72.0" prefWidth="186.0" style="-fx-background-color: #b1c8a3; -fx-background-radius: 5;">
                <font>
-                  <Font size="36.0" />
+                  <Font size="45.0" />
                </font>
             </Label>
-            <Pane fx:id="timesMenu" layoutX="386.0" layoutY="93.0" prefHeight="182.0" prefWidth="276.0" style="-fx-background-color: #204338; -fx-background-radius: 24;">
+            <Label fx:id="scrambleLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="40.0" layoutY="24.0" prefHeight="99.0" prefWidth="563.0" style="-fx-background-color: #b1c8a3; -fx-background-radius: 5;" textAlignment="CENTER">
+               <font>
+                  <Font size="28.0" />
+               </font>
+            </Label>
+            <Button layoutX="279.0" layoutY="260.0" mnemonicParsing="false" onAction="#onStartCuberAction" prefHeight="39.0" prefWidth="82.0" style="-fx-background-color: #6d7b64; -fx-background-radius: 20;" text="START">
+               <font>
+                  <Font name="DejaVu Sans Bold" size="15.0" />
+               </font>
+            </Button>
+            <Button layoutX="126.0" layoutY="260.0" mnemonicParsing="false" onAction="#onStopCuber1Action" prefHeight="39.0" prefWidth="82.0" style="-fx-background-color: #6d7b64; -fx-background-radius: 20;" text="STOP">
+               <font>
+                  <Font name="DejaVu Sans Bold" size="15.0" />
+               </font>
+            </Button>
+            <Button layoutX="433.0" layoutY="260.0" mnemonicParsing="false" onAction="#onStopCuber2Action" prefHeight="39.0" prefWidth="82.0" style="-fx-background-color: #6d7b64; -fx-background-radius: 20;" text="STOP">
+               <font>
+                  <Font name="DejaVu Sans Bold" size="15.0" />
+               </font>
+            </Button>
+            <Pane fx:id="timesMenu" layoutX="386.0" layoutY="92.0" prefHeight="182.0" prefWidth="276.0" style="-fx-background-color: #204338; -fx-background-radius: 24;">
                <children>
                   <TextField fx:id="times1Pane" layoutX="14.0" layoutY="9.0" prefHeight="164.0" prefWidth="122.0" style="-fx-background-color: #325743;" />
                   <TextField fx:id="times2Pane" layoutX="140.0" layoutY="9.0" prefHeight="164.0" prefWidth="122.0" style="-fx-background-color: #325743;" />
                </children>
             </Pane>
-            <Button layoutX="330.0" layoutY="263.0" mnemonicParsing="false" onAction="#parar" text="STOP" />
-            <Button layoutX="255.0" layoutY="267.0" mnemonicParsing="false" onAction="#start" text="START" />
          </children>
       </Pane>
       <Button layoutX="656.0" layoutY="84.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="72.0" style="-fx-background-color: #1e3728;" text="Button">

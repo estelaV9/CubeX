@@ -182,7 +182,7 @@ public class CubeUserDAO {
         }
     }
 
-    public static List<CubeUser> listUser(String option , String category) {
+    public static List<CubeUser> listUser(String option, String category) {
         try {
             Connection connection = DatabaseConnection.conectar();
             String sql = "SELECT NAME_USER, LEVEL_USER, ROLE_USER FROM CUBE_USERS";

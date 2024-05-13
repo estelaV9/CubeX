@@ -20,13 +20,6 @@
       </ImageView>
       <Pane layoutX="36.0" layoutY="70.0" prefHeight="312.0" prefWidth="674.0" style="-fx-background-color: #325743; -fx-background-radius: 24;">
          <children>
-            <!-- //cuando el foco este en timer se activa el evento y el metodo para saber que tecla se ha presionado -->
-
-            <TextField fx:id="scramblePane" editable="false" layoutX="40.0" layoutY="24.0" prefHeight="99.0" prefWidth="563.0" style="-fx-background-color: #b1c8a3; -fx-alignment: center;  -fx-font-size: 20px;" />
-            <TextField fx:id="chronoPane" editable="false" layoutX="197.0" layoutY="158.0" prefHeight="99.0" prefWidth="247.0" style="-fx-background-color: #b1c8a3;">
-               <font>
-                  <Font name="DejaVu Sans Bold" size="24.0" />
-               </font></TextField>
             <Button fx:id="openBtt" layoutX="627.0" layoutY="270.0" mnemonicParsing="false" onAction="#onOpenMenuAction" style="-fx-background-color: #325743; -fx-background-radius: 100;">
                <graphic>
                   <ImageView fitHeight="34.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
@@ -46,12 +39,22 @@
                </graphic>
 
             </Button>
-            <Button layoutX="101.0" layoutY="258.0" mnemonicParsing="false" onAction="#start" text="START" />
-            <Button layoutX="481.0" layoutY="271.0" mnemonicParsing="false" onAction="#parar" text="STOP" />
-            <Label fx:id="chrono" layoutX="293.0" layoutY="217.0" />
-            <Label fx:id="chrono1" layoutX="248.0" layoutY="173.0" prefHeight="53.0" prefWidth="168.0">
+            <Button layoutX="60.0" layoutY="183.0" mnemonicParsing="false" onAction="#start" prefHeight="50.0" prefWidth="106.0" style="-fx-background-color: #6d7b64; -fx-background-radius: 20;" text="START">
                <font>
-                  <Font size="36.0" />
+                  <Font name="DejaVu Sans Bold" size="21.0" />
+               </font></Button>
+            <Button layoutX="475.0" layoutY="183.0" mnemonicParsing="false" onAction="#parar" prefHeight="50.0" prefWidth="106.0" style="-fx-background-color: #6d7b64; -fx-background-radius: 20;" text="STOP">
+               <font>
+                  <Font name="DejaVu Sans Bold" size="21.0" />
+               </font></Button>
+            <Label fx:id="chrono1" alignment="CENTER" contentDisplay="CENTER" layoutX="197.0" layoutY="158.0" prefHeight="99.0" prefWidth="247.0" style="-fx-background-color: #b1c8a3; -fx-background-radius: 5;" text="0:00,00">
+               <font>
+                  <Font size="45.0" />
+               </font>
+            </Label>
+            <Label fx:id="scrambleLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="40.0" layoutY="24.0" prefHeight="99.0" prefWidth="572.0" style="-fx-background-color: #b1c8a3; -fx-background-radius: 5;" textAlignment="CENTER">
+               <font>
+                  <Font size="28.0" />
                </font>
             </Label>
          </children>
