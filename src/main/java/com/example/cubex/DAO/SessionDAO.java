@@ -171,4 +171,26 @@ public class SessionDAO {
         return nameCategory;
     }
 
+    public static int numberSession (String mail) {
+        String sql = "SELECT COUNT(ID_SESSION) FROM SESSIONS WHERE ID_USER = (SELECT ID_USER FROM CUBE_USERS WHERE MAIL = ?)";
+        int number = -1;
+        try {
+            Connection con = DatabaseConnection.conectar();
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.setString(1, mail);
+            ResultSet resultSet = statement.executeQuery();
+            if(resultSet.next()){
+                number = resultSet.getInt("COUNT(ID_SESSION)");
+            }
+            con.close();
+        } catch (SQLException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error de conexión.");
+            alert.setHeaderText("¡ERROR!");
+            alert.setContentText("Error al conectar a la base de datos: " + e.getMessage());
+            alert.showAndWait();
+        }
+        return number;
+    }
+
 }

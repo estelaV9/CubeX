@@ -1,8 +1,10 @@
 package com.example.cubex.Controller;
 
+import com.example.cubex.DAO.MemberDAO;
 import com.example.cubex.DAO.SessionDAO;
 import com.example.cubex.Database.DatabaseConnection;
 import com.example.cubex.model.CacheStatic;
+import com.example.cubex.model.Member;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -49,12 +51,13 @@ public class SessionCtrller extends CodeGeneral implements Initializable {
     private ComboBox categoriesCB;
     @FXML
     private ScrollPane scroll;
+    public static boolean isUsing;
     private double nextPaneY = 10; // POSICION Y DEL PROXIMO PANEL
     double newHeight = 0; // NUEVA POSICION Y SI SE ELIMINA ALGUN PANEL
     private static int contadorCreate = 0; // CONTADOR PARA VER CUANTAS VECES CREA UNA SESION EL USUARIO DEMO
 
     LocalDate localDate = LocalDate.now();
-    String category, sessionToDelete;
+    String category, sessionToDelete, sessionToUse;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -63,7 +66,7 @@ public class SessionCtrller extends CodeGeneral implements Initializable {
         sessionName.setStyle("-fx-prompt-text-fill: #9B9B9B; -fx-background-color: #b1c8a3;");
         paneScroll.prefWidth(50);
         CodeGeneral.cubeCategory(categoriesCB);
-        if(!StartCtrller.isDemo) {
+        if (!StartCtrller.isDemo) {
             // SI NO ES UN USUARIO DEMO, SE CARGAN LAS SESIONES DEL USUARIO
             loadSession();
         }
@@ -98,16 +101,27 @@ public class SessionCtrller extends CodeGeneral implements Initializable {
                 category = String.valueOf(categoriesCB.getSelectionModel().getSelectedItem());
                 nameSession.setVisible(false);
                 if (!StartCtrller.isDemo) {
-                    int idType = SessionDAO.insertIdTypeSession(category);
-                    int idUser = SessionDAO.insertIdUserSession(CacheStatic.cubeUser.getMail());
-                    if (SessionDAO.insertSession(idUser, sessionName.getText(), localDate, idType)) {
-                        paneScroll.getChildren().add(createSessions(sessionName.getText(), category));
-                    } else {
-                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    // SI ES USUARIO SE LIMITA A 15 SESIONES, SI ES MEMBERS PUEDE HACER INFINITAS
+                    if (SessionDAO.numberSession(CacheStatic.cubeUser.getMail()) == 15 && !MemberDAO.selectMember(CacheStatic.cubeUser.getMail())
+                            && !StartCtrller.isDemo) {
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
                         alert.setTitle("Sesion fallida.");
-                        alert.setHeaderText("Creación de sesion fallida");
-                        alert.setContentText("No se ha podido crear la sesion correctamente");
+                        alert.setHeaderText("Has sobrepasado el limite de sesiones por usuario");
+                        alert.setContentText("¡Conviertete en miembro para disfrutar de todas las funcionalidades de la aplicación!");
                         alert.showAndWait();
+                    } else {
+                        int idType = SessionDAO.insertIdTypeSession(category);
+                        int idUser = SessionDAO.insertIdUserSession(CacheStatic.cubeUser.getMail());
+
+                        if (SessionDAO.insertSession(idUser, sessionName.getText(), localDate, idType)) {
+                            paneScroll.getChildren().add(createSessions(sessionName.getText(), category));
+                        } else {
+                            Alert alert = new Alert(Alert.AlertType.ERROR);
+                            alert.setTitle("Sesion fallida.");
+                            alert.setHeaderText("Creación de sesion fallida");
+                            alert.setContentText("No se ha podido crear la sesion correctamente");
+                            alert.showAndWait();
+                        }
                     }
                 } else {
                     //SE CREA LA SESION PERO NO SE GUARDA
@@ -115,7 +129,6 @@ public class SessionCtrller extends CodeGeneral implements Initializable {
                 }
             }
         }
-
     } // CREAR LAS SESIONES CON UN PANEL DE SESION
 
 
@@ -168,6 +181,11 @@ public class SessionCtrller extends CodeGeneral implements Initializable {
         use.setPrefHeight(31);
         use.setStyle("-fx-background-color: #74cc5e; -fx-font-family: DejaVu Sans; -fx-font-weight: bold; -fx-font-size: 15px;");
 
+        use.setUserData(sessionName);
+        use.setOnAction(event -> {
+            sessionToUse = (String) ((Button) event.getSource()).getUserData(); // SELECCIONAR CUAL ESTA USUANDO
+        });
+        System.out.println(use.getOnAction());
         Button delete = new Button("DELETE");
         delete.setLayoutX(118);
         delete.setLayoutY(143);
@@ -254,7 +272,7 @@ public class SessionCtrller extends CodeGeneral implements Initializable {
                     alert.setContentText("Se ha eliminado la sesion correctamente");
                     alert.showAndWait();
                 } else {
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("Sesion fallida.");
                     alert.setHeaderText("Eliminación fallida");
                     alert.setContentText("No se ha podido eliminar la sesion correctamente");
@@ -268,7 +286,7 @@ public class SessionCtrller extends CodeGeneral implements Initializable {
     void onCancelSessionCreate(ActionEvent event) {
         int opcion = JOptionPane.showConfirmDialog(null,
                 "¿Estás seguro de que quieres cancelar la creación de la sesión?\n" +
-                        "Todos los datos ingresados hasta ahora se perderán.", "Confirmación", JOptionPane.YES_NO_OPTION);
+                        "Todos los datos ingresados se perderán.", "Confirmación", JOptionPane.YES_NO_OPTION);
         if (opcion == JOptionPane.YES_OPTION) {
             nameSession.setVisible(false);
         }
@@ -276,21 +294,21 @@ public class SessionCtrller extends CodeGeneral implements Initializable {
 
     @FXML
     void onReloadAction() {
-        if(!StartCtrller.isDemo){
+        if (!StartCtrller.isDemo) {
             loadSession();
         }
-            paneScroll.setStyle("-fx-background-color :  #325743");
-            nextPaneY = 10;
-            paneScroll.setPrefHeight(alturaPanel()); // SE ESTABLECE LA NUEVA ALTURA
+        paneScroll.setStyle("-fx-background-color :  #325743");
+        nextPaneY = 10;
+        paneScroll.setPrefHeight(alturaPanel()); // SE ESTABLECE LA NUEVA ALTURA
 
 
     } // ACTUALIZAR SESIONES (POR SI HA BORRADO NO TENER UN HUECO VACIO
 
-    public double alturaPanel(){
+    public double alturaPanel() {
         boolean isPanel = false;
         int contadorPanels = 0; // SI HAY SOLO UN PANEL SE HACE EL PANEL Y UN POCO DE LO QUE QUEDA
-        double restoEntrePanel = 0; // SI HAY UN PANEL, SE COGE LA ALTURA DE ESE PANEL MAS LA RESTA ENTRE
-                                    // EL TOTAL DEL PANEL PRINCIPAL Y LA ALTURA DEL PANEL DE SESSION
+        double restoEntrePanel; // SI HAY UN PANEL, SE COGE LA ALTURA DE ESE PANEL MAS LA RESTA ENTRE
+        // EL TOTAL DEL PANEL PRINCIPAL Y LA ALTURA DEL PANEL DE SESSION
         // PARA DARLE UNA ALTURA NUEVA Y QEU NO QEUDE EL ESPACIO DEL PANEL ELIMINADO :
         // SE RECORRE LA LISTA DE NODOS QUE TIENE EL PANE SCROLL, COMO YA NO TIENE EL PANEL ELIMINADO, ENTONCES NO
         // VA A CONTAR LA ALTURA DE ESE PANEL, ENTONCES QUEDARIA LA ALTURA DE SOLO LOS PANELES DE SESIONES QEU NO
@@ -305,17 +323,16 @@ public class SessionCtrller extends CodeGeneral implements Initializable {
             }
         }
 
-        if(isPanel && contadorPanels == 1){
+        if (isPanel && contadorPanels == 1) {
             restoEntrePanel = 294 - newHeight;
             return newHeight + restoEntrePanel;
-        } else if (isPanel && contadorPanels > 1){
+        } else if (isPanel && contadorPanels > 1) {
             return newHeight;
-        }else {
+        } else {
             return 294; // SI NO HAY NINGUN PANEL SE QUEDA EL TAMAÑO ESTANDAR
         }
 
     }
-
 
 
 }

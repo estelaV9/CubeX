@@ -421,8 +421,7 @@ public class SettingCtrller extends CodeGeneral implements Initializable {
         int opcion = JOptionPane.showConfirmDialog(null,
                 "¿Está seguro de que desea eliminar la cuenta?", "Confirmación", JOptionPane.YES_NO_OPTION);
         if (opcion == JOptionPane.YES_OPTION) {
-            CubeUserDAO.deleteUser(CacheStatic.cubeUser.getMail());
-            if (CubeUserDAO.successfulDelete) {
+            if (CubeUserDAO.deleteUser(CacheStatic.cubeUser.getMail())) {
                 // SI SE ELIMINA EL USUARIO SE MUESTRA EL MENSAJE
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Eliminación de usuario");
@@ -473,8 +472,7 @@ public class SettingCtrller extends CodeGeneral implements Initializable {
             alert.setContentText("Las contraseñas no coinciden. Por favor, verifica e intenta nuevamente.");
             alert.showAndWait();
         } else if (Validator.isValidPassword(txtNewPasswordUp.getText())) {
-            CubeUserDAO.modifyPassword(txtNewPasswordUp.getText(), CacheStatic.cubeUser.getMail());
-            if (CubeUserDAO.successfulModify) {
+            if (CubeUserDAO.modifyPassword(txtNewPasswordUp.getText(), CacheStatic.cubeUser.getMail())) {
                 // SI SE ACTUALIZO EL USUARIO, MOSTRAR UN MENSAJE DE EXITO
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Actualizacion de usuario");
@@ -531,8 +529,7 @@ public class SettingCtrller extends CodeGeneral implements Initializable {
             if (seleccionado.getText().equals("MEMBER") && !MemberDAO.selectMember(CacheStatic.cubeUser.getMail())) {
                 onProAction();
             } else {
-                CubeUserDAO.modifyUser(txtNameUser.getText(), txtEmailUser.getText(), String.valueOf(role), CacheStatic.cubeUser.getMail());
-                if(CubeUserDAO.successfulModifyUser){
+                if(CubeUserDAO.modifyUser(txtNameUser.getText(), txtEmailUser.getText(), String.valueOf(role), CacheStatic.cubeUser.getMail())){
                     CacheStatic.cubeUser.setMail(txtEmailUser.getText());
                     // SI SE ACTUALIZO EL USUARIO, MOSTRAR UN MENSAJE DE EXITO
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -595,9 +592,8 @@ public class SettingCtrller extends CodeGeneral implements Initializable {
             invalidProLabel.setText("Invalid MM/YY");
         } else {
             invalidProLabel.setText("");
-            CubeUserDAO.modifyPro(CacheStatic.cubeUser.getMail());
             MemberDAO.insertMember(MemberDAO.insertIdUser(CacheStatic.cubeUser.getMail()), localDate);
-            if (CubeUserDAO.successfulModifyProUser && MemberDAO.isMember) {
+            if (CubeUserDAO.modifyPro(CacheStatic.cubeUser.getMail()) && MemberDAO.isMember) {
                 // SI SE ACTUALIZO EL USUARIO, MOSTRAR UN MENSAJE DE EXITO
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Actualizacion de usuario");

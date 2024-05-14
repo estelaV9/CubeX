@@ -59,8 +59,7 @@ public class RegistrationCtrller implements Initializable {
             alert.showAndWait();
         } else if (Validator.isValidPassword(passwordTxt.getText())) {
             CacheStatic.cubeUser = new CubeUser(passwordTxt.getText(), emailTxt.getText());
-            CubeUserDAO.logearUsuario(emailTxt.getText(), passwordTxt.getText());
-            if(CubeUserDAO.invalidLogin){
+            if(CubeUserDAO.logearUsuario(emailTxt.getText(), passwordTxt.getText())){
                 loginMessage.setText("Invalid login");
             } else {
                 openMainPage();
@@ -92,9 +91,9 @@ public class RegistrationCtrller implements Initializable {
             alert.showAndWait();
         } else if (Validator.isValidPassword(txtPasswdUser.getText())) {
             CacheStatic.cubeUser = new CubeUser(txtNameUser.getText(), txtPasswdUser.getText(), txtEmailUser.getText(), currentDate);
-            CubeUserDAO.insertarUsuarios(CacheStatic.cubeUser.getNameUser(), CacheStatic.cubeUser.getPasswordUser(),
-                    CacheStatic.cubeUser.getMail(), CacheStatic.cubeUser.getRegistrationDate());
-            if(CubeUserDAO.successfulCreation){
+
+            if(CubeUserDAO.insertarUsuarios(CacheStatic.cubeUser.getNameUser(), CacheStatic.cubeUser.getPasswordUser(),
+                    CacheStatic.cubeUser.getMail(), CacheStatic.cubeUser.getRegistrationDate())){
                 // SI SE INSERTO EL USUARIO, MOSTRAR UN MENSAJE DE EXITO
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Creación de usuario");

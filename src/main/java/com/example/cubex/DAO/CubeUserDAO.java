@@ -25,15 +25,10 @@ import java.util.List;
 import java.util.Locale;
 
 public class CubeUserDAO {
-    public static boolean successfulCreation = false;
-    public static boolean successfulDelete = false;
-    public static boolean successfulModify = false;
-    public static boolean successfulModifyUser = false;
-    public static boolean successfulModifyProUser = false;
-    public static boolean invalidLogin = false;
     public static List<CubeUser> users = new ArrayList<>();
 
-    public static void insertarUsuarios(String nameUser, String passwdUser, String mailUser, LocalDate registration) {
+    public static boolean insertarUsuarios(String nameUser, String passwdUser, String mailUser, LocalDate registration) {
+        boolean successfulCreation = false;
         String sqlInsert = "INSERT INTO cube_users (NAME_USER, PASSWORD_USER, MAIL, REGISTRATION_DATE) " +
                 "VALUES (?, ?, ?, ?);";
         try { // EXCEPCION PARA CONTROLAR QUE NO HAYA DOS NOMBRES DE USUARIOS IGUALES
@@ -47,8 +42,6 @@ public class CubeUserDAO {
             // COMPROBAR SI EL NOMBRE INTRODUCIDO YA EXISTE
             if (rowsInserted > 0) {
                 successfulCreation = true;
-            } else {
-                successfulCreation = false;
             }
             connection.close();
         } catch (SQLException e) {
@@ -58,9 +51,11 @@ public class CubeUserDAO {
             alert.setContentText("Error al conectar a la base de datos: " + e.getMessage());
             alert.showAndWait();
         }
+        return successfulCreation;
     }
 
-    public static void logearUsuario(String mail, String password) {
+    public static boolean logearUsuario(String mail, String password) {
+        boolean invalidLogin = false;
         try {
             Connection connection = DatabaseConnection.conectar();
             // SI LA CONEXION ES NULA MANDAR UN MENSAJE
@@ -73,8 +68,6 @@ public class CubeUserDAO {
             if (!resultSet.next()) {
                 // SI EL USUARIO NO EXISTE, MOSTRAR UN MENSAJE DE ERROR
                 invalidLogin = true;
-            } else {
-                invalidLogin = false;
             }
             connection.close();
         } catch (SQLException e) {
@@ -84,10 +77,12 @@ public class CubeUserDAO {
             alert.setContentText("Error al conectar a la base de datos: " + e.getMessage());
             alert.showAndWait();
         }
+        return invalidLogin;
     }
 
 
-    public static void deleteUser(String mailUser) {
+    public static boolean deleteUser(String mailUser) {
+        boolean successfulDelete = false;
         try {
             Connection connection = DatabaseConnection.conectar();
             String sqlDelete = "DELETE FROM CUBE_USERS WHERE MAIL = ?";
@@ -95,11 +90,8 @@ public class CubeUserDAO {
             statement.setString(1, mailUser);
             int rowsDelete = statement.executeUpdate();
             if (rowsDelete > 0) {
-                // INVALIDAR LA SESION
-                CacheStatic.cubeUser = null;
+                CacheStatic.cubeUser = null; // INVALIDAR LA SESION
                 successfulDelete = true;
-            } else {
-                successfulDelete = false;
             }
             connection.close(); // Cerrar conexión a la base de datos
         } catch (SQLException e) {
@@ -109,10 +101,12 @@ public class CubeUserDAO {
             alert.setContentText("Error al conectar a la base de datos: " + e.getMessage());
             alert.showAndWait();
         }
+        return successfulDelete;
     }
 
 
-    public static void modifyPassword(String newPassword, String mailUser) {
+    public static boolean modifyPassword(String newPassword, String mailUser) {
+        boolean successfulModify = false;
         try {
             Connection connection = DatabaseConnection.conectar();
             String sqlUpdate = "UPDATE CUBE_USERS SET PASSWORD_USER = ? WHERE MAIL = ?";
@@ -122,8 +116,6 @@ public class CubeUserDAO {
             int rowsInserted = statement.executeUpdate();
             if (rowsInserted > 0) {
                 successfulModify = true;
-            } else {
-                successfulModify = false;
             }
         } catch (SQLException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -132,9 +124,11 @@ public class CubeUserDAO {
             alert.setContentText("Error al conectar a la base de datos: " + e.getMessage());
             alert.showAndWait();
         }
+        return successfulModify;
     }
 
-    public static void modifyUser(String nameUser, String newMailUser, String roleUser, String mailUser) {
+    public static boolean modifyUser(String nameUser, String newMailUser, String roleUser, String mailUser) {
+        boolean successfulModifyUser = false;
         try {
             Connection connection = DatabaseConnection.conectar();
             String sqlUpdate = "UPDATE CUBE_USERS SET NAME_USER = ?, MAIL = ?, ROLE_USER = ?" +
@@ -147,8 +141,6 @@ public class CubeUserDAO {
             int rowsUpdate = statement.executeUpdate();
             if (rowsUpdate > 0) {
                 successfulModifyUser = true;
-            } else {
-                successfulModifyUser = false;
             }
         } catch (SQLException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -157,10 +149,12 @@ public class CubeUserDAO {
             alert.setContentText("Error al conectar a la base de datos: " + e.getMessage());
             alert.showAndWait();
         }
+        return successfulModifyUser;
     }
 
 
-    public static void modifyPro(String mailUser) {
+    public static boolean modifyPro(String mailUser) {
+        boolean successfulModifyProUser = false;
         try {
             Connection connection = DatabaseConnection.conectar();
             String sqlUpdate = "UPDATE CUBE_USERS SET ROLE_USER = 'MEMBER' WHERE MAIL = ?" +
@@ -170,8 +164,6 @@ public class CubeUserDAO {
             int rowsUpdate = statement.executeUpdate();
             if (rowsUpdate > 0) {
                 successfulModifyProUser = true;
-            } else {
-                successfulModifyProUser = false;
             }
         } catch (SQLException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -180,6 +172,7 @@ public class CubeUserDAO {
             alert.setContentText("Error al conectar a la base de datos: " + e.getMessage());
             alert.showAndWait();
         }
+        return successfulModifyProUser;
     }
 
     public static List<CubeUser> listUser(String option, String category) {
@@ -198,7 +191,11 @@ public class CubeUserDAO {
 
             }
         } catch (SQLException e) {
-            System.out.println("error " + e);
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error de conexión.");
+            alert.setHeaderText("¡ERROR!");
+            alert.setContentText("Error al conectar a la base de datos: " + e.getMessage());
+            alert.showAndWait();
         }
         return users;
     }
@@ -223,7 +220,11 @@ public class CubeUserDAO {
                 CacheStatic.cubeUser.setRegistrationDate(date.toLocalDate());
             }
         } catch (SQLException e) {
-            System.out.println("error " + e);
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error de conexión.");
+            alert.setHeaderText("¡ERROR!");
+            alert.setContentText("Error al conectar a la base de datos: " + e.getMessage());
+            alert.showAndWait();
         }
     }
 
