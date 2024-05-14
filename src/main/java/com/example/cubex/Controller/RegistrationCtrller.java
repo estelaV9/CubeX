@@ -196,6 +196,11 @@ public class RegistrationCtrller implements Initializable {
         // SEGUN LA OPCION QUE HAYA ELEGIDO EN EL START SE MOSTRARA UN PANEL Y OTRO
         if (!StartCtrller.optionRegistrer) {
             onLogAction();
+
+
+
+            emailTxt.setText("eljoaki@gmail.com");
+            passwordTxt.setText("Ps.contains(8)");
         } else {
             onSignAction();
         }
