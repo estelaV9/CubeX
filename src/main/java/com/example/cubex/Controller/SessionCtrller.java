@@ -1,5 +1,6 @@
 package com.example.cubex.Controller;
 
+import com.example.cubex.DAO.AverageDAO;
 import com.example.cubex.DAO.MemberDAO;
 import com.example.cubex.DAO.SessionDAO;
 import com.example.cubex.Database.DatabaseConnection;
@@ -51,7 +52,7 @@ public class SessionCtrller extends CodeGeneral implements Initializable {
     private ComboBox categoriesCB;
     @FXML
     private ScrollPane scroll;
-    public static boolean isUsing;
+    public static String isUsing;
     private double nextPaneY = 10; // POSICION Y DEL PROXIMO PANEL
     double newHeight = 0; // NUEVA POSICION Y SI SE ELIMINA ALGUN PANEL
     private static int contadorCreate = 0; // CONTADOR PARA VER CUANTAS VECES CREA UNA SESION EL USUARIO DEMO
@@ -115,6 +116,8 @@ public class SessionCtrller extends CodeGeneral implements Initializable {
 
                         if (SessionDAO.insertSession(idUser, sessionName.getText(), localDate, idType)) {
                             paneScroll.getChildren().add(createSessions(sessionName.getText(), category));
+                            int idSession = SessionDAO.selectNumberSession(sessionName.getText());
+                            AverageDAO.createAverageSession(idSession);
                         } else {
                             Alert alert = new Alert(Alert.AlertType.ERROR);
                             alert.setTitle("Sesion fallida.");
@@ -184,8 +187,8 @@ public class SessionCtrller extends CodeGeneral implements Initializable {
         use.setUserData(sessionName);
         use.setOnAction(event -> {
             sessionToUse = (String) ((Button) event.getSource()).getUserData(); // SELECCIONAR CUAL ESTA USUANDO
+            isUsing = sessionName; // SE ESTABLECE EL NOMBRE DE LA SESION QUE QUIERA USAR
         });
-        System.out.println(use.getOnAction());
         Button delete = new Button("DELETE");
         delete.setLayoutX(118);
         delete.setLayoutY(143);
@@ -265,7 +268,7 @@ public class SessionCtrller extends CodeGeneral implements Initializable {
             if (StartCtrller.isDemo) {
                 contadorCreate = 0;
             } else {
-                if (SessionDAO.deleteSession(nameSession)) {
+                if (AverageDAO.deleteAverage(nameSession) && SessionDAO.deleteSession(nameSession) ) {
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Sesion eliminada.");
                     alert.setHeaderText("Eliminación exitosa");

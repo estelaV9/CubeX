@@ -228,4 +228,49 @@ public class CubeUserDAO {
         }
     }
 
+
+    public static boolean levelUpdate (){
+        String sql = "UPDATE CUBE_USERS SET LEVEL_USER = " +
+                "(SELECT TRUNCATE(COUNT(DESCRIPTION_SCRAMBLE) * 25 / 100, 0)  FROM TIMES_TRAINING)";
+        boolean isUpdate = false;
+        try {
+            Connection connection = DatabaseConnection.conectar();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            int rowsInserted = statement.executeUpdate();
+            if (rowsInserted > 0) {
+                isUpdate = true;
+            }
+        } catch (SQLException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error de conexión.");
+            alert.setHeaderText("¡ERROR!");
+            alert.setContentText("Error al conectar a la base de datos: " + e.getMessage());
+            alert.showAndWait();
+        }
+        return isUpdate;
+    }
+
+    public static int levelNumber (String mailUser) {
+        levelUpdate();
+        String sql = "SELECT LEVEL_USER FROM CUBE_USERS WHERE MAIL = ?";
+        int levelNumber = 0;
+        try {
+            Connection connection = DatabaseConnection.conectar();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, mailUser);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                levelNumber = resultSet.getInt("LEVEL_USER");
+            }
+        } catch (SQLException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error de conexión.");
+            alert.setHeaderText("¡ERROR!");
+            alert.setContentText("Error al conectar a la base de datos: " + e.getMessage());
+            alert.showAndWait();
+        }
+        return levelNumber;
+
+    }
+
 }

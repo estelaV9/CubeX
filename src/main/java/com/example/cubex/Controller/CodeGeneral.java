@@ -111,6 +111,8 @@ public class CodeGeneral implements Initializable {
                 demoProfilePane.setVisible(true);
                 pulsarProfile = true;
             } else {
+                int level = CubeUserDAO.levelNumber(CacheStatic.cubeUser.getMail());
+                levelProfileTxt.setText(String.valueOf(level));
                 profilePage.setVisible(true);
                 CubeUserDAO.dataProfile(CacheStatic.cubeUser.getMail());
                 if(CacheStatic.cubeUser.getRoleUser() == CubeUser.Role.valueOf("MEMBER")){
@@ -325,14 +327,16 @@ public class CodeGeneral implements Initializable {
     } // METER LAS CATEGORIAS DE LOS CUBOS EN UN ARRAYLIST
 
 
-    private static Timeline timeline1; // CRONOMETRO PARA MOSTRAR EL TIEMPO DE CUBER1
-    private static Timeline timeline2; // CRONOMETRO PARA MOSTRAR EL TIEMPO DE CUBER2
+    public static Timeline timeline1; // CRONOMETRO PARA MOSTRAR EL TIEMPO DE CUBER1
+    public static Timeline timeline2; // CRONOMETRO PARA MOSTRAR EL TIEMPO DE CUBER2
 
     public static void start(Label chrono) {
         // CUANDO PULSE DE NUEVO SE REINICIARAN LOS CRONOMETROS
         min = 0;
         seg = 0;
         cent = 0;
+        //SE CREA UNA INSTANCIA DE TIMELINE PARA CONTROLAR EL TIEMPO
+        // EL KEYFRAME SE EJECUTARA CADA 10 MILISEGUNDOS Y HARA QUE EL CRONOMETRO SE INICIE
         timeline1 = new Timeline(new KeyFrame(Duration.millis(10), event1 -> {
             cent++;
             // CUANDO LLEGUE A 100 MILISEGUNDOS SE HACE UN SEGUNDO
@@ -377,7 +381,7 @@ public class CodeGeneral implements Initializable {
         // DETENER EL TIMELINE DEL CHRONOMETRO QUE HAYA PULSADO
         if (chrono.equals("chrono1Label")) {
             timeline1.stop();
-        } else {
+        } else if (chrono.equals("chrono2Label")) {
             timeline2.stop();
         }
     }

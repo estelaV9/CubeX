@@ -3,13 +3,30 @@ package com.example.cubex.DAO;
 import com.example.cubex.Database.DatabaseConnection;
 import javafx.scene.control.Alert;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDate;
 
 public class SessionDAO {
+    public static int selectNumberSession (String nameSession) {
+        int idSession = -1;
+        String sql = "SELECT ID_SESSION FROM SESSIONS WHERE NAME_SESSION = ?";
+        try {
+            Connection connection = DatabaseConnection.conectar();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, nameSession);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                idSession = resultSet.getInt("ID_SESSION");
+            }
+        } catch (SQLException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error de conexión.");
+            alert.setHeaderText("¡ERROR!");
+            alert.setContentText("Error al conectar a la base de datos: " + e.getMessage());
+            alert.showAndWait();
+        }
+        return idSession;
+    }
     public static int insertIdUserSession(String mail) {
         String sql = "SELECT ID_USER FROM CUBE_USERS WHERE MAIL = ?";
         int idUser = -1;

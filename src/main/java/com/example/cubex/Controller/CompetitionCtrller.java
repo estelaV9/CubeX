@@ -3,6 +3,7 @@ package com.example.cubex.Controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -34,9 +35,18 @@ public class CompetitionCtrller extends CodeGeneral implements Initializable {
 
     @FXML
     void onStartCuberAction() {
-        // CUANDO SE PULSE START EL CRONOMETRO SE EMPEZARAN EN LAS DOS
-        CodeGeneral.start(chrono2Label);
-        CodeGeneral.start(chrono1Label);
+        if(cuber1Txt.getText().isEmpty() || cuber2Txt.getText().isEmpty() || categoriesCB.getValue() == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Campos vacíos.");
+            alert.setHeaderText("¡ERROR!");
+            alert.setContentText("Por favor, completa todos los campos antes de continuar.");
+            alert.showAndWait();
+        } else {
+            // CUANDO SE PULSE START EL CRONOMETRO SE EMPEZARAN EN LAS DOS
+            CodeGeneral.start(chrono2Label);
+            CodeGeneral.start(chrono1Label);
+        }
+
     }
     @FXML
     void onStopCuber1Action(ActionEvent event) {
