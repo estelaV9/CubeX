@@ -325,10 +325,15 @@ public class CodeGeneral implements Initializable {
     } // METER LAS CATEGORIAS DE LOS CUBOS EN UN ARRAYLIST
 
 
-    private static Timeline timeline1;
-    private static Timeline timeline2;
+    private static Timeline timeline1; // CRONOMETRO PARA MOSTRAR EL TIEMPO DE CUBER1
+    private static Timeline timeline2; // CRONOMETRO PARA MOSTRAR EL TIEMPO DE CUBER2
+
     public static void start(Label chrono) {
-        timeline = new Timeline(new KeyFrame(Duration.millis(10), event1 -> {
+        // CUANDO PULSE DE NUEVO SE REINICIARAN LOS CRONOMETROS
+        min = 0;
+        seg = 0;
+        cent = 0;
+        timeline1 = new Timeline(new KeyFrame(Duration.millis(10), event1 -> {
             cent++;
             // CUANDO LLEGUE A 100 MILISEGUNDOS SE HACE UN SEGUNDO
             if (cent > 99) {
@@ -350,26 +355,29 @@ public class CodeGeneral implements Initializable {
             // CUANDO LLEGUE A 10 MINUTOS EL TIEMPO SE PARA
             if (min == 10) {
                 timeString = min + ":0" + seg + "," + cent;
-                timeline.stop();
+                // DETENER EL TIMELINE CORRESPONDIENTE
+                if (chrono.getId().equals("chrono1Label")) {
+                    timeline1.stop();
+                } else if (chrono.getId().equals("chrono2Label")) {
+                    timeline2.stop();
+                }
             }
             chrono.setText(timeString); // MOSTRAR EL TIEMPO
         }));
-        timeline.setCycleCount(Timeline.INDEFINITE); // DE TIEMPO INDEFINIDO
-        timeline.play(); // COMENZAMOS NUESTRO TIMELINE
 
-        // Asignar la timeline al Label correspondiente
-        if (chrono.getId().equals("chrono1Label")) {
-            timeline1 = timeline;
-        } else if (chrono.getId().equals("chrono2Label")) {
-            timeline2 = timeline;
+        timeline1.setCycleCount(Timeline.INDEFINITE); // DE TIEMPO INDEFINIDO
+        timeline1.play(); // COMENZAMOS NUESTRO TIMELINE
+        if (chrono.getId().equals("chrono2Label")) {
+            // SI HAY UN SEGUNDO CRONOMETRO (COMPETITION) SE LE ASIGNA EL VALOR DEL TIMELINE1 A TIMELINE2
+            timeline2 = timeline1;
         }
     }
 
-    public static void parar(Label chrono) {
-        // Detener la Timeline asociada al Label proporcionado
-        if (chrono.getId().equals("chrono1Label") && timeline1 != null) {
+    public static void parar(String chrono) {
+        // DETENER EL TIMELINE DEL CHRONOMETRO QUE HAYA PULSADO
+        if (chrono.equals("chrono1Label")) {
             timeline1.stop();
-        } else if (chrono.getId().equals("chrono2Label") && timeline2 != null) {
+        } else {
             timeline2.stop();
         }
     }

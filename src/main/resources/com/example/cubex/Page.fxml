@@ -47,7 +47,7 @@
                <font>
                   <Font name="DejaVu Sans Bold" size="21.0" />
                </font></Button>
-            <Label fx:id="chrono1" alignment="CENTER" contentDisplay="CENTER" layoutX="197.0" layoutY="158.0" prefHeight="99.0" prefWidth="247.0" style="-fx-background-color: #b1c8a3; -fx-background-radius: 5;" text="0:00,00">
+            <Label fx:id="chrono1Label" alignment="CENTER" contentDisplay="CENTER" layoutX="197.0" layoutY="158.0" prefHeight="99.0" prefWidth="247.0" style="-fx-background-color: #b1c8a3; -fx-background-radius: 5;" text="0:00,00">
                <font>
                   <Font size="45.0" />
                </font>

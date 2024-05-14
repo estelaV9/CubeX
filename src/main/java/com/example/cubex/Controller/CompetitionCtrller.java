@@ -40,12 +40,12 @@ public class CompetitionCtrller extends CodeGeneral implements Initializable {
     }
     @FXML
     void onStopCuber1Action(ActionEvent event) {
-        CodeGeneral.parar(chrono1Label);
+        CodeGeneral.parar("chrono1Label");
     }
 
     @FXML
     void onStopCuber2Action(ActionEvent event) {
-        CodeGeneral.parar(chrono2Label);
+        CodeGeneral.parar("chrono2Label");
     }
 
     @Override

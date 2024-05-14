@@ -29,7 +29,7 @@ public class PageCtrller extends CodeGeneral implements Initializable {
     @FXML
     private Pane demoProfilePane;
     @FXML
-    private Label chrono1;
+    private Label chrono1Label;
     @FXML
     private TextField chronoPane;
     @FXML
@@ -43,12 +43,12 @@ public class PageCtrller extends CodeGeneral implements Initializable {
 
     @FXML
     void start(ActionEvent event) {
-        CodeGeneral.start(chrono1);
+        CodeGeneral.start(chrono1Label);
     }
 
     @FXML
     void parar(ActionEvent event) {
-        CodeGeneral.parar(chrono1);
+        CodeGeneral.parar("chrono1Label");
     }
 
     @Override
