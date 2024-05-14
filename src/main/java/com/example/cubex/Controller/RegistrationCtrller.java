@@ -5,7 +5,6 @@ import com.example.cubex.model.CacheStatic;
 import com.example.cubex.model.CubeUser;
 import com.example.cubex.DAO.CubeUserDAO;
 import com.example.cubex.Main;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -18,11 +17,8 @@ import javafx.stage.Stage;
 import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.*;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 
 
@@ -40,11 +36,10 @@ public class RegistrationCtrller implements Initializable {
     @FXML private TextField txtEmailUser;
     @FXML private TextField txtNameUser;
     @FXML private PasswordField txtPasswdUser;
-    public static String nameUser;
 
 
     @FXML
-    void onEnterAction(ActionEvent event) {
+    void onEnterAction() {
         if (emailTxt.getText().isEmpty() || passwordTxt.getText().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Campos vacíos.");
@@ -68,7 +63,7 @@ public class RegistrationCtrller implements Initializable {
     } // INICIAR SESION
 
     @FXML
-    void onSignUpAction(ActionEvent event) throws SQLException {
+    void onSignUpAction() {
         LocalDate currentDate = LocalDate.now();
         if (txtNameUser.getText().isEmpty() || txtEmailUser.getText().isEmpty() || txtPasswdUser.getText().isEmpty()
                 || txtConfirmPsswd.getText().equals("")) {
@@ -139,13 +134,13 @@ public class RegistrationCtrller implements Initializable {
     } // APARIENCIA DEL LOGIN
 
     @FXML
-    void onCancelAction(ActionEvent event) {
+    void onCancelAction() {
         emailTxt.clear();
         passwordTxt.clear();
     } // LIMPIAR LOS CAMPOS DEL LOGIN
 
     @FXML
-    void onCloseAction(ActionEvent event) {
+    void onCloseAction() {
         int opcion = JOptionPane.showConfirmDialog(null,
                 "¿Está seguro de que desea salir?", "Confirmación", JOptionPane.YES_NO_OPTION);
         if (opcion == JOptionPane.YES_OPTION) {
@@ -154,7 +149,7 @@ public class RegistrationCtrller implements Initializable {
     } // SALIR DE LA APLICACION
 
     @FXML
-    void onBackAction(ActionEvent event) {
+    void onBackAction() {
         try {
             FXMLLoader fxmlLoader = new
                     FXMLLoader(Main.class.getResource("Start.fxml"));
