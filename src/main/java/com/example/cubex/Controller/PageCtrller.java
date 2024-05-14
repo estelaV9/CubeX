@@ -19,6 +19,8 @@ public class PageCtrller extends CodeGeneral implements Initializable {
     @FXML
     private Label chrono1Label;
     @FXML
+    private Label timesLabel;
+    @FXML
     private Pane profilePage;
 
 
@@ -65,6 +67,7 @@ public class PageCtrller extends CodeGeneral implements Initializable {
             alert.setContentText("No se ha podido insertar el tiempo.");
             alert.showAndWait();
         } else {
+
 
         }
         scrambleLabel.setText(CodeGeneral.scramble()); // SE VUELVE A GENERAR EL SCRAMBLE

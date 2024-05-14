@@ -79,6 +79,7 @@ public class SessionCtrller extends CodeGeneral implements Initializable {
         demoProfilePane.setVisible(false);
         nameSession.setVisible(true);
     }
+    public static int idSessions;
 
     @FXML
     void onCreateSessionAction() {
@@ -116,8 +117,8 @@ public class SessionCtrller extends CodeGeneral implements Initializable {
 
                         if (SessionDAO.insertSession(idUser, sessionName.getText(), localDate, idType)) {
                             paneScroll.getChildren().add(createSessions(sessionName.getText(), category));
-                            int idSession = SessionDAO.selectNumberSession(sessionName.getText());
-                            AverageDAO.createAverageSession(idSession);
+                            idSessions = SessionDAO.selectNumberSession(sessionName.getText());
+                            AverageDAO.createAverageSession(idSessions);
                         } else {
                             Alert alert = new Alert(Alert.AlertType.ERROR);
                             alert.setTitle("Sesion fallida.");

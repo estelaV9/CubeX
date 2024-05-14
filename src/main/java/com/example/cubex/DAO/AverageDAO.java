@@ -49,17 +49,17 @@ public class AverageDAO {
         return isDelete;
     }
 
-    public static int countTimes (int idSession) {
+    public static boolean countTimes (int idSession) {
         String sql = "UPDATE AVERAGE SET PERIOD_AVG = " +
                 "(SELECT COUNT(ID_AVERAGE) FROM AVERAGE WHERE ID_SESSION = ?)";
-        int numberTimes = -1;
+        boolean isUpdate = false;
         try {
             Connection connection = DatabaseConnection.conectar();
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, idSession);
-            ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                numberTimes = resultSet.getInt("COUNT(ID_AVERAGE)");
+            int rowsInserted = statement.executeUpdate();
+            if (rowsInserted > 0) {
+                isUpdate = true;
             }
         } catch (SQLException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -68,20 +68,20 @@ public class AverageDAO {
             alert.setContentText("Error al conectar a la base de datos: " + e.getMessage());
             alert.showAndWait();
         }
-        return numberTimes;
+        return isUpdate;
     } // SABER CUANTOS TIEMPOS HAY EN CADA SESION
 
-    public static int worstMinutes(int idSession) {
+    public static boolean worstMinutes(int idSession) {
         String sql = "UPDATE AVERAGE SET WORST_MINUTES = " +
                 "(SELECT TRUNCATE(MAX(MINUTES1 * 60 + SECONDS1)/60, 0) FROM TIMES_TRAINING WHERE ID_SESSION = ?)";
-        int worstMinutes = -1;
+        boolean isUpdate = false;
         try {
             Connection connection = DatabaseConnection.conectar();
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, idSession);
-            ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                worstMinutes = resultSet.getInt("TRUNCATE(MAX(MINUTES1 * 60 + SECONDS1)/60, 0)");
+            int rowsInserted = statement.executeUpdate();
+            if (rowsInserted > 0) {
+                isUpdate = true;
             }
         } catch (SQLException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -90,20 +90,20 @@ public class AverageDAO {
             alert.setContentText("Error al conectar a la base de datos: " + e.getMessage());
             alert.showAndWait();
         }
-        return worstMinutes;
-    } // PEOR TIEMPO DE LA SESION
+        return isUpdate;
+    } // PEOR MINUTO DE LA SESION
 
-    public static int worstSecond (int idSession) {
+    public static boolean worstSecond (int idSession) {
         String sql = "UPDATE AVERAGE SET PERIOD_AVG = " +
                 "(SELECT MAX(MINUTES1 * 60 + SECONDS1) - MAX(MINUTES1 * 60) FROM TIMES_TRAINING WHERE ID_SESSION = ?)";
-        int numberTimes = -1;
+        boolean isUpdate = false;
         try {
             Connection connection = DatabaseConnection.conectar();
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, idSession);
-            ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                numberTimes = resultSet.getInt("MAX(MINUTES1 * 60 + SECONDS1) - MAX(MINUTES1 * 60)");
+            int rowsInserted = statement.executeUpdate();
+            if (rowsInserted > 0) {
+                isUpdate = true;
             }
         } catch (SQLException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -112,21 +112,21 @@ public class AverageDAO {
             alert.setContentText("Error al conectar a la base de datos: " + e.getMessage());
             alert.showAndWait();
         }
-        return numberTimes;
-    } // PEOR TIEMPO DE LA SESION
+        return isUpdate;
+    } // PEOR SEGUNDO DE LA SESION
 
 
-    public static int pbMinutes (int idSession) {
+    public static boolean pbMinutes (int idSession) {
         String sql = "UPDATE AVERAGE SET WORST_MINUTES = " +
                 "(SELECT TRUNCATE(MIN(MINUTES1 * 60 + SECONDS1)/60, 0) FROM TIMES_TRAINING WHERE ID_SESSION = ?)";
-        int pbMinutes = -1;
+        boolean isUpdate = false;
         try {
             Connection connection = DatabaseConnection.conectar();
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, idSession);
-            ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                pbMinutes = resultSet.getInt("TRUNCATE(MAX(MINUTES1 * 60 + SECONDS1)/60, 0)");
+            int rowsInserted = statement.executeUpdate();
+            if (rowsInserted > 0) {
+                isUpdate = true;
             }
         } catch (SQLException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -135,20 +135,20 @@ public class AverageDAO {
             alert.setContentText("Error al conectar a la base de datos: " + e.getMessage());
             alert.showAndWait();
         }
-        return pbMinutes;
-    } // PEOR TIEMPO DE LA SESION
+        return isUpdate;
+    } // MEJOR MINUTO DE LA SESION
 
-    public static int pbSecond (int idSession) {
+    public static boolean pbSecond (int idSession) {
         String sql = "UPDATE AVERAGE SET PERIOD_AVG = " +
                 "(SELECT MIN(MINUTES1 * 60 + SECONDS1) - MIN(MINUTES1 * 60) FROM TIMES_TRAINING WHERE ID_SESSION = ?)";
-        int pbSecond = -1;
+        boolean isUpdate = false;
         try {
             Connection connection = DatabaseConnection.conectar();
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, idSession);
-            ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                pbSecond = resultSet.getInt("MAX(MINUTES1 * 60 + SECONDS1) - MAX(MINUTES1 * 60)");
+            int rowsInserted = statement.executeUpdate();
+            if (rowsInserted > 0) {
+                isUpdate = true;
             }
         } catch (SQLException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -157,8 +157,19 @@ public class AverageDAO {
             alert.setContentText("Error al conectar a la base de datos: " + e.getMessage());
             alert.showAndWait();
         }
-        return pbSecond;
-    } // PEOR TIEMPO DE LA SESION
+        return isUpdate;
+    } // MEJOR SEGUNDO DE LA SESION
+
+    public static void listTimes (int idSession){
+        worstMinutes(idSession);
+        worstSecond(idSession);
+        pbMinutes(idSession);
+        pbSecond(idSession);
+        countTimes(idSession);
+
+
+    }
+
 
 
     //MEDIA TOTAL
