@@ -124,13 +124,18 @@
             </ImageView>
          </graphic>
       </Button>
-      <Pane fx:id="timesMenu" layoutX="422.0" layoutY="161.0" prefHeight="182.0" prefWidth="276.0" style="-fx-background-color: #204338; -fx-background-radius: 24;">
+      <Pane fx:id="timesMenu" layoutX="481.0" layoutY="129.0" prefHeight="214.0" prefWidth="217.0" style="-fx-background-color: #204338; -fx-background-radius: 24;">
          <children>
-            <ScrollPane fx:id="timesMenuScroll" hbarPolicy="NEVER" layoutX="15.0" layoutY="12.0" prefHeight="158.0" prefWidth="247.0">
+            <ScrollPane fx:id="timesMenuScroll" hbarPolicy="NEVER" layoutX="17.0" layoutY="45.0" prefHeight="158.0" prefWidth="186.0">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="158.0" prefWidth="232.0" style="-fx-background-color: #325743;" />
+                <AnchorPane fx:id="panelTimesScroll" minHeight="0.0" minWidth="0.0" prefHeight="158.0" prefWidth="172.0" style="-fx-background-color: #325743;" />
               </content>
             </ScrollPane>
+            <Label fx:id="nameSessionLabel" layoutX="21.0" layoutY="12.0" prefHeight="26.0" prefWidth="186.0" style="-fx-underline: true;" textFill="#6d7b64">
+               <font>
+                  <Font name="DejaVu Sans Bold" size="21.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
       <Pane fx:id="settingMenu" layoutX="454.0" layoutY="58.0" prefHeight="194.0" prefWidth="276.0" style="-fx-background-color: #204338; -fx-background-radius: 24;">

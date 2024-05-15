@@ -14,11 +14,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -65,6 +67,8 @@ public class CodeGeneral implements Initializable {
     @FXML
     public Pane communityPane;
     @FXML
+    public AnchorPane panelTimesScroll;
+    @FXML
     private TextField levelProfileTxt;
 
     @FXML
@@ -77,6 +81,8 @@ public class CodeGeneral implements Initializable {
 
     @FXML
     private Label dateProfileTxt;
+    @FXML
+    private Label nameSessionLabel;
     @FXML
     private ScrollPane timesMenuScroll;
 
@@ -151,47 +157,66 @@ public class CodeGeneral implements Initializable {
     @FXML void onOpenMenuAction(ActionEvent event) {
         timesMenu.setVisible(true);
         closeBtt.setVisible(true);
+        nameSessionLabel.setText(SessionCtrller.isUsing);
         mostrarTiempos();
     }// SE ABRE EL PANEL DE TIEMPOS Y EL BOTON DE CERRAR
 
 
-    public void mostrarTiempos () {
+    public void mostrarTiempos() {
         int contador = 0;
         TimeTrainingDAO.timesTraining = TimeTrainingDAO.listTimesTraining(SessionCtrller.idSessions);
 
-        // SE CREAN 3 VBOX PARA CADA COLUMNS
-        VBox vbox1 = new VBox();
-        VBox vbox2 = new VBox();
+        Label titleTimes = new Label("TIMES FOR SESSION : " + SessionCtrller.isUsing);
+        titleTimes.setStyle("-fx-underline: true; -fx-font-family: DejaVu Sans; -fx-font-weight: bold; -fx-font-size: 21px;");
 
+        // CONTENEDOR PRINCIPAL
+        VBox mainContainer = new VBox();
+        mainContainer.setSpacing(10);
 
-        //ESPACIO VERTICAL ENTRE LOS ELEMENTOS DE LAS COLUMNAS
-        vbox1.setSpacing(10);
-        vbox2.setSpacing(10);
-
-        // ITERAR SOBRE LA LISTA DE USUARIOS Y CREAR UN LABEL POR CADA UNO
+        // ITERAR SOBRE LA LISTA DE TIEMPOS
         for (TimeTraining timeTraining : TimeTrainingDAO.timesTraining) {
             contador++;
-            // SE CREA UN LABEL POR CADA COLUMNA
-            Label label1 = new Label(String.valueOf(contador));
+
+            // CREAR UN HBOX PARA CADA TIEMPO
+            HBox timeBox = new HBox();
+            timeBox.setSpacing(10);
+
+            // LABELS PARA LOS TIEMPOS
+            Label label1 = new Label("  " + contador);
             Label label2 = new Label(timeTraining.getMinutes() + ":" + timeTraining.getSeconds());
 
-            // SE LES DA UN ESTILO
+
+            // BOTONES
+            Button plusTwo = new Button("+2");
+            Button deleteTime = new Button("X");
+
+            // ESTILOS
             label1.setStyle("-fx-font-size: 17px; -fx-text-fill: black;");
             label2.setStyle("-fx-font-size: 17px; -fx-text-fill: black;");
+            plusTwo.setStyle("-fx-background-color: #6d7b64; -fx-font-family: DejaVu Sans; -fx-font-weight: bold; -fx-font-size: 15px;");
+            deleteTime.setStyle("-fx-background-color: #a82f2a; -fx-font-family: DejaVu Sans; -fx-font-weight: bold; -fx-font-size: 15px;");
 
-            // SE AGREGAN LOS LABELS A LAS COLUMNAS CORRESPONDIENTES
-            vbox1.getChildren().add(label1);
-            vbox2.getChildren().add(label2);
+            // EVENTOS PARA LOS BOTONES
+            plusTwo.setOnAction(e -> {
+                TimeTrainingDAO.plusTwoTime(timeTraining.getMinutes(), timeTraining.getSeconds());
+            });
+
+            deleteTime.setOnAction(e -> {
+                // Lógica para eliminar el tiempo actual
+            });
+
+            // AGREGAR ELEMENTOS AL HBOX
+            timeBox.getChildren().addAll(label1, label2, plusTwo, deleteTime);
+
+            // AGREGAR EL HBOX AL CONTENEDOR PRINCIPAL
+            mainContainer.getChildren().add(timeBox);
+            mainContainer.setStyle("-fx-background-color :  #325743");
         }
 
-        // SE CREAN UN HBOX QUE CONTENGAN LAS 2 COLUMNAS
-        HBox hbox = new HBox(vbox1, vbox2);
-        hbox.setSpacing(20); // ESPACIO HORIZONTAL ENTRE LAS COLUMNAS
-        hbox.setStyle("-fx-background-color :  #325743");
 
 
-        // SE AGREGA EL HBOX AL SCROLLPANE
-        timesMenuScroll.setContent(hbox);
+        // AGREGAR EL CONTENEDOR PRINCIPAL AL SCROLLPANE
+        timesMenuScroll.setContent(mainContainer);
         timesMenuScroll.setFitToWidth(true);
     }
 

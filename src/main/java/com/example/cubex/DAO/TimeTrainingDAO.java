@@ -86,4 +86,28 @@ public class TimeTrainingDAO {
         }
         return timesTraining;
     }
+
+
+    public static boolean plusTwoTime (int minutes1, double seconds1) {
+        // SE QUE PUEDEN HABER DOS TIEMPOS IGUALES PERO NO ME DA TIEMPO
+        String sql = "UPDATE TIMES_TRAINING SET SECONDS1 = SECONDS1 + 2 WHERE MINUTES1 = ? AND SECONDS1 = ?";
+        boolean isUpdatePlus = false;
+        try {
+            Connection connection = DatabaseConnection.conectar();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, minutes1);
+            statement.setDouble(2, seconds1);
+            int rowsInserted = statement.executeUpdate();
+            if (rowsInserted > 0) {
+                isUpdatePlus = true;
+            }
+        } catch (SQLException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error de conexión.");
+            alert.setHeaderText("¡ERROR!");
+            alert.setContentText("Error al conectar a la base de datos: " + e.getMessage());
+            alert.showAndWait();
+        }
+        return isUpdatePlus;
+    }
 }
