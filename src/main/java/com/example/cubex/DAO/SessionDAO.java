@@ -16,7 +16,9 @@ public class SessionDAO {
             statement.setString(1, nameSession);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
+                System.out.println("holi");
                 idSession = resultSet.getInt("ID_SESSION");
+                System.out.println(idSession);
             }
         } catch (SQLException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);

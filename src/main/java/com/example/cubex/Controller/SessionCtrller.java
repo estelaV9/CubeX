@@ -189,6 +189,7 @@ public class SessionCtrller extends CodeGeneral implements Initializable {
         use.setOnAction(event -> {
             sessionToUse = (String) ((Button) event.getSource()).getUserData(); // SELECCIONAR CUAL ESTA USUANDO
             isUsing = sessionName; // SE ESTABLECE EL NOMBRE DE LA SESION QUE QUIERA USAR
+            idSessions = SessionDAO.selectNumberSession(isUsing);
         });
         Button delete = new Button("DELETE");
         delete.setLayoutX(118);

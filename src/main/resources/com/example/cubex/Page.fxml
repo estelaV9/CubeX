@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -125,7 +126,11 @@
       </Button>
       <Pane fx:id="timesMenu" layoutX="422.0" layoutY="161.0" prefHeight="182.0" prefWidth="276.0" style="-fx-background-color: #204338; -fx-background-radius: 24;">
          <children>
-            <Label fx:id="timesLabel" layoutX="15.0" layoutY="32.0" prefHeight="136.0" prefWidth="247.0" style="-fx-background-color: #325743;" />
+            <ScrollPane fx:id="timesMenuScroll" hbarPolicy="NEVER" layoutX="15.0" layoutY="12.0" prefHeight="158.0" prefWidth="247.0">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="158.0" prefWidth="232.0" style="-fx-background-color: #325743;" />
+              </content>
+            </ScrollPane>
          </children>
       </Pane>
       <Pane fx:id="settingMenu" layoutX="454.0" layoutY="58.0" prefHeight="194.0" prefWidth="276.0" style="-fx-background-color: #204338; -fx-background-radius: 24;">

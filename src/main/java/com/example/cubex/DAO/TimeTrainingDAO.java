@@ -1,14 +1,19 @@
 package com.example.cubex.DAO;
 
 import com.example.cubex.Database.DatabaseConnection;
+import com.example.cubex.model.CubeUser;
+import com.example.cubex.model.TimeTraining;
 import javafx.scene.control.Alert;
 
 import java.security.PublicKey;
 import java.security.spec.DSAPublicKeySpec;
 import java.sql.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TimeTrainingDAO {
+    public static List<TimeTraining> timesTraining = new ArrayList<>();
     public static boolean createTimeTraining (String scramble, String min, String second, LocalDate registrationDate, int idSession){
         boolean isCreate = false;
             String sql = "INSERT INTO TIMES_TRAINING (DESCRIPTION_SCRAMBLE, MINUTES1, SECONDS1, REGISTRATION_DATE, ID_SESSION)" +
@@ -46,7 +51,6 @@ public class TimeTrainingDAO {
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 idSession = resultSet.getInt("ID_SESSION");
-                System.out.println(idSession);
             }
         } catch (SQLException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -56,5 +60,30 @@ public class TimeTrainingDAO {
             alert.showAndWait();
         }
         return idSession;
+    }
+
+
+    public static List<TimeTraining> listTimesTraining (int idSession){
+        try {
+            Connection connection = DatabaseConnection.conectar();
+            String sql = "SELECT MINUTES1, SECONDS1 FROM TIMES_TRAINING WHERE ID_SESSION = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, idSession);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                int minutes = resultSet.getInt("MINUTES1");
+                double seconds = resultSet.getDouble("SECONDS1");
+                TimeTraining timeTraining = new TimeTraining(minutes, seconds);
+                timesTraining.add(timeTraining);
+            }
+        } catch (SQLException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error de conexión.");
+            alert.setHeaderText("¡ERROR!");
+            alert.setContentText("Error al conectar a la base de datos: " + e.getMessage());
+            alert.showAndWait();
+        }
+        return timesTraining;
     }
 }

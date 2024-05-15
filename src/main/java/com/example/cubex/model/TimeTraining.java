@@ -11,7 +11,12 @@ public class TimeTraining {
     private LocalDate registrationDate;
     private int idSession;
 
-    public TimeTraining(String descriptionScramble, int minutes, double seconds, String comments, LocalDate registrationDate,int idSession) {
+    public TimeTraining(int minutes, double seconds) {
+        this.minutes = minutes;
+        this.seconds = seconds;
+    }
+
+    public TimeTraining(String descriptionScramble, int minutes, double seconds, String comments, LocalDate registrationDate, int idSession) {
         this.descriptionScramble = descriptionScramble;
         this.minutes = minutes;
         this.seconds = seconds;
