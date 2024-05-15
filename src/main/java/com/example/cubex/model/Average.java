@@ -2,7 +2,6 @@ package com.example.cubex.model;
 
 public class Average {
     private int idAverage;
-    private int idUser;
     private int avgMinutes;
     private double avgSeconds;
     private int periodAvg;
@@ -10,10 +9,12 @@ public class Average {
     private double pbSeconds;
     private int worstMinutes;
     private double worstSeconds;
+    private int idSession;
+    private int idCompe;
+    private int idChamp;
 
-
-    public Average(int idUser, int avgMinutes, double avgSeconds, int periodAvg, int pbMinutes, double pbSeconds, int worstMinutes, double worstSeconds) {
-        this.idUser = idUser;
+    public Average(int avgMinutes, double avgSeconds, int periodAvg, int pbMinutes, double pbSeconds,
+                   int worstMinutes, double worstSeconds, int idSession, int idCompe, int idChamp) {
         this.avgMinutes = avgMinutes;
         this.avgSeconds = avgSeconds;
         this.periodAvg = periodAvg;
@@ -21,7 +22,22 @@ public class Average {
         this.pbSeconds = pbSeconds;
         this.worstMinutes = worstMinutes;
         this.worstSeconds = worstSeconds;
+        this.idSession = idSession;
+        this.idCompe = idCompe;
+        this.idChamp = idChamp;
     }
+
+    public int getIdSession() { return idSession; }
+
+    public void setIdSession(int idSession) { this.idSession = idSession; }
+
+    public int getIdCompe() { return idCompe; }
+
+    public void setIdCompe(int idCompe) { this.idCompe = idCompe; }
+
+    public int getIdChamp() { return idChamp; }
+
+    public void setIdChamp(int idChamp) { this.idChamp = idChamp; }
 
     public int getIdAverage() {
         return idAverage;
@@ -29,14 +45,6 @@ public class Average {
 
     public void setIdAverage(int idAverage) {
         this.idAverage = idAverage;
-    }
-
-    public int getIdUser() {
-        return idUser;
-    }
-
-    public void setIdUser(int idUser) {
-        this.idUser = idUser;
     }
 
     public int getAvgMinutes() {

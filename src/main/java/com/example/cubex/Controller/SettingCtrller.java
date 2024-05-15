@@ -190,9 +190,6 @@ public class SettingCtrller extends CodeGeneral implements Initializable {
         // SE AGREGA EL HBOX AL SCROLLPANE
         scrollPane.setContent(hbox);
         scrollPane.setFitToWidth(true);
-
-
-        System.out.println("Jjj");
     }
 
     @FXML

@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 public class TimeCompetition {
     private int idTimeCompe;
+    private int idUserCompe;
     private String descriptionScramble;
     private int minutes1;
     private double seconds1;
@@ -14,8 +15,9 @@ public class TimeCompetition {
     private int idCompe;
     private int idType;
 
-    public TimeCompetition(String descriptionScramble, int minutes1, double seconds1, String comments1, int minutes2, double seconds2, String comments2, int idCompe, int idType) {
+    public TimeCompetition(String descriptionScramble, int idUserCompe, int minutes1, double seconds1, String comments1, int minutes2, double seconds2, String comments2, int idCompe, int idType) {
         this.descriptionScramble = descriptionScramble;
+        this.idUserCompe = idUserCompe;
         this.minutes1 = minutes1;
         this.seconds1 = seconds1;
         this.comments1 = comments1;
@@ -24,6 +26,14 @@ public class TimeCompetition {
         this.comments2 = comments2;
         this.idCompe = idCompe;
         this.idType = idType;
+    }
+
+    public int getIdUserCompe() {
+        return idUserCompe;
+    }
+
+    public void setIdUserCompe(int idUserCompe) {
+        this.idUserCompe = idUserCompe;
     }
 
     public int getIdTimeCompe() {

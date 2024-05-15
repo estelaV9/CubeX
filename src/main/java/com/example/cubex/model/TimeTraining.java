@@ -9,16 +9,14 @@ public class TimeTraining {
     private double seconds;
     private String comments;
     private LocalDate registrationDate;
-    private int idType;
     private int idSession;
 
-    public TimeTraining(String descriptionScramble, int minutes, double seconds, String comments, LocalDate registrationDate, int idType, int idSession) {
+    public TimeTraining(String descriptionScramble, int minutes, double seconds, String comments, LocalDate registrationDate,int idSession) {
         this.descriptionScramble = descriptionScramble;
         this.minutes = minutes;
         this.seconds = seconds;
         this.comments = comments;
         this.registrationDate = registrationDate;
-        this.idType = idType;
         this.idSession = idSession;
     }
 
@@ -68,14 +66,6 @@ public class TimeTraining {
 
     public void setRegistrationDate(LocalDate registrationDate) {
         this.registrationDate = registrationDate;
-    }
-
-    public int getIdType() {
-        return idType;
-    }
-
-    public void setIdType(int idType) {
-        this.idType = idType;
     }
 
     public int getIdSession() {
