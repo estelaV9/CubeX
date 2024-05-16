@@ -373,9 +373,8 @@ public class SettingCtrller extends CodeGeneral implements Initializable {
 
     @FXML
     void onUpdateImgAction(){
-        imageProfile.setImage(ImagenCtrller.returnImagen(ImagenCtrller.selectedFile));
-        imageProfileEdit.setImage(ImagenCtrller.returnImagen(ImagenCtrller.selectedFile));
-        isModifyImagen = true;
+        imageProfile.setImage(CubeUserDAO.imgUrlSelect(CacheStatic.cubeUser.getMail()));
+        imageProfileEdit.setImage(CubeUserDAO.imgUrlSelect(CacheStatic.cubeUser.getMail()));
     }
 
 
@@ -709,9 +708,9 @@ public class SettingCtrller extends CodeGeneral implements Initializable {
         communityPane.setVisible(false);
         onProfileSetAction();
         CodeGeneral.cubeCategory(categoriesCB);
-        if(isModifyImagen){
+        if(CubeUserDAO.selectUrl(CacheStatic.cubeUser.getMail())){
             onUpdateImgAction();
-        }
+        } // SI LA IMAGEN SE MODIFICO ENTONCES SE CARGA LA IMAGEN
     }
 
 }

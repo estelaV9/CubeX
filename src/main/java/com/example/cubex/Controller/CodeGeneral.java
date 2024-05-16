@@ -11,7 +11,6 @@ import com.example.cubex.model.TimeCompetition;
 import com.example.cubex.model.TimeTraining;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -19,7 +18,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -44,13 +42,11 @@ public class CodeGeneral implements Initializable {
     @FXML public Button optionBtt;
     @FXML public Pane optionMenu;
     @FXML public Button profileBtt;
-    @FXML public TextField scramblePane;
     @FXML public Label scrambleLabel;
     @FXML public Button sessionBtt;
     @FXML public Pane settingMenu;
     @FXML public Button settingsBtt;
     @FXML public Button settingsMenuBtt;
-    @FXML public Button solvesBtt;
     @FXML public Button timerBtt;
     @FXML public Button closeTimesCompe;
     @FXML public Button openTimesCompe;
@@ -61,40 +57,20 @@ public class CodeGeneral implements Initializable {
     @FXML public Button champBtt;
     @FXML public Pane optionDemoPane;
     @FXML public Button signOutBtt;
-    @FXML
-    private Button editProfileBtt;
-    @FXML
-    public Pane demoProfilePane;
-    @FXML
-    public Pane profilePage;
-    @FXML
-    public Pane communityPane;
-    @FXML
-    public AnchorPane panelTimesScroll;
-    @FXML
-    private TextField levelProfileTxt;
-
-    @FXML
-    private Label userProfiletxt;
-    @FXML
-    private ImageView proProfileImg;
-
-    @FXML
-    private Label proProfileTxt;
-
-    @FXML
-    private Label dateProfileTxt;
-    @FXML
-    private Label nameSessionLabel;
-    @FXML
-    private ScrollPane timesMenuScroll;
-    @FXML
-    private ScrollPane timesCompeScroll;
-    @FXML
-    public ImageView imageProfileGeneral;
-
-    @FXML
-    public ImageView imageProfileEditGeneral;
+    @FXML private Button editProfileBtt;
+    @FXML public Pane demoProfilePane;
+    @FXML public Pane profilePage;
+    @FXML public AnchorPane panelTimesScroll;
+    @FXML private TextField levelProfileTxt;
+    @FXML private Label userProfiletxt;
+    @FXML private ImageView proProfileImg;
+    @FXML private Label proProfileTxt;
+    @FXML private Label dateProfileTxt;
+    @FXML private Label nameSessionLabel;
+    @FXML private ScrollPane timesMenuScroll;
+    @FXML private ScrollPane timesCompeScroll;
+    @FXML public ImageView imageProfileGeneral;
+    @FXML public ImageView imageProfileEditGeneral;
 
 
     // ATRIBUTOS SEMAFOROS PARA ABRIR Y CERRAR DESDE EL MISMO BOTON
@@ -105,19 +81,18 @@ public class CodeGeneral implements Initializable {
     static int min = 0;
     static int seg = 0;
     static int cent = 0;
-    static Timeline timeline;
 
 
                             /********* GENERAL METHODS ***********/
-    @FXML void manejarTeclaPresionada(KeyEvent event) {
+    @FXML void manejarTeclaPresionada() {
 
     }
 
-    @FXML void manejarTeclaSoltada(KeyEvent event) {
+    @FXML void manejarTeclaSoltada() {
 
     }
 
-    @FXML void onExitAction(ActionEvent event) {
+    @FXML void onExitAction() {
         int opcion = JOptionPane.showConfirmDialog(null,
                 "¿Está seguro de que desea salir?", "Confirmación", JOptionPane.YES_NO_OPTION);
         if (opcion == JOptionPane.YES_OPTION) {
@@ -162,12 +137,12 @@ public class CodeGeneral implements Initializable {
     }
 
     @FXML
-    void onEditProfileAction(ActionEvent event) {
+    void onEditProfileAction() {
         onSettingsMenuAction();
     }
 
                                 /********* TIMES MENU ***********/
-    @FXML void onOpenMenuAction(ActionEvent event) {
+    @FXML void onOpenMenuAction() {
         // CIERRAR TODAS LAS VENTANAS EMERGENTES QUE HAYA Y MOSTRAR LA QUE SE PULSO
         if(StartCtrller.isDemo){
             demoProfilePane.setVisible(false);
@@ -394,7 +369,7 @@ public class CodeGeneral implements Initializable {
             e.printStackTrace();
         }
     }
-    @FXML void onSignOutAction(ActionEvent event) {
+    @FXML void onSignOutAction() {
         try {
             FXMLLoader fxmlLoader = new
                     FXMLLoader(Main.class.getResource("Start.fxml"));
@@ -414,7 +389,7 @@ public class CodeGeneral implements Initializable {
 
 
                                 /********* SETTINGS MENU ***********/
-    @FXML void onSettingsAction(ActionEvent event) {
+    @FXML void onSettingsAction() {
         // CIERRAR TODAS LAS VENTANAS EMERGENTES QUE HAYA Y MOSTRAR LA QUE SE PULSO
         if(StartCtrller.isDemo){
             demoProfilePane.setVisible(false);
@@ -437,7 +412,7 @@ public class CodeGeneral implements Initializable {
         settingMenu.setVisible(false);
     } // CERRAR EL MENU DE AJUSTES
 
-    @FXML void onCompeAction(ActionEvent event) {
+    @FXML void onCompeAction() {
         try {
             FXMLLoader fxmlLoader = new
                     FXMLLoader(Main.class.getResource("Competition.fxml"));
@@ -455,7 +430,7 @@ public class CodeGeneral implements Initializable {
         }
     }// IR A LA PAGINA COMPETITION
 
-    @FXML void onSessionAction(ActionEvent event) {
+    @FXML void onSessionAction() {
         try {
             FXMLLoader fxmlLoader = new
                     FXMLLoader(Main.class.getResource("Session.fxml"));
@@ -474,7 +449,7 @@ public class CodeGeneral implements Initializable {
     }// IR A LA PAGINA DE SESIONES
 
 
-    @FXML void onTimerAction(ActionEvent event) {
+    @FXML void onTimerAction() {
         try {
             FXMLLoader fxmlLoader = new
                     FXMLLoader(Main.class.getResource("Page.fxml"));
@@ -492,7 +467,7 @@ public class CodeGeneral implements Initializable {
         }
     }// PAGINA PRINCIPAL
 
-    @FXML void onChampAction(ActionEvent event) {
+    @FXML void onChampAction() {
 
     }
 
@@ -601,15 +576,10 @@ public class CodeGeneral implements Initializable {
         nameSession.setVisible(false);
     } // CERRAR LOS POPUPS
 
-
-
-
-
-
     @FXML
     void onUpdateImgAction(){
-        imageProfileEditGeneral.setImage(ImagenCtrller.returnImagen(ImagenCtrller.selectedFile));
-        imageProfileGeneral.setImage(ImagenCtrller.returnImagen(ImagenCtrller.selectedFile));
+        imageProfileEditGeneral.setImage(CubeUserDAO.imgUrlSelect(CacheStatic.cubeUser.getMail()));
+        imageProfileGeneral.setImage(CubeUserDAO.imgUrlSelect(CacheStatic.cubeUser.getMail()));
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

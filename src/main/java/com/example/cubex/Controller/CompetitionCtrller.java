@@ -127,9 +127,9 @@ public class CompetitionCtrller extends CodeGeneral implements Initializable {
         chrono2Label.setText("0:00,00");
         if(!StartCtrller.isDemo){
             CompetitionDAO.countCompetition();
-            if(SettingCtrller.isModifyImagen){
+            if(CubeUserDAO.selectUrl(CacheStatic.cubeUser.getMail())){
                 onUpdateImgAction();
-            } // SI SE HA PUESTO UNA FOTO SE CARGA ESA FOTO
+            } // SI LA IMAGEN SE MODIFICO ENTONCES SE CARGA LA IMAGEN
         } // SI NO ES USUARIO DEMO SE CARGA LA FOTO QUE SE HAYA PUESTO
     }// CUANDO SE INICIA, SE CUENTA LOS TIEMPOS DE LA COMPETENCIA, SE ELIMINA TODAS LAS VENTANAS EMERGENTES,
      // SE ESTABLECE UN SCRAMBLE, SE CARGAN LAS CATEGORIAS Y LA IMAGEN SI LA ACTUALIZO EL USUARIO ANTERIORMENTE

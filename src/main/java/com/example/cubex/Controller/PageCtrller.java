@@ -1,5 +1,6 @@
 package com.example.cubex.Controller;
 
+import com.example.cubex.DAO.CubeUserDAO;
 import com.example.cubex.DAO.SessionDAO;
 import com.example.cubex.DAO.TimeTrainingDAO;
 import com.example.cubex.model.CacheStatic;
@@ -90,9 +91,9 @@ public class PageCtrller extends CodeGeneral implements Initializable {
         CodeGeneral.onFalseMenus(demoProfilePane, profilePage, settingMenu, optionMenu, optionDemoPane, timesMenu);
         scrambleLabel.setText(CodeGeneral.scramble());
         if(!StartCtrller.isDemo){
-            if(SettingCtrller.isModifyImagen){
+            if(CubeUserDAO.selectUrl(CacheStatic.cubeUser.getMail())){
                 onUpdateImgAction();
-            } // SI SE HA PUESTO UNA FOTO SE CARGA ESA FOTO
+            } // SI LA IMAGEN SE MODIFICO ENTONCES SE CARGA LA IMAGEN
         } // SI NO ES USUARIO DEMO SE CARGA LA FOTO QUE SE HAYA PUESTO
     } // CUANDO SE INICIA, SE ELIMINA TODAS LAS VENTANAS EMERGENTES, SE ESTABLECE UN SCRAMBLE Y SE CARGA LA IMAGEN SI
       // LA ACTUALIZO EL USUARIO ANTERIORMENTE

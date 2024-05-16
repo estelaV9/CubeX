@@ -1,7 +1,10 @@
 package com.example.cubex.Controller;
 
+import com.example.cubex.DAO.CubeUserDAO;
+import com.example.cubex.model.CacheStatic;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -31,6 +34,20 @@ public class ImagenCtrller {
 
         // SE MUESTRA LA IMAGEN EN EL IMAGENVIEW
         imagenView.setImage(returnImagen(selectedFile));
+
+        if (CubeUserDAO.urlUpdate(selectedFile, CacheStatic.cubeUser.getMail())) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Imagen actualizada");
+            alert.setHeaderText("¡Éxito!");
+            alert.setContentText("La imagen se ha actualizado correctamente.");
+            alert.showAndWait();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error al actualizar la imagen");
+            alert.setHeaderText("¡ERROR!");
+            alert.setContentText("La imagen no se ha podido actualizar.");
+            alert.showAndWait();
+        }
     }
 
     public static Image returnImagen(File selectedFile) {

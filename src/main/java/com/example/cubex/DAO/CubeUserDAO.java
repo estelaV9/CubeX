@@ -1,28 +1,18 @@
 package com.example.cubex.DAO;
 
-import com.example.cubex.Controller.RegistrationCtrller;
-import com.example.cubex.Controller.SettingCtrller;
-import com.example.cubex.Controller.StartCtrller;
 import com.example.cubex.Database.DatabaseConnection;
-import com.example.cubex.Main;
 import com.example.cubex.model.CacheStatic;
 import com.example.cubex.model.CubeUser;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.RadioButton;
-import javafx.stage.Stage;
-
-import java.io.IOException;
-import java.lang.invoke.StringConcatFactory;
-import java.security.PublicKey;
+import java.awt.*;
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
+import javafx.scene.image.Image;
 
 public class CubeUserDAO {
     public static List<CubeUser> users = new ArrayList<>();
@@ -295,5 +285,81 @@ public class CubeUserDAO {
         }
         return idUser;
     }
+
+    public static boolean urlUpdate (File selectedFile, String mail){
+        String sql = "UPDATE CUBE_USERS SET URL_IMAGEN = ? WHERE MAIL = ?";
+        boolean isUpdate = false;
+        try {
+            Connection connection = DatabaseConnection.conectar();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            String fileUrl = selectedFile.toURI().toString(); // EXTRAER LA URL
+            statement.setString(1, fileUrl);
+            statement.setString(2, mail);
+            int rowsInserted = statement.executeUpdate();
+            if (rowsInserted > 0) {
+                isUpdate = true;
+            }
+        } catch (SQLException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error de conexión.");
+            alert.setHeaderText("¡ERROR!");
+            alert.setContentText("Error al conectar a la base de datos: " + e.getMessage());
+            alert.showAndWait();
+        }
+        return isUpdate;
+    } // ACTUALIZAR LA URL
+
+
+    public static Image imgUrlSelect (String mail){
+        String sql = "SELECT URL_IMAGEN FROM CUBE_USERS WHERE MAIL = ?";
+        Image image = null; //SE CREA UNA IMAGEN CON LA URL
+        try {
+            Connection connection = DatabaseConnection.conectar();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, mail);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()){
+                String fileUrl = resultSet.getString("URL_IMAGEN");
+                URL url = new URL (fileUrl); // SE CREA UN URL PORQUE CON EL STRING DE LA URL NO SE PUEDE
+                image = new Image(url.toString());
+            }
+        } catch (SQLException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error de conexión.");
+            alert.setHeaderText("¡ERROR!");
+            alert.setContentText("Error al conectar a la base de datos: " + e.getMessage());
+            alert.showAndWait();
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
+        return image;
+    } // SELECCIONAR LA URL Y CONVERTIRLA EN IMAGEN
+
+    public static boolean selectUrl (String mail){
+        String sql = "SELECT URL_IMAGEN FROM CUBE_USERS WHERE MAIL = ?";
+        boolean haveUrl = false;
+        try {
+            Connection connection = DatabaseConnection.conectar();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, mail);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()){
+                String fileUrl = resultSet.getString("URL_IMAGEN");
+                if(fileUrl != null){
+                    haveUrl = true;
+                }
+            }
+        } catch (SQLException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error de conexión.");
+            alert.setHeaderText("¡ERROR!");
+            alert.setContentText("Error al conectar a la base de datos: " + e.getMessage());
+            alert.showAndWait();
+        }
+        return haveUrl;
+    } // SELECCIONAR LA URL
+
+
+
 
 }

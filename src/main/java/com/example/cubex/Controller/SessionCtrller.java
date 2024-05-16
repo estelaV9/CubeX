@@ -71,18 +71,15 @@ public class SessionCtrller extends CodeGeneral implements Initializable {
             loadSession(); // SI NO ES UN USUARIO DEMO, SE CARGAN LAS SESIONES DEL USUARIO
             allTimesScroll.setVisible(true);
             categoriesCB1.setVisible(true);
+            if(CubeUserDAO.selectUrl(CacheStatic.cubeUser.getMail())){
+                onUpdateImgAction();
+            } // SI LA IMAGEN SE MODIFICO ENTONCES SE CARGA LA IMAGEN, SOLO SE CARGA EN USER NO EN USER DEMO
         } else {
             allTimesScroll.setVisible(false);
             categoriesCB1.setVisible(false);
         } // SI ES USER DEMO NO SE LE PERMITIRA VER LOS TIEMPOS SEGUN LOS CUBOS QUE HA HECHO
         detailsPane.setVisible(false);
         detailsManualPane.setVisible(false);
-
-        if(!StartCtrller.isDemo){
-            if(SettingCtrller.isModifyImagen){
-                onUpdateImgAction();
-            } // SI SE HA PUESTO UNA FOTO SE CARGA ESA FOTO
-        } // SI NO ES USUARIO DEMO SE CARGA LA FOTO QUE SE HAYA PUESTO
     }
 
     @FXML
