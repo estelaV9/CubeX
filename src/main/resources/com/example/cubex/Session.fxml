@@ -14,27 +14,13 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="740.0" style="-fx-background-color: #1e3728;" stylesheets="@Style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cubex.Controller.SessionCtrller">
    <children>
-      <Button layoutX="645.0" layoutY="97.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="72.0" style="-fx-background-color: #1e3728;" text="Button">
-         <graphic>
-            <ImageView fitHeight="42.0" fitWidth="67.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@Imagen/cube.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </Button>
-      <ImageView fitHeight="50.0" fitWidth="186.0" layoutX="277.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@Imagen/title.png" />
-         </image>
-      </ImageView>
       <Pane fx:id="SessionPane" layoutX="36.0" layoutY="70.0" prefHeight="312.0" prefWidth="674.0" style="-fx-background-color: #325743; -fx-background-radius: 24;">
          <children>
             <Button fx:id="openBtt" layoutX="627.0" layoutY="270.0" mnemonicParsing="false" onAction="#onOpenMenuAction" style="-fx-background-color: #325743; -fx-background-radius: 100;" />
             <Button fx:id="closeBtt" layoutX="626.0" layoutY="270.0" mnemonicParsing="false" onAction="#onCloseMenuAction" prefHeight="23.0" prefWidth="46.0" style="-fx-background-color: #325743; -fx-background-radius: 100;" />
-            <Button fx:id="addSessionBtt" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#onAddSessionAction" prefHeight="71.0" prefWidth="106.0" style="-fx-background-color: #204338; -fx-background-radius: 25;" text="+">
+            <Button fx:id="addSessionBtt" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#onAddSessionAction" prefHeight="72.0" prefWidth="72.0" style="-fx-background-color: #204338; -fx-background-radius: 25;" text="+">
                <font>
-                  <Font name="DejaVu Sans Bold" size="57.0" />
+                  <Font name="DejaVu Sans Bold" size="40.0" />
                </font>
             </Button>
             <ScrollPane fx:id="scroll" hbarPolicy="NEVER" layoutX="384.0" layoutY="9.0" prefHeight="295.0" prefWidth="276.0" style="-fx-background-color: #325743;" vbarPolicy="ALWAYS">
@@ -42,6 +28,12 @@
                   <AnchorPane fx:id="paneScroll" minHeight="0.0" minWidth="0.0" prefHeight="294.0" prefWidth="262.0" style="-fx-background-color: #325743;" />
                </content>
             </ScrollPane>
+            <ScrollPane fx:id="allTimesScroll" hbarPolicy="NEVER" layoutX="126.0" layoutY="67.0" prefHeight="186.0" prefWidth="202.0" style="-fx-background-color: #204338;">
+              <content>
+                <AnchorPane fx:id="panelAllTimesScroll" minHeight="0.0" minWidth="0.0" prefHeight="186.0" prefWidth="188.0" style="-fx-background-color: #204338;" />
+              </content>
+            </ScrollPane>
+            <ComboBox fx:id="categoriesCB1" layoutX="126.0" layoutY="22.0" onAction="#onShowTimes" prefHeight="44.0" prefWidth="202.0" style="-fx-background-color: #b1c8a3; -fx-prompt-text-fill: rgba(255, 0, 0, 0.5);" />
             <Pane fx:id="nameSession" layoutX="67.0" layoutY="33.0" prefHeight="248.0" prefWidth="256.0" style="-fx-background-color: #325743; -fx-background-radius: 24; -fx-border-color: black; -fx-border-radius: 24;">
                <children>
                   <Button fx:id="createSessionBtt" layoutX="17.0" layoutY="202.0" mnemonicParsing="false" onAction="#onCreateSessionAction" prefHeight="31.0" prefWidth="166.0" style="-fx-background-color: #74cc5e;" text="Create">
@@ -78,8 +70,102 @@
                   <ComboBox fx:id="categoriesCB" layoutX="14.0" layoutY="113.0" prefHeight="26.0" prefWidth="235.0" style="-fx-background-color: #b1c8a3;" />
                </children>
             </Pane>
+            <Pane fx:id="detailsPane" layoutX="63.0" layoutY="13.0" prefHeight="245.0" prefWidth="314.0" style="-fx-background-color: #325743; -fx-background-radius: 24; -fx-border-color: black; -fx-border-radius: 24;">
+               <children>
+                  <Button layoutX="17.0" layoutY="202.0" mnemonicParsing="false" onAction="#onEditNameDetailsAction" prefHeight="31.0" prefWidth="172.0" style="-fx-background-color: #74cc5e;" text="EDIT NAME SESSION">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Button>
+                  <Label fx:id="loginMessage1" layoutX="21.0" layoutY="136.0">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="DetailsNameSessionLabel" layoutX="16.0" layoutY="10.0" prefHeight="31.0" prefWidth="222.0" style="-fx-underline: true;">
+                     <font>
+                        <Font name="System Bold" size="21.0" />
+                     </font>
+                  </Label>
+                  <Pane layoutX="17.0" layoutY="47.0" prefHeight="67.0" prefWidth="136.0" style="-fx-background-color: #b1c8a3; -fx-background-radius: 10;">
+                     <children>
+                        <Label layoutX="8.0" layoutY="6.0" text="PB">
+                           <font>
+                              <Font name="DejaVu Sans Bold" size="16.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="DetailsPbTime" layoutX="8.0" layoutY="23.0" prefHeight="31.0" prefWidth="115.0">
+                           <font>
+                              <Font size="28.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </Pane>
+                  <Pane layoutX="164.0" layoutY="47.0" prefHeight="67.0" prefWidth="136.0" style="-fx-background-color: #b1c8a3; -fx-background-radius: 10;">
+                     <children>
+                        <Label layoutX="8.0" layoutY="6.0" text="WORST">
+                           <font>
+                              <Font name="DejaVu Sans Bold" size="16.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="DetailsWorstTime" layoutX="8.0" layoutY="26.0" prefHeight="31.0" prefWidth="115.0">
+                           <font>
+                              <Font size="28.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </Pane>
+                  <Pane layoutX="17.0" layoutY="124.0" prefHeight="67.0" prefWidth="136.0" style="-fx-background-color: #b1c8a3; -fx-background-radius: 10;">
+                     <children>
+                        <Label layoutX="8.0" layoutY="6.0" text="AVG">
+                           <font>
+                              <Font name="DejaVu Sans Bold" size="16.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="DetailsAvg" layoutX="8.0" layoutY="24.0" prefHeight="31.0" prefWidth="115.0">
+                           <font>
+                              <Font size="28.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </Pane>
+                  <Pane layoutX="164.0" layoutY="124.0" prefHeight="67.0" prefWidth="136.0" style="-fx-background-color: #b1c8a3; -fx-background-radius: 10;">
+                     <children>
+                        <Label layoutX="8.0" layoutY="6.0" text="TOTAL TIMES">
+                           <font>
+                              <Font name="DejaVu Sans Bold" size="16.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="DetailsTotalTimes" layoutX="9.0" layoutY="23.0" prefHeight="31.0" prefWidth="115.0">
+                           <font>
+                              <Font size="28.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </Pane>
+                  <Button fx:id="closeDetailsPane" layoutX="191.0" layoutY="202.0" mnemonicParsing="false" onAction="#onCloseDetailsPaneAction" prefHeight="31.0" prefWidth="109.0" style="-fx-background-color: #6d7b64;" text="CLOSE">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Button>
+               </children>
+            </Pane>
          </children>
       </Pane>
+      <Button layoutX="645.0" layoutY="97.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="72.0" style="-fx-background-color: #1e3728;" text="Button">
+         <graphic>
+            <ImageView fitHeight="42.0" fitWidth="67.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Imagen/cube.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <ImageView fitHeight="50.0" fitWidth="186.0" layoutX="277.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Imagen/title.png" />
+         </image>
+      </ImageView>
       <Button layoutX="14.0" layoutY="309.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" prefHeight="50.0" prefWidth="72.0" style="-fx-background-color: #1e3728;" text="Button">
          <graphic>
             <ImageView fitHeight="42.0" fitWidth="67.0" pickOnBounds="true" preserveRatio="true">

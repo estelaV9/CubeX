@@ -3,6 +3,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -20,7 +21,7 @@
       </ImageView>
       <Pane layoutX="36.0" layoutY="70.0" prefHeight="312.0" prefWidth="674.0" style="-fx-background-color: #325743; -fx-background-radius: 24;">
          <children>
-            <Button fx:id="openBtt" layoutX="627.0" layoutY="270.0" mnemonicParsing="false" onAction="#onOpenMenuAction" style="-fx-background-color: #325743; -fx-background-radius: 100;">
+            <Button fx:id="openTimesCompe" layoutX="627.0" layoutY="270.0" mnemonicParsing="false" onAction="#onOpenMenuCompeAction" style="-fx-background-color: #325743; -fx-background-radius: 100;">
                <graphic>
                   <ImageView fitHeight="34.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -29,7 +30,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="closeBtt" layoutX="626.0" layoutY="270.0" mnemonicParsing="false" onAction="#onCloseMenuAction" prefHeight="23.0" prefWidth="46.0" style="-fx-background-color: #325743; -fx-background-radius: 100;">
+            <Button fx:id="closeTimesCompe" layoutX="626.0" layoutY="270.0" mnemonicParsing="false" onAction="#onCloseMenuCompeAction" prefHeight="23.0" prefWidth="46.0" style="-fx-background-color: #325743; -fx-background-radius: 100;">
                <graphic>
                   <ImageView fitHeight="34.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -76,10 +77,13 @@
                   <Font name="DejaVu Sans Bold" size="15.0" />
                </font>
             </Button>
-            <Pane fx:id="timesMenu" layoutX="386.0" layoutY="92.0" prefHeight="182.0" prefWidth="276.0" style="-fx-background-color: #204338; -fx-background-radius: 24;">
+            <Pane fx:id="timesMenuCompe" layoutX="411.0" layoutY="92.0" prefHeight="182.0" prefWidth="251.0" style="-fx-background-color: #204338; -fx-background-radius: 24;">
                <children>
-                  <TextField fx:id="times1Pane" layoutX="14.0" layoutY="9.0" prefHeight="164.0" prefWidth="122.0" style="-fx-background-color: #325743;" />
-                  <TextField fx:id="times2Pane" layoutX="140.0" layoutY="9.0" prefHeight="164.0" prefWidth="122.0" style="-fx-background-color: #325743;" />
+                  <ScrollPane fx:id="timesCompeScroll" hbarPolicy="NEVER" layoutX="17.0" layoutY="14.0" prefHeight="155.0" prefWidth="220.0" style="-fx-background-color: #325743;">
+                    <content>
+                      <AnchorPane fx:id="compePaneScroll" minHeight="0.0" minWidth="0.0" prefHeight="154.0" prefWidth="206.0" style="-fx-background-color: #325743;" />
+                    </content>
+                  </ScrollPane>
                </children>
             </Pane>
          </children>

@@ -1,11 +1,10 @@
 package com.example.cubex.Controller;
 
-import com.example.cubex.DAO.AverageDAO;
-import com.example.cubex.DAO.MemberDAO;
-import com.example.cubex.DAO.SessionDAO;
+import com.example.cubex.DAO.*;
 import com.example.cubex.Database.DatabaseConnection;
 import com.example.cubex.model.CacheStatic;
 import com.example.cubex.model.Member;
+import com.example.cubex.model.TimeTraining;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -16,7 +15,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 
 import javax.print.attribute.standard.PrinterName;
 import javax.swing.*;
@@ -31,6 +32,7 @@ import java.util.ResourceBundle;
 public class SessionCtrller extends CodeGeneral implements Initializable {
     @FXML
     private Button addSessionBtt;
+
     @FXML
     private Button cancelSessionBtt;
     @FXML
@@ -51,14 +53,50 @@ public class SessionCtrller extends CodeGeneral implements Initializable {
     @FXML
     private ComboBox categoriesCB;
     @FXML
+    private AnchorPane panelAllTimesScroll;
+    @FXML
+    private ComboBox categoriesCB1;
+
+    @FXML
+    private ScrollPane allTimesScroll;
+    @FXML
     private ScrollPane scroll;
+
+    @FXML
+    private Label DetailsAvg;
+
+    @FXML
+    private Label DetailsNameSessionLabel;
+
+    @FXML
+    private Label DetailsPbTime;
+
+    @FXML
+    private Label DetailsTotalTimes;
+
+    @FXML
+    private Label DetailsWorstTime;
+
+    @FXML
+    private Button closeDetailsPane;
+
+    @FXML
+    private Button createSessionBtt1;
+
+    @FXML
+    private Pane detailsPane;
+
+    @FXML
+    private Label loginMessage1;
+
+    int idSession;
     public static String isUsing;
     private double nextPaneY = 10; // POSICION Y DEL PROXIMO PANEL
     double newHeight = 0; // NUEVA POSICION Y SI SE ELIMINA ALGUN PANEL
     private static int contadorCreate = 0; // CONTADOR PARA VER CUANTAS VECES CREA UNA SESION EL USUARIO DEMO
 
     LocalDate localDate = LocalDate.now();
-    String category, sessionToDelete, sessionToUse;
+    String category, sessionToDelete, sessionToUse, SessionDetails;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -67,18 +105,69 @@ public class SessionCtrller extends CodeGeneral implements Initializable {
         sessionName.setStyle("-fx-prompt-text-fill: #9B9B9B; -fx-background-color: #b1c8a3;");
         paneScroll.prefWidth(50);
         CodeGeneral.cubeCategory(categoriesCB);
+        CodeGeneral.cubeCategory(categoriesCB1);
+        categoriesCB1.setStyle("-fx-background-color : #b1c8a3");
         if (!StartCtrller.isDemo) {
             // SI NO ES UN USUARIO DEMO, SE CARGAN LAS SESIONES DEL USUARIO
             loadSession();
+            allTimesScroll.setVisible(true);
+            categoriesCB1.setVisible(true);
         }
+        detailsPane.setVisible(false);
     }
 
+
+    @FXML
+    void onShowTimes() {
+        nameSession.setVisible(false);
+
+        String category = String.valueOf(categoriesCB1.getSelectionModel().getSelectedItem());
+        int idCategory = SessionDAO.idCategory(category);
+        int contador = 0;
+
+
+        // CONTENEDOR PRINCIPAL
+        VBox mainContainer = new VBox();
+        mainContainer.setSpacing(10);
+
+        // ITERAR SOBRE LA LISTA DE TIEMPOS
+        for (TimeTraining timeTraining : TimeTrainingDAO.listTimesCategory(idCategory, CubeUserDAO.selectIdUser(CacheStatic.cubeUser.getMail()))) {
+            contador++;
+
+            // CREAR UN HBOX PARA CADA TIEMPO
+            HBox timeBox = new HBox();
+            timeBox.setSpacing(10);
+
+            // LABELS PARA LOS TIEMPOS
+            Label label1 = new Label("  " + contador + ")");
+            Label label2 = new Label(timeTraining.getMinutes() + ":" + timeTraining.getSeconds());
+            Label label3 = new Label(String.valueOf(timeTraining.getRegistrationDate()));
+
+
+            // ESTILOS
+            label1.setStyle("-fx-font-size: 17px; -fx-text-fill: black;");
+            label2.setStyle("-fx-font-size: 17px; -fx-text-fill: black;");
+            label3.setStyle("-fx-font-size: 17px; -fx-text-fill: black;");
+
+            // AGREGAR ELEMENTOS AL HBOX
+            timeBox.getChildren().addAll(label1, label2, label3);
+
+            // AGREGAR EL HBOX AL CONTENEDOR PRINCIPAL
+            mainContainer.getChildren().add(timeBox);
+        }
+        mainContainer.setStyle("-fx-background-color : #204338");
+        // AGREGAR EL CONTENEDOR PRINCIPAL AL SCROLLPANE
+        allTimesScroll.setContent(mainContainer);
+        allTimesScroll.setFitToWidth(true);
+
+    }
 
     @FXML
     void onAddSessionAction(ActionEvent event) {
         demoProfilePane.setVisible(false);
         nameSession.setVisible(true);
     }
+
     public static int idSessions;
 
     @FXML
@@ -104,8 +193,7 @@ public class SessionCtrller extends CodeGeneral implements Initializable {
                 nameSession.setVisible(false);
                 if (!StartCtrller.isDemo) {
                     // SI ES USUARIO SE LIMITA A 15 SESIONES, SI ES MEMBERS PUEDE HACER INFINITAS
-                    if (SessionDAO.numberSession(CacheStatic.cubeUser.getMail()) == 15 && !MemberDAO.selectMember(CacheStatic.cubeUser.getMail())
-                            && !StartCtrller.isDemo) {
+                    if (SessionDAO.numberSession(CacheStatic.cubeUser.getMail()) == 15 && !MemberDAO.selectMember(CacheStatic.cubeUser.getMail())) {
                         Alert alert = new Alert(Alert.AlertType.ERROR);
                         alert.setTitle("Sesion fallida.");
                         alert.setHeaderText("Has sobrepasado el limite de sesiones por usuario");
@@ -162,6 +250,38 @@ public class SessionCtrller extends CodeGeneral implements Initializable {
         details.setPrefWidth(186);
         details.setPrefHeight(31);
         details.setStyle("-fx-background-color: #b1c8a3; -fx-font-family: DejaVu Sans; -fx-font-weight: bold; -fx-font-size: 15px;");
+
+        details.setUserData(sessionName);
+        details.setOnAction(event -> {
+            detailsPane.setVisible(true);
+            nameSession.setVisible(false);
+            if(!StartCtrller.isDemo) {
+                sessionToUse = (String) ((Button) event.getSource()).getUserData(); // SELECCIONAR CUAL ESTA USUANDO
+                SessionDetails = sessionName; // SE ESTABLECE EL NOMBRE DE LA SESION QUE QUIERA USAR
+                idSession = SessionDAO.selectNumberSession(SessionDetails);
+                // ACTUALIZAR TODOS LAS COLUMNAS DE AVERAGE DE ESA SESSION
+                AverageDAO.worstMinutes(idSession);
+                AverageDAO.worstSecond(idSession);
+                AverageDAO.pbMinutes(idSession);
+                AverageDAO.pbSecond(idSession);
+                AverageDAO.countTimes(idSession);
+                AverageDAO.avgMinutes(idSession);
+                AverageDAO.avgSeconds(idSession);
+
+                // MOSTRAR LOS DATOS
+                DetailsNameSessionLabel.setText(SessionDetails.toUpperCase());
+                DetailsTotalTimes.setText(String.valueOf(AverageDAO.timesTotalSession(idSession)));
+                DetailsWorstTime.setText(AverageDAO.worstMinutesTotalSession(idSession) + ":" + AverageDAO.worstSecondTotalSession(idSession));
+                DetailsPbTime.setText(AverageDAO.pbMinutesTotalSession(idSession) + ":" + AverageDAO.pbSecondTotalSession(idSession));
+                DetailsAvg.setText(AverageDAO.avgMinutesTotalSession(idSession) + ":" + AverageDAO.avgSecondTotalSession(idSession));
+            } else {
+                DetailsNameSessionLabel.setText("DEMO");
+                DetailsTotalTimes.setText(String.valueOf(0));
+                DetailsWorstTime.setText(0 + ":" + 00.00);
+                DetailsPbTime.setText(0 + ":" + 00.00);
+                DetailsAvg.setText(0 + ":" + 00.00);
+            } // SI ES USUARIO DEMO SE SETTEA TIEMPOS EN 0 Y NO SE PODRA CAMBIAR
+        });
 
         RadioButton manualRadio = new RadioButton("MANUAL");
         manualRadio.setLayoutX(17);
@@ -234,6 +354,43 @@ public class SessionCtrller extends CodeGeneral implements Initializable {
         return newPane;
     } // CREAR UN NUEVO PANEL DE SESSION
 
+    @FXML
+    void onCloseDetailsPaneAction(ActionEvent event) {
+        detailsPane.setVisible(false);
+    }
+
+    @FXML
+    void onEditNameDetailsAction(ActionEvent event) {
+        if(!StartCtrller.isDemo) {
+            String nombre = JOptionPane.showInputDialog(null, "Nombre sesion");
+            if (nombre != null) {
+                System.out.println(nombre);
+                if (SessionDAO.changeNameSesssion(nombre, idSession)) {
+                    detailsPane.setVisible(false);
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Nombre de Sesion cambiada.");
+                    alert.setHeaderText("Actualizacion exitosa");
+                    alert.setContentText("Se ha actualizado el nombre de la sesion correctamente");
+                    alert.showAndWait();
+                    onReloadAction();
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Nombre de Sesion no cambiada.");
+                    alert.setHeaderText("Actualizacion fallida");
+                    alert.setContentText("No se ha actualizado el nombre de la sesion correctamente");
+                    alert.showAndWait();
+                }
+            }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error al actualizar el nombre de la sesión");
+            alert.setHeaderText("Actualizacion fallida");
+            alert.setContentText("Lo sentimos, no puedes actualizar el nombre de la sesión como usuario demo.\n" +
+                    "Para acceder a las funcionalidades de la aplicacion, registrate o inicia sesión. ¡Gracias!");
+            alert.showAndWait();
+        } // SI ES USUARIO DEMO NO PODRA ACTUALIZAR EL NOMBRE DE LA SESION
+    }
+
     public void loadSession() {
         int minIdSession = SessionDAO.minIdSession(CacheStatic.cubeUser.getMail());
         int maxIdSession = SessionDAO.maxIdSession(CacheStatic.cubeUser.getMail());
@@ -270,7 +427,7 @@ public class SessionCtrller extends CodeGeneral implements Initializable {
             if (StartCtrller.isDemo) {
                 contadorCreate = 0;
             } else {
-                if (AverageDAO.deleteAverage(nameSession) && SessionDAO.deleteSession(nameSession) ) {
+                if (AverageDAO.deleteAverage(nameSession) && SessionDAO.deleteSession(nameSession)) {
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Sesion eliminada.");
                     alert.setHeaderText("Eliminación exitosa");
@@ -304,7 +461,9 @@ public class SessionCtrller extends CodeGeneral implements Initializable {
         }
         paneScroll.setStyle("-fx-background-color :  #325743");
         nextPaneY = 10;
+        paneScroll.getChildren().clear();
         paneScroll.setPrefHeight(alturaPanel()); // SE ESTABLECE LA NUEVA ALTURA
+        loadSession();
 
 
     } // ACTUALIZAR SESIONES (POR SI HA BORRADO NO TENER UN HUECO VACIO

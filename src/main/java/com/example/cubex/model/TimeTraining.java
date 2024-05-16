@@ -11,6 +11,20 @@ public class TimeTraining {
     private LocalDate registrationDate;
     private int idSession;
 
+    public TimeTraining(int minutes) {
+        this.minutes = minutes;
+    }
+
+    public TimeTraining(double seconds) {
+        this.seconds = seconds;
+    }
+
+    public TimeTraining(int minutes, double seconds, LocalDate registrationDate) {
+        this.minutes = minutes;
+        this.seconds = seconds;
+        this.registrationDate = registrationDate;
+    }
+
     public TimeTraining(int minutes, double seconds) {
         this.minutes = minutes;
         this.seconds = seconds;

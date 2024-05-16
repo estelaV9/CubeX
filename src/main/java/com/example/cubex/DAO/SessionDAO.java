@@ -16,9 +16,7 @@ public class SessionDAO {
             statement.setString(1, nameSession);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                System.out.println("holi");
                 idSession = resultSet.getInt("ID_SESSION");
-                System.out.println(idSession);
             }
         } catch (SQLException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -190,6 +188,28 @@ public class SessionDAO {
         return nameCategory;
     }
 
+    public static int idCategory (String nameCategory){
+        String sql = "SELECT ID_TYPE FROM CUBE_TYPE WHERE NAME_TYPE = ?";
+        int idCategory = -1;
+        try {
+            Connection con = DatabaseConnection.conectar();
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.setString(1, nameCategory);
+            ResultSet resultSet = statement.executeQuery();
+            if(resultSet.next()){
+                idCategory = resultSet.getInt("ID_TYPE");
+            }
+            con.close();
+        } catch (SQLException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error de conexión.");
+            alert.setHeaderText("¡ERROR!");
+            alert.setContentText("Error al conectar a la base de datos: " + e.getMessage());
+            alert.showAndWait();
+        }
+        return idCategory;
+    }
+
     public static int numberSession (String mail) {
         String sql = "SELECT COUNT(ID_SESSION) FROM SESSIONS WHERE ID_USER = (SELECT ID_USER FROM CUBE_USERS WHERE MAIL = ?)";
         int number = -1;
@@ -210,6 +230,29 @@ public class SessionDAO {
             alert.showAndWait();
         }
         return number;
+    }
+
+    public static boolean changeNameSesssion (String newName, int idSession) {
+        String sql = "UPDATE SESSIONS SET NAME_SESSION = ? WHERE ID_SESSION = ?";
+        boolean isUpdate = false;
+        try {
+            Connection con = DatabaseConnection.conectar();
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.setString(1, newName);
+            statement.setInt(2, idSession);
+            int rowsInserted = statement.executeUpdate();
+            if (rowsInserted > 0) {
+                isUpdate = true;
+            }
+            con.close();
+        } catch (SQLException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error de conexión.");
+            alert.setHeaderText("¡ERROR!");
+            alert.setContentText("Error al conectar a la base de datos: " + e.getMessage());
+            alert.showAndWait();
+        }
+        return isUpdate;
     }
 
 }

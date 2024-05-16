@@ -15,6 +15,7 @@ public class CubeUser {
     private String urlImagen;
 
 
+
     public CubeUser(String mail) {
         this.mail = mail;
     }

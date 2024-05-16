@@ -273,4 +273,25 @@ public class CubeUserDAO {
 
     }
 
+    public static int selectIdUser (String mail){
+        String sql = "SELECT ID_USER FROM CUBE_USERS WHERE MAIL = ?";
+        int idUser = 0;
+        try {
+            Connection connection = DatabaseConnection.conectar();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, mail);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                idUser = resultSet.getInt("ID_USER");
+            }
+        } catch (SQLException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error de conexión.");
+            alert.setHeaderText("¡ERROR!");
+            alert.setContentText("Error al conectar a la base de datos: " + e.getMessage());
+            alert.showAndWait();
+        }
+        return idUser;
+    }
+
 }

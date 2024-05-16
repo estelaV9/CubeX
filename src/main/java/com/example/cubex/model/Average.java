@@ -13,6 +13,19 @@ public class Average {
     private int idCompe;
     private int idChamp;
 
+    public Average(int avgMinutes) {
+        this.avgMinutes = avgMinutes;
+    }
+
+    public Average(double avgSeconds) {
+        this.avgSeconds = avgSeconds;
+    }
+
+    public Average(int avgMinutes, double avgSeconds) {
+        this.avgMinutes = avgMinutes;
+        this.avgSeconds = avgSeconds;
+    }
+
     public Average(int avgMinutes, double avgSeconds, int periodAvg, int pbMinutes, double pbSeconds,
                    int worstMinutes, double worstSeconds, int idSession, int idCompe, int idChamp) {
         this.avgMinutes = avgMinutes;

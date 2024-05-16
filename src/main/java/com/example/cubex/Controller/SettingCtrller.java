@@ -1,13 +1,10 @@
 package com.example.cubex.Controller;
 
-import com.example.cubex.DAO.CubeUserDAO;
-import com.example.cubex.DAO.MemberDAO;
+import com.example.cubex.DAO.*;
 import com.example.cubex.Database.DatabaseConnection;
 import com.example.cubex.Main;
 import com.example.cubex.Validator.Validator;
-import com.example.cubex.model.CacheStatic;
-import com.example.cubex.model.CubeUser;
-import com.example.cubex.model.Member;
+import com.example.cubex.model.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,6 +16,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -135,6 +133,7 @@ public class SettingCtrller extends CodeGeneral implements Initializable {
     private ScrollPane scrollPane;
     @FXML
     private Label invalidProLabel;
+
     LocalDate localDate = LocalDate.now();
     static boolean pulsarFilter;
 
@@ -143,8 +142,8 @@ public class SettingCtrller extends CodeGeneral implements Initializable {
     void onAvgFilterAction(ActionEvent event) {
         onCloseFilterAction();
         String category = String.valueOf(categoriesCB.getSelectionModel().getSelectedItem());
+        int idCategory = SessionDAO.idCategory(category);
         int contador = 0;
-        CubeUserDAO.users = CubeUserDAO.listUser("average", category);
 
         // SE CREAN 4 VBOX PARA CADA COLUMNS
         VBox vbox1 = new VBox();
@@ -152,40 +151,50 @@ public class SettingCtrller extends CodeGeneral implements Initializable {
         VBox vbox3 = new VBox();
         VBox vbox4 = new VBox();
 
-
         //ESPACIO VERTICAL ENTRE LOS ELEMENTOS DE LAS COLUMNAS
         vbox1.setSpacing(10);
         vbox2.setSpacing(10);
         vbox3.setSpacing(10);
         vbox4.setSpacing(10);
 
-        // ITERAR SOBRE LA LISTA DE USUARIOS Y CREAR UN LABEL POR CADA UNO
-        for (CubeUser user : CubeUserDAO.users) {
+        // ITERAR SOBRE LA LISTA DE MINUTOS
+        for (Average average : AverageDAO.avgMinutesType(idCategory)) {
             contador++;
             // SE CREA UN LABEL POR CADA COLUMNA
             Label label1 = new Label(String.valueOf(contador));
-            Label label2 = new Label(user.getNameUser());
-            Label label3 = new Label(String.valueOf(user.getLevelUser()));
-            Label label4 = new Label(String.valueOf(user.getRoleUser()));
+            Label label2 = new Label(average.getAvgMinutes() + " : ");
 
             // SE LES DA UN ESTILO
             label1.setStyle("-fx-font-size: 17px; -fx-text-fill: black;");
             label2.setStyle("-fx-font-size: 17px; -fx-text-fill: black;");
-            label3.setStyle("-fx-font-size: 17px; -fx-text-fill: black;");
-            label4.setStyle("-fx-font-size: 17px; -fx-text-fill: black;");
 
             // SE AGREGAN LOS LABELS A LAS COLUMNAS CORRESPONDIENTES
             vbox1.getChildren().add(label1);
             vbox2.getChildren().add(label2);
-            vbox3.getChildren().add(label3);
+        }
+
+        // ITERAR SOBRE LA LISTA DE SEGUNDOS Y AÑADIRLE
+        for (Average average : AverageDAO.avgSecondsType(idCategory)) {
+            Label label3 = new Label(String.valueOf(average.getAvgSeconds()));
+            label3.setStyle("-fx-font-size: 17px; -fx-text-fill: black;");
+            vbox3.getChildren().addAll(label3);
+        }
+
+        // ITERAR SOBRE LA LISTA DE USUARIOS QUE TIENEN ESE TIEMPO
+        for (CubeUser cubeUser : AverageDAO.selectNameAvg(AverageDAO.avgMinutesType(idCategory), AverageDAO.avgSecondsType(idCategory))) {
+            Label label4 = new Label(cubeUser.getMail());
+            label4.setStyle("-fx-font-size: 17px; -fx-text-fill: black;");
             vbox4.getChildren().add(label4);
         }
 
-        // SE CREAN UN HBOX QUE CONTENGAN LAS 4 COLUMNAS
-        HBox hbox = new HBox(vbox1, vbox2, vbox3, vbox4);
+        // SE CREA UN HBOX PARA JUNTAR LOS MINUTOS CON LOS SEGUNDOS SIN ESPACIOS
+        HBox hBox1 = new HBox(vbox2, vbox3);
+        hBox1.setSpacing(0);
+
+        // SE CREAN UN HBOX QUE CONTENGAN LAS COLUMNAS Y EL HBOX DEL TIEMPOS
+        HBox hbox = new HBox(vbox1, hBox1, vbox4);
         hbox.setSpacing(20); // ESPACIO HORIZONTAL ENTRE LAS COLUMNAS
         hbox.setStyle("-fx-background-color :  #325743");
-
 
         // SE AGREGA EL HBOX AL SCROLLPANE
         scrollPane.setContent(hbox);
@@ -196,8 +205,8 @@ public class SettingCtrller extends CodeGeneral implements Initializable {
     void onBestFilterAction(ActionEvent event) {
         onCloseFilterAction();
         String category = String.valueOf(categoriesCB.getSelectionModel().getSelectedItem());
+        int idCategory = SessionDAO.idCategory(category);
         int contador = 0;
-        CubeUserDAO.users = CubeUserDAO.listUser("average", category);
 
         // SE CREAN 4 VBOX PARA CADA COLUMNS
         VBox vbox1 = new VBox();
@@ -205,45 +214,55 @@ public class SettingCtrller extends CodeGeneral implements Initializable {
         VBox vbox3 = new VBox();
         VBox vbox4 = new VBox();
 
-
         //ESPACIO VERTICAL ENTRE LOS ELEMENTOS DE LAS COLUMNAS
         vbox1.setSpacing(10);
         vbox2.setSpacing(10);
         vbox3.setSpacing(10);
         vbox4.setSpacing(10);
 
-        // ITERAR SOBRE LA LISTA DE USUARIOS Y CREAR UN LABEL POR CADA UNO
-        for (CubeUser user : CubeUserDAO.users) {
+        // ITERAR SOBRE LA LISTA DE MINUTOS
+        for (TimeTraining timeTraining : TimeTrainingDAO.pbMinutesType(idCategory)) {
             contador++;
             // SE CREA UN LABEL POR CADA COLUMNA
             Label label1 = new Label(String.valueOf(contador));
-            Label label2 = new Label(user.getNameUser());
-            Label label3 = new Label(String.valueOf(user.getLevelUser()));
-            Label label4 = new Label(String.valueOf(user.getRoleUser()));
+            Label label2 = new Label(timeTraining.getMinutes() + " : ");
 
             // SE LES DA UN ESTILO
             label1.setStyle("-fx-font-size: 17px; -fx-text-fill: black;");
             label2.setStyle("-fx-font-size: 17px; -fx-text-fill: black;");
-            label3.setStyle("-fx-font-size: 17px; -fx-text-fill: black;");
-            label4.setStyle("-fx-font-size: 17px; -fx-text-fill: black;");
 
             // SE AGREGAN LOS LABELS A LAS COLUMNAS CORRESPONDIENTES
             vbox1.getChildren().add(label1);
             vbox2.getChildren().add(label2);
-            vbox3.getChildren().add(label3);
+        }
+
+        // ITERAR SOBRE LA LISTA DE SEGUNDOS Y AÑADIRLE
+        for (TimeTraining timeTraining : TimeTrainingDAO.PbSecondsType(idCategory)) {
+            Label label3 = new Label(String.valueOf(timeTraining.getSeconds()));
+            label3.setStyle("-fx-font-size: 17px; -fx-text-fill: black;");
+            vbox3.getChildren().addAll(label3);
+        }
+
+        // ITERAR SOBRE LA LISTA DE USUARIOS QUE TIENEN ESE TIEMPO
+        for (CubeUser cubeUser : TimeTrainingDAO.selectNamePbTime(TimeTrainingDAO.pbMinutesType(idCategory), TimeTrainingDAO.PbSecondsType(idCategory))) {
+            Label label4 = new Label(cubeUser.getMail());
+            label4.setStyle("-fx-font-size: 17px; -fx-text-fill: black;");
             vbox4.getChildren().add(label4);
         }
 
-        // SE CREAN UN HBOX QUE CONTENGAN LAS 4 COLUMNAS
-        HBox hbox = new HBox(vbox1, vbox2, vbox3, vbox4);
+        // SE CREA UN HBOX PARA JUNTAR LOS MINUTOS CON LOS SEGUNDOS SIN ESPACIOS
+        HBox hBox1 = new HBox(vbox2, vbox3);
+        hBox1.setSpacing(0);
+
+        // SE CREAN UN HBOX QUE CONTENGAN LAS COLUMNAS Y EL HBOX DEL TIEMPOS
+        HBox hbox = new HBox(vbox1, hBox1, vbox4);
         hbox.setSpacing(20); // ESPACIO HORIZONTAL ENTRE LAS COLUMNAS
         hbox.setStyle("-fx-background-color :  #325743");
-
 
         // SE AGREGA EL HBOX AL SCROLLPANE
         scrollPane.setContent(hbox);
         scrollPane.setFitToWidth(true);
-    } // FILTRAR POR MEJOR
+    } // FILTRAR POR MEJOR TIEMPO
 
     @FXML
     void onCloseFilterAction() {

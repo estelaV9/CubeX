@@ -2,11 +2,13 @@ package com.example.cubex.Controller;
 
 import com.example.cubex.DAO.CubeUserDAO;
 import com.example.cubex.DAO.SessionDAO;
+import com.example.cubex.DAO.TimeCompetitionDAO;
 import com.example.cubex.DAO.TimeTrainingDAO;
 import com.example.cubex.Database.DatabaseConnection;
 import com.example.cubex.Main;
 import com.example.cubex.model.CacheStatic;
 import com.example.cubex.model.CubeUser;
+import com.example.cubex.model.TimeCompetition;
 import com.example.cubex.model.TimeTraining;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -53,7 +55,11 @@ public class CodeGeneral implements Initializable {
     @FXML public Button settingsMenuBtt;
     @FXML public Button solvesBtt;
     @FXML public Button timerBtt;
+    @FXML public Button closeTimesCompe;
+    @FXML public Button openTimesCompe;
     @FXML public Pane timesMenu;
+    @FXML public Pane compePaneScroll;
+    @FXML public Pane timesMenuCompe;
     @FXML public TextField sessionName;
     @FXML public Button champBtt;
     @FXML public Pane optionDemoPane;
@@ -85,6 +91,8 @@ public class CodeGeneral implements Initializable {
     private Label nameSessionLabel;
     @FXML
     private ScrollPane timesMenuScroll;
+    @FXML
+    private ScrollPane timesCompeScroll;
 
 
     // ATRIBUTOS SEMAFOROS PARA ABRIR Y CERRAR DESDE EL MISMO BOTON
@@ -158,23 +166,134 @@ public class CodeGeneral implements Initializable {
         timesMenu.setVisible(true);
         closeBtt.setVisible(true);
         nameSessionLabel.setText(SessionCtrller.isUsing);
-        mostrarTiempos();
+        if(!StartCtrller.isDemo){
+            mostrarTiempos();
+        } else {
+            nameSessionLabel.setText("DEMO MODE");
+            panelTimesScroll.getChildren().add(messageDemoPage());
+        } // SI NO ES DEMO SE MUESTRAN SUS TIEMPOS, SI NO, SE MUESTRA UN MENSAJE
     }// SE ABRE EL PANEL DE TIEMPOS Y EL BOTON DE CERRAR
 
+    public VBox messageDemoPage () {
+        VBox mainContainer = new VBox();
+        mainContainer.setSpacing(10);
+
+        Label label1 = new Label(" To access all features\n" +
+                " of the profile, please\n" +
+                " register or log in.\n" +
+                " Thank you!");
+        label1.setStyle("-fx-font-size: 17px; -fx-text-fill: #6d7b64;");
+        mainContainer.getChildren().add(label1);
+        mainContainer.setStyle("-fx-background-color :  #325743");
+        return mainContainer;
+    }
 
     public void mostrarTiempos() {
-        int contador = 0;
-        TimeTrainingDAO.timesTraining = TimeTrainingDAO.listTimesTraining(SessionCtrller.idSessions);
+        if (SessionCtrller.isUsing == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("No hay sesion en uso.");
+            alert.setHeaderText("¡ERROR!");
+            alert.setContentText("Por favor, elige una sesion para poder guardar los tiempos.");
+            alert.showAndWait();
+        } else {
+            int contador = 0;
 
-        Label titleTimes = new Label("TIMES FOR SESSION : " + SessionCtrller.isUsing);
-        titleTimes.setStyle("-fx-underline: true; -fx-font-family: DejaVu Sans; -fx-font-weight: bold; -fx-font-size: 21px;");
+            // CONTENEDOR PRINCIPAL
+            VBox mainContainer = new VBox();
+            mainContainer.setSpacing(10);
+
+            // ITERAR SOBRE LA LISTA DE TIEMPOS
+            for (TimeTraining timeTraining : TimeTrainingDAO.listTimesTraining(SessionCtrller.idSessions)) {
+                contador++;
+
+                // CREAR UN HBOX PARA CADA TIEMPO
+                HBox timeBox = new HBox();
+                timeBox.setSpacing(10);
+
+                // LABELS PARA LOS TIEMPOS
+                Label label1 = new Label("  " + contador);
+                Label label2 = new Label(timeTraining.getMinutes() + ":" + timeTraining.getSeconds());
+
+
+                // BOTONES
+                Button plusTwo = new Button("+2");
+                Button deleteTime = new Button("X");
+
+                // ESTILOS
+                label1.setStyle("-fx-font-size: 17px; -fx-text-fill: black;");
+                label2.setStyle("-fx-font-size: 17px; -fx-text-fill: black;");
+                plusTwo.setStyle("-fx-background-color: #6d7b64; -fx-font-family: DejaVu Sans; -fx-font-weight: bold; -fx-font-size: 15px;");
+                deleteTime.setStyle("-fx-background-color: #a82f2a; -fx-font-family: DejaVu Sans; -fx-font-weight: bold; -fx-font-size: 15px;");
+
+                // EVENTOS PARA LOS BOTONES
+                plusTwo.setOnAction(e -> {
+                    TimeTrainingDAO.plusTwoTime(timeTraining.getMinutes(), timeTraining.getSeconds());
+                });
+
+                deleteTime.setOnAction(e -> {
+
+                });
+
+                // AGREGAR ELEMENTOS AL HBOX
+                timeBox.getChildren().addAll(label1, label2, plusTwo, deleteTime);
+
+                // AGREGAR EL HBOX AL CONTENEDOR PRINCIPAL
+                mainContainer.getChildren().add(timeBox);
+                mainContainer.setStyle("-fx-background-color :  #325743");
+            }
+
+
+            // AGREGAR EL CONTENEDOR PRINCIPAL AL SCROLLPANE
+            timesMenuScroll.setContent(mainContainer);
+            timesMenuScroll.setFitToWidth(true);
+        }
+    }
+
+    @FXML void onCloseMenuAction(ActionEvent event) {
+        timesMenu.setVisible(false);
+        closeBtt.setVisible(false);
+    }// SE CIERRA EL PANEL DE TIEMPOS Y EL BOTON DE CERRAR
+
+    @FXML void onCloseMenuCompeAction(){
+        timesMenuCompe.setVisible(false);
+        closeTimesCompe.setVisible(false);
+        openTimesCompe.setVisible(true);
+    }
+    @FXML void onOpenMenuCompeAction(){
+        timesMenuCompe.setVisible(true);
+        closeTimesCompe.setVisible(true);
+        openTimesCompe.setVisible(false);
+        if(!StartCtrller.isDemo){
+            timesCompe();
+        } else {
+            compePaneScroll.getChildren().add(messageDemoCompe());
+        } // SI NO ES DEMO SE MUESTRAN SUS TIEMPOS, SI NO, SE MUESTRA UN MENSAJE
+    }
+    public VBox messageDemoCompe () {
+        VBox mainContainer = new VBox();
+        mainContainer.setSpacing(10);
+
+        Label label1 = new Label("         DEMO MODE    \n");
+        Label label2 = new Label(" To access all features\n" +
+                " of the profile, please\n" +
+                " register or log in.\n" +
+                " Thank you!");
+        label1.setStyle("-fx-underline: true; -fx-font-family: DejaVu Sans; -fx-font-weight: bold; -fx-font-size: 21px;");
+        label2.setStyle("-fx-font-size: 17px; -fx-text-fill: #6d7b64;");
+        mainContainer.getChildren().addAll(label1, label2);
+        mainContainer.setStyle("-fx-background-color :  #325743");
+        return mainContainer;
+    }
+
+    public void timesCompe () {
+        int contador = 0;
 
         // CONTENEDOR PRINCIPAL
         VBox mainContainer = new VBox();
         mainContainer.setSpacing(10);
 
         // ITERAR SOBRE LA LISTA DE TIEMPOS
-        for (TimeTraining timeTraining : TimeTrainingDAO.timesTraining) {
+        for (TimeCompetition timeCompetition : TimeCompetitionDAO.listTimesCompe(CubeUserDAO.selectIdUser(CacheStatic.cubeUser.getMail()))) {
             contador++;
 
             // CREAR UN HBOX PARA CADA TIEMPO
@@ -182,31 +301,20 @@ public class CodeGeneral implements Initializable {
             timeBox.setSpacing(10);
 
             // LABELS PARA LOS TIEMPOS
-            Label label1 = new Label("  " + contador);
-            Label label2 = new Label(timeTraining.getMinutes() + ":" + timeTraining.getSeconds());
-
-
-            // BOTONES
-            Button plusTwo = new Button("+2");
-            Button deleteTime = new Button("X");
+            Label label1 = new Label("  " + contador + ")");
+            Label label2 = new Label(timeCompetition.getMinutes1() + ":" + timeCompetition.getSeconds1());
+            Label label3 = new Label("   |   ");
+            Label label4 = new Label(timeCompetition.getMinutes2() + ":" + timeCompetition.getSeconds2());
 
             // ESTILOS
             label1.setStyle("-fx-font-size: 17px; -fx-text-fill: black;");
             label2.setStyle("-fx-font-size: 17px; -fx-text-fill: black;");
-            plusTwo.setStyle("-fx-background-color: #6d7b64; -fx-font-family: DejaVu Sans; -fx-font-weight: bold; -fx-font-size: 15px;");
-            deleteTime.setStyle("-fx-background-color: #a82f2a; -fx-font-family: DejaVu Sans; -fx-font-weight: bold; -fx-font-size: 15px;");
+            label3.setStyle("-fx-font-size: 17px; -fx-text-fill: black;");
+            label4.setStyle("-fx-font-size: 17px; -fx-text-fill: black;");
 
-            // EVENTOS PARA LOS BOTONES
-            plusTwo.setOnAction(e -> {
-                TimeTrainingDAO.plusTwoTime(timeTraining.getMinutes(), timeTraining.getSeconds());
-            });
-
-            deleteTime.setOnAction(e -> {
-                // Lógica para eliminar el tiempo actual
-            });
 
             // AGREGAR ELEMENTOS AL HBOX
-            timeBox.getChildren().addAll(label1, label2, plusTwo, deleteTime);
+            timeBox.getChildren().addAll(label1, label2,label3, label4);
 
             // AGREGAR EL HBOX AL CONTENEDOR PRINCIPAL
             mainContainer.getChildren().add(timeBox);
@@ -214,16 +322,10 @@ public class CodeGeneral implements Initializable {
         }
 
 
-
         // AGREGAR EL CONTENEDOR PRINCIPAL AL SCROLLPANE
-        timesMenuScroll.setContent(mainContainer);
-        timesMenuScroll.setFitToWidth(true);
+        timesCompeScroll.setContent(mainContainer);
+        timesCompeScroll.setFitToWidth(true);
     }
-
-    @FXML void onCloseMenuAction(ActionEvent event) {
-        timesMenu.setVisible(false);
-        closeBtt.setVisible(false);
-    }// SE CIERRA EL PANEL DE TIEMPOS Y EL BOTON DE CERRAR
 
 
                                 /********* OPTIONS MENU ***********/
