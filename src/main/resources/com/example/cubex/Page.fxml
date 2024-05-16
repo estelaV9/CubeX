@@ -117,7 +117,7 @@
       </Button>
       <Button fx:id="profileBtt" layoutX="74.0" layoutY="14.0" mnemonicParsing="false" onAction="#onProfileAction" prefHeight="44.0" prefWidth="46.0" style="-fx-background-color: #325743; -fx-background-radius: 100;">
          <graphic>
-            <ImageView fitHeight="36.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="imageProfileGeneral" fitHeight="36.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@Imagen/loginPhotoMini.png" />
                </image>
@@ -136,6 +136,51 @@
                   <Font name="DejaVu Sans Bold" size="21.0" />
                </font>
             </Label>
+         </children>
+      </Pane>
+      <Pane fx:id="profilePage" layoutX="67.0" layoutY="66.0" prefHeight="194.0" prefWidth="391.0" style="-fx-background-color: #204338; -fx-background-radius: 24;">
+         <children>
+            <Label layoutX="156.0" layoutY="4.0" prefHeight="36.0" prefWidth="82.0" text="USER" textFill="#6d7b64">
+               <font>
+                  <Font name="System Bold Italic" size="31.0" />
+               </font>
+            </Label>
+            <Line endX="129.39999389648438" endY="-6.5999908447265625" layoutX="105.0" layoutY="52.0" startX="49.999969482421875" startY="-6.0000152587890625" stroke="#6d7b64" strokeWidth="2.0" />
+            <Button fx:id="editProfileBtt" layoutX="27.0" layoutY="147.0" mnemonicParsing="false" onAction="#onEditProfileAction" prefHeight="32.0" prefWidth="202.0" style="-fx-background-color: #325743; -fx-background-radius: 100;" text="EDIT">
+               <font>
+                  <Font name="DejaVu Sans Bold" size="17.0" />
+               </font>
+            </Button>
+            <ImageView fx:id="imageProfileEditGeneral" fitHeight="136.0" fitWidth="152.0" layoutX="247.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Imagen/loginPhoto.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="userProfiletxt" layoutX="14.0" layoutY="51.0" prefHeight="37.0" prefWidth="186.0" text="user" textFill="#6d7b64">
+               <font>
+                  <Font name="DejaVu Sans" size="31.0" />
+               </font>
+            </Label>
+            <Label fx:id="dateProfileTxt" layoutX="14.0" layoutY="93.0" prefHeight="39.0" prefWidth="247.0" text="Joined on " textFill="#6d7b64">
+               <font>
+                  <Font name="DejaVu Sans" size="21.0" />
+               </font>
+            </Label>
+            <TextField fx:id="levelProfileTxt" alignment="CENTER" layoutX="335.0" layoutY="150.0" prefHeight="32.0" prefWidth="36.0" style="-fx-background-radius: 100; -fx-background-color: #6b9979;">
+               <font>
+                  <Font name="DejaVu Sans Bold" size="14.0" />
+               </font>
+            </TextField>
+            <Label fx:id="proProfileTxt" layoutX="46.0" layoutY="19.0" text="PRO" textFill="#74cc5e">
+               <font>
+                  <Font name="DejaVu Sans Bold" size="19.0" />
+               </font>
+            </Label>
+            <ImageView fx:id="proProfileImg" fitHeight="78.0" fitWidth="72.0" layoutX="-9.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Imagen/cubexIcon.png" />
+               </image>
+            </ImageView>
          </children>
       </Pane>
       <Pane fx:id="settingMenu" layoutX="454.0" layoutY="58.0" prefHeight="194.0" prefWidth="276.0" style="-fx-background-color: #204338; -fx-background-radius: 24;">
@@ -214,51 +259,6 @@
                   <Font name="DejaVu Sans Bold" size="17.0" />
                </font>
             </Button>
-         </children>
-      </Pane>
-      <Pane fx:id="profilePage" layoutX="67.0" layoutY="66.0" prefHeight="194.0" prefWidth="391.0" style="-fx-background-color: #204338; -fx-background-radius: 24;">
-         <children>
-            <Label layoutX="156.0" layoutY="4.0" prefHeight="36.0" prefWidth="82.0" text="USER" textFill="#6d7b64">
-               <font>
-                  <Font name="System Bold Italic" size="31.0" />
-               </font>
-            </Label>
-            <Line endX="129.39999389648438" endY="-6.5999908447265625" layoutX="105.0" layoutY="52.0" startX="49.999969482421875" startY="-6.0000152587890625" stroke="#6d7b64" strokeWidth="2.0" />
-            <Button fx:id="editProfileBtt" layoutX="27.0" layoutY="147.0" mnemonicParsing="false" onAction="#onEditProfileAction" prefHeight="32.0" prefWidth="202.0" style="-fx-background-color: #325743; -fx-background-radius: 100;" text="EDIT">
-               <font>
-                  <Font name="DejaVu Sans Bold" size="17.0" />
-               </font>
-            </Button>
-            <ImageView fitHeight="136.0" fitWidth="152.0" layoutX="247.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@Imagen/loginPhoto.png" />
-               </image>
-            </ImageView>
-            <Label fx:id="userProfiletxt" layoutX="14.0" layoutY="51.0" prefHeight="37.0" prefWidth="186.0" text="user" textFill="#6d7b64">
-               <font>
-                  <Font name="DejaVu Sans" size="31.0" />
-               </font>
-            </Label>
-            <Label fx:id="dateProfileTxt" layoutX="14.0" layoutY="93.0" prefHeight="39.0" prefWidth="247.0" text="Joined on " textFill="#6d7b64">
-               <font>
-                  <Font name="DejaVu Sans" size="21.0" />
-               </font>
-            </Label>
-            <TextField fx:id="levelProfileTxt" alignment="CENTER" layoutX="335.0" layoutY="150.0" prefHeight="32.0" prefWidth="36.0" style="-fx-background-radius: 100; -fx-background-color: #6b9979;">
-               <font>
-                  <Font name="DejaVu Sans Bold" size="14.0" />
-               </font>
-            </TextField>
-            <Label fx:id="proProfileTxt" layoutX="46.0" layoutY="19.0" text="PRO" textFill="#74cc5e">
-               <font>
-                  <Font name="DejaVu Sans Bold" size="19.0" />
-               </font>
-            </Label>
-            <ImageView fx:id="proProfileImg" fitHeight="78.0" fitWidth="72.0" layoutX="-9.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@Imagen/cubexIcon.png" />
-               </image>
-            </ImageView>
          </children>
       </Pane>
    </children>

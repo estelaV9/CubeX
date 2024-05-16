@@ -16,6 +16,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -31,6 +33,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import javafx.geometry.Insets;
 
@@ -134,8 +137,15 @@ public class SettingCtrller extends CodeGeneral implements Initializable {
     @FXML
     private Label invalidProLabel;
 
+    @FXML
+    private ImageView imageProfile;
+
+    @FXML
+    private ImageView imageProfileEdit;
+
     LocalDate localDate = LocalDate.now();
     static boolean pulsarFilter;
+    public static boolean isModifyImagen;
 
 
     @FXML
@@ -336,8 +346,38 @@ public class SettingCtrller extends CodeGeneral implements Initializable {
 
     @FXML
     void onEditAction(ActionEvent event) {
+        try {
+            FXMLLoader fxmlLoader = new
+                    FXMLLoader(Main.class.getResource("imagenUrl.fxml"));
+            Parent root = fxmlLoader.load();
+            ImagenCtrller controller = fxmlLoader.getController();
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            // stage.show();
+            stage.setTitle("Imagen Page");
+            Stage myStage = (Stage) this.editBtt.getScene().getWindow();
+            myStage.show();
+            myStage.setOnCloseRequest(event1 -> {
+                myStage.requestFocus();
+            });
+            if (!stage.isShowing()) {
+                stage.show();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
+    } // ABRIR OTRO STAGE PARA EDITAR FOTO
+
+
+    @FXML
+    void onUpdateImgAction(){
+        imageProfile.setImage(ImagenCtrller.returnImagen(ImagenCtrller.selectedFile));
+        imageProfileEdit.setImage(ImagenCtrller.returnImagen(ImagenCtrller.selectedFile));
+        isModifyImagen = true;
     }
+
 
 
     @FXML
@@ -661,6 +701,9 @@ public class SettingCtrller extends CodeGeneral implements Initializable {
         communityPane.setVisible(false);
         onProfileSetAction();
         CodeGeneral.cubeCategory(categoriesCB);
+        if(isModifyImagen){
+            onUpdateImgAction();
+        }
     }
 
 }

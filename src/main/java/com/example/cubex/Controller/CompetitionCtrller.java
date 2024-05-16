@@ -136,5 +136,10 @@ public class CompetitionCtrller extends CodeGeneral implements Initializable {
 
         chrono1Label.setText("0:00,00");
         chrono2Label.setText("0:00,00");
+        if(!StartCtrller.isDemo){
+            if(SettingCtrller.isModifyImagen){
+                onUpdateImgAction();
+            }
+        }
     }
 }

@@ -78,5 +78,10 @@ public class PageCtrller extends CodeGeneral implements Initializable {
         closeBtt.setVisible(false);
         CodeGeneral.onFalseMenus(demoProfilePane, profilePage, settingMenu, optionMenu, optionDemoPane, timesMenu);
         scrambleLabel.setText(CodeGeneral.scramble());
+        if(!StartCtrller.isDemo){
+            if(SettingCtrller.isModifyImagen){
+                onUpdateImgAction();
+            }
+        }
     }
 }

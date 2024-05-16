@@ -114,6 +114,12 @@ public class SessionCtrller extends CodeGeneral implements Initializable {
             categoriesCB1.setVisible(true);
         }
         detailsPane.setVisible(false);
+
+        if(!StartCtrller.isDemo){
+            if(SettingCtrller.isModifyImagen){
+                onUpdateImgAction();
+            }
+        }
     }
 
 

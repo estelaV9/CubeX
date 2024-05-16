@@ -93,6 +93,11 @@ public class CodeGeneral implements Initializable {
     private ScrollPane timesMenuScroll;
     @FXML
     private ScrollPane timesCompeScroll;
+    @FXML
+    public ImageView imageProfileGeneral;
+
+    @FXML
+    public ImageView imageProfileEditGeneral;
 
 
     // ATRIBUTOS SEMAFOROS PARA ABRIR Y CERRAR DESDE EL MISMO BOTON
@@ -123,7 +128,7 @@ public class CodeGeneral implements Initializable {
         }
     } // SALIR DE LA APLICACIÓN
 
-    @FXML void onProfileAction(ActionEvent event) {
+    @FXML void onProfileAction() {
         if(!pulsarProfile){
             if(StartCtrller.isDemo){
                 demoProfilePane.setVisible(true);
@@ -145,6 +150,9 @@ public class CodeGeneral implements Initializable {
                 levelProfileTxt.setText(String.valueOf(CacheStatic.cubeUser.getLevelUser()));
                 pulsarProfile = true;
             }
+            onCloseSettingAction();
+            onCloseMenuAction();
+            onCloseOptionAction();
         } else {
             if(StartCtrller.isDemo){
                 demoProfilePane.setVisible(false);
@@ -249,7 +257,7 @@ public class CodeGeneral implements Initializable {
         }
     }
 
-    @FXML void onCloseMenuAction(ActionEvent event) {
+    @FXML void onCloseMenuAction() {
         timesMenu.setVisible(false);
         closeBtt.setVisible(false);
     }// SE CIERRA EL PANEL DE TIEMPOS Y EL BOTON DE CERRAR
@@ -330,7 +338,7 @@ public class CodeGeneral implements Initializable {
 
                                 /********* OPTIONS MENU ***********/
 
-    @FXML void onOptionAction(ActionEvent event) {
+    @FXML void onOptionAction() {
         if(!pulsarOption){ // SI NO SE HA PULSADO, SE ABRE EL MENU
             if(StartCtrller.isDemo){
                 optionMenu.setVisible(false);
@@ -341,6 +349,9 @@ public class CodeGeneral implements Initializable {
                 optionDemoPane.setVisible(false);
                 pulsarOption = true;
             }
+            onCloseSettingAction();
+            onCloseMenuAction();
+            onProfileAction();
         } else { // SI SE HA PULSADO, SE CIERRA EL MENU
             onCloseOptionAction();
             pulsarOption = false;
@@ -574,6 +585,12 @@ public class CodeGeneral implements Initializable {
 
 
 
+
+    @FXML
+    void onUpdateImgAction(){
+        imageProfileEditGeneral.setImage(ImagenCtrller.returnImagen(ImagenCtrller.selectedFile));
+        imageProfileGeneral.setImage(ImagenCtrller.returnImagen(ImagenCtrller.selectedFile));
+    }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 

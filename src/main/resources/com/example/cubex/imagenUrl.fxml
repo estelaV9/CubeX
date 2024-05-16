@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="487.0" style="-fx-background-color: #1e3728;" stylesheets="@Style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cubex.Controller.ImagenCtrller">
+   <children>
+      <ImageView fitHeight="50.0" fitWidth="186.0" layoutX="157.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Imagen/title.png" />
+         </image>
+      </ImageView>
+      <Pane layoutX="29.0" layoutY="68.0" prefHeight="312.0" prefWidth="427.0" style="-fx-background-color: #325743; -fx-background-radius: 24;">
+         <children>
+            <Button fx:id="loadImagenBtt" layoutX="81.0" layoutY="245.0" mnemonicParsing="false" onAction="#onLoadImagenAction" prefHeight="31.0" prefWidth="266.0" style="-fx-background-color: #74cc5e;" text="LOAD IMAGE">
+               <font>
+                  <Font name="DejaVu Sans Bold" size="21.0" />
+               </font>
+            </Button>
+            <ImageView fx:id="imagenView" fitHeight="219.0" fitWidth="318.0" layoutX="56.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
+         </children>
+      </Pane>
+      <Button fx:id="backSettingBtt" layoutX="410.0" layoutY="19.0" mnemonicParsing="false" onAction="#onBackSettingAction" prefHeight="34.0" prefWidth="45.0" style="-fx-background-color: #325743; -fx-background-radius: 100;">
+         <graphic>
+            <ImageView fitHeight="22.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true" style="-fx-rotate: 180;">
+               <image>
+                  <Image url="@Imagen/backIcon.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button layoutX="414.0" layoutY="99.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="72.0" style="-fx-background-color: #1e3728;" text="Button">
+         <graphic>
+            <ImageView fitHeight="42.0" fitWidth="67.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Imagen/cube.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button layoutX="7.0" layoutY="307.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" prefHeight="50.0" prefWidth="72.0" style="-fx-background-color: #1e3728;" text="Button">
+         <graphic>
+            <ImageView fitHeight="42.0" fitWidth="67.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Imagen/cube.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+   </children>
+</AnchorPane>
