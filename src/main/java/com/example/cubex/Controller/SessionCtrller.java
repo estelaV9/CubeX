@@ -2,6 +2,7 @@ package com.example.cubex.Controller;
 
 import com.example.cubex.DAO.*;
 import com.example.cubex.Database.DatabaseConnection;
+import com.example.cubex.Validator.Validator;
 import com.example.cubex.model.CacheStatic;
 import com.example.cubex.model.TimeTraining;
 import javafx.event.ActionEvent;
@@ -40,6 +41,11 @@ public class SessionCtrller extends CodeGeneral implements Initializable {
     @FXML private Button closeDetailsPane;
     @FXML private Pane detailsPane;
     @FXML private Label loginMessage1;
+    @FXML private Label DetailsNameSessionLabel1;
+    @FXML private Pane detailsManualPane;
+    @FXML private Label loginMessage11;
+    @FXML private Label scrambleLabel;
+    @FXML private TextField detailTimeTxt;
 
     int idSession;
     public static String isUsing; // SABER QUE SESSION SE ESTA USANDO
@@ -55,7 +61,8 @@ public class SessionCtrller extends CodeGeneral implements Initializable {
         CodeGeneral.onFalseMenus(demoProfilePane, profilePage, settingMenu, optionMenu, optionDemoPane, nameSession);
         sessionName.setPromptText("Name of Session");
         sessionName.setStyle("-fx-prompt-text-fill: #9B9B9B; -fx-background-color: #b1c8a3;");
-        categoriesCB1.setStyle("-fx-background-color : #b1c8a3");
+        categoriesCB.setStyle("-fx-background-color: red;");
+        categoriesCB1.setStyle("-fx-background-color: red;");
         paneScroll.prefWidth(50);
         CodeGeneral.cubeCategory(categoriesCB);
         CodeGeneral.cubeCategory(categoriesCB1);
@@ -69,6 +76,7 @@ public class SessionCtrller extends CodeGeneral implements Initializable {
             categoriesCB1.setVisible(false);
         } // SI ES USER DEMO NO SE LE PERMITIRA VER LOS TIEMPOS SEGUN LOS CUBOS QUE HA HECHO
         detailsPane.setVisible(false);
+        detailsManualPane.setVisible(false);
 
         if(!StartCtrller.isDemo){
             if(SettingCtrller.isModifyImagen){
@@ -251,6 +259,8 @@ public class SessionCtrller extends CodeGeneral implements Initializable {
         autoRadio.setToggleGroup(manualAuto);
         autoRadio.setSelected(true);
 
+
+
         Button use = new Button("USE");
         use.setLayoutX(17);
         use.setLayoutY(143);
@@ -261,6 +271,11 @@ public class SessionCtrller extends CodeGeneral implements Initializable {
         use.setOnAction(event -> {
             isUsing = sessionName; // SE ESTABLECE EL NOMBRE DE LA SESION QUE SE VA A USAR
             idSessions = SessionDAO.selectNumberSession(isUsing);
+            if(manualAuto.getSelectedToggle() == manualRadio){
+                detailsManualPane.setVisible(true);
+                DetailsNameSessionLabel1.setText(sessionName);
+                scrambleLabel.setText(CodeGeneral.scramble());
+            }
         });
 
         Button delete = new Button("DELETE");
@@ -297,6 +312,55 @@ public class SessionCtrller extends CodeGeneral implements Initializable {
     @FXML void onCloseDetailsPaneAction() {
         detailsPane.setVisible(false);
     }
+
+    @FXML
+    void onCloseTimesDetailsAction(ActionEvent event) {
+        detailsManualPane.setVisible(false);
+    } // CERRAR EL PANEL DE INSERTAR TIEMPO MANUALMENTE
+
+    @FXML
+    void onInserTimeDetailsAction(ActionEvent event) {
+        if (detailTimeTxt.getText().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Campos vacíos.");
+            alert.setHeaderText("¡ERROR!");
+            alert.setContentText("Por favor, inserte un tiempo antes de continuar.");
+            alert.showAndWait();
+        } else if (StartCtrller.isDemo) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error al insertar tiempo");
+            alert.setHeaderText("Inserción fallida");
+            alert.setContentText("Lo sentimos, no se puede insertar tiempos en la sesión como usuario demo.\n" +
+                    "Para acceder a las funcionalidades de la aplicacion, registrate o inicia sesión. ¡Gracias!");
+            alert.showAndWait();
+        } else if (!Validator.isValidTime(detailTimeTxt)) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Tiempo no válido.");
+            alert.setHeaderText("¡ERROR!");
+            alert.setContentText("Por favor, ingrese un tiempo válido.\nFor example : 00:12,11");
+            alert.showAndWait();
+        } else {
+            if (!StartCtrller.isDemo) {
+                String tiempo = detailTimeTxt.getText(); // GUARDAR EL TIEMPO QUE HA HECHO
+                tiempo = tiempo.replace(',', '.'); // PARA QUE LAS DECIMAS DE LA BASE DE DATOS SE ESTABLEZCA BIEN
+
+                /* ESTABLECES MINUTOS Y SEGUNDOS */
+                int indiceMinutos = tiempo.indexOf(":"); // INDICE QUE INDICA EN QUE POSICION ESTA :
+                String subMinutos = tiempo.substring(0, indiceMinutos); // ESTABLECE EL VALOR ANTES DEL :
+                // PARA ESTABLECER EL VALOR DE LOS SEGUNDOS, SE COJE EL VALOR DESPUES DEL : HASTA EL FINAL
+                String subSeconds = tiempo.substring(indiceMinutos + 1, indiceMinutos + (tiempo.length() - indiceMinutos));
+
+                if (!TimeTrainingDAO.createTimeTraining(scrambleLabel.getText(), subMinutos, subSeconds, localDate, idSessions)) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Tiempos fallidos.");
+                    alert.setHeaderText("¡ERROR!");
+                    alert.setContentText("No se ha podido insertar el tiempo.");
+                    alert.showAndWait();
+                } // MENSAJE POR SI ALGO FALLA AL INSERTAR LOS DATOS
+            } // SI NO ES USER DEMO, SE LE GUARDA LOS TIEMPOS EN ESA SESSION QUE ESTA SIENDO UTILIZADA
+            scrambleLabel.setText(CodeGeneral.scramble()); // VOLVER A GENERAR EL SCRAMBLE
+        }
+    }// INSERTAR TIEMPOS MANUALMENTE
 
     @FXML
     void onEditNameDetailsAction() {

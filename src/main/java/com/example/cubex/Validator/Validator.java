@@ -2,6 +2,7 @@ package com.example.cubex.Validator;
 
 import javafx.print.PageOrientation;
 import javafx.scene.control.Alert;
+import javafx.scene.control.TextField;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -169,5 +170,30 @@ public class Validator {
         Matcher matcher = pattern.matcher(aux);
         return matcher.find();
     } // VALIDAR FECHA VENCIMIENTO
+
+    public static boolean isValidTime (TextField detailTimeTxt){
+        boolean isValid = false;
+        String time = detailTimeTxt.getText(); // TIEMPO INGRESADO
+        time = time.replace(',', '.'); // SE REEMPLAZA LA COMA POR EL PUNTO
+
+        String regex = "^([01]):[0-5][0-9]\\.[0-9]{1,2}$"; // COMIENZA CON UN NUMERO ENTRE 0 Y 1 SEGUIDO DE :
+                                                         // SEGUIDO DE UN DIGITO ENTRE 0-5 CON UN DIGITO ENTRE 0-9
+                                                         // SEGUIDO DE UN CARACTER CON DOS DIGITO ENTRE 0-9 Y OTRO OPCIONAL
+        // COMPROBAR SI EL TIEMPO CUMPLE EL FORMATO
+        if (time.matches(regex)) {
+            /* ESTABLECES MINUTOS Y SEGUNDOS */
+            int indiceMinutos = time.indexOf(":");
+            String subMinutos = time.substring(0, indiceMinutos);
+            String subSeconds = time.substring(indiceMinutos + 1, indiceMinutos + (time.length() - indiceMinutos));
+            int minutes = Integer.parseInt(subMinutos);
+            double seconds = Double.parseDouble(subSeconds);
+
+            // VERIFICAR QUE LOS MINUTOS Y SEGUNDOS ESTEN EN UN RANDO CORRECTO (0-59)
+            if (minutes <= 1 && minutes >=0 && seconds >= 0 && seconds <= 59) {
+                isValid = true;
+            }
+        }
+        return isValid;
+    }
 
 }

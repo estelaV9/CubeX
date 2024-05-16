@@ -17,8 +17,9 @@ public class CompetitionCtrller extends CodeGeneral implements Initializable {
     @FXML private Label chrono2Label;
 
     LocalDate localDate = LocalDate.now(); // ATRIBUTO QUE GUARDA EL DIA ACTUAL
-    boolean isStopCuber1 = false; // ATRIBUTO PARA SABER CUANDO HAN PARADO EL TIEMPO
-    boolean isStopCuber2 = false; // ATRIBUTO PARA SABER CUANDO HAN PARADO EL TIEMPO
+    boolean isStopCuber1 = true; // ATRIBUTO PARA SABER CUANDO HAN PARADO EL TIEMPO
+    boolean isStopCuber2 = true; // ATRIBUTO PARA SABER CUANDO HAN PARADO EL TIEMPO
+    boolean isStarted = false; // ATRIBUTO QUE GUARDA SI HA EMPEZADO EL CRONOMETRO
     int numberCategoria, contador = CompetitionDAO.countCompetition();
 
     @FXML
@@ -30,31 +31,44 @@ public class CompetitionCtrller extends CodeGeneral implements Initializable {
             alert.setContentText("Por favor, completa todos los campos antes de continuar.");
             alert.showAndWait();
         } else {
-            isStopCuber2 = false;
-            isStopCuber1 = false;
-            if (!StartCtrller.isDemo) {
-                String nameCategory = String.valueOf(categoriesCB.getSelectionModel().getSelectedItem());
-                numberCategoria = SessionDAO.idCategory(nameCategory);
-            }
-            // CUANDO SE PULSE START EL CRONOMETRO SE EMPEZARAN EN LAS DOS
-            CodeGeneral.start(chrono2Label);
-            CodeGeneral.start(chrono1Label);
+            if(isStopCuber2 && isStopCuber1) {
+                if (!StartCtrller.isDemo) {
+                    String nameCategory = String.valueOf(categoriesCB.getSelectionModel().getSelectedItem());
+                    numberCategoria = SessionDAO.idCategory(nameCategory);
+                } // SI NO ES USUARIO DEMO, SE GUARDA EL ID DE LA CATEGORIA
+                // CUANDO SE PULSE START EL CRONOMETRO SE EMPEZARAN EN LAS DOS
+                CodeGeneral.start(chrono2Label);
+                CodeGeneral.start(chrono1Label);
+                isStarted = true;
+                isStopCuber2 = false;
+                isStopCuber1 = false;
+            } // SI LOS DOS HAN PARADO ENTONCES SE INICIA EL CRONOMETRO
         }
 
     }
 
     @FXML
     void onStopCuber1Action() {
-        CodeGeneral.parar("chrono1Label");
-        isStopCuber1 = true;
-        insertTimesCompe();
+        if(isStarted){
+            CodeGeneral.parar("chrono1Label");
+            isStopCuber1 = true;
+            insertTimesCompe();
+            if(isStopCuber1 && isStopCuber2){
+                isStarted = false;
+            } // SI LOS DOS HAN PARADO EN TODOS EL CRONOMETRO SE PARA
+        } // SI INICIARON EL CRONOMETRO ENTONCES, SE PARA
     }
 
     @FXML
     void onStopCuber2Action() {
-        CodeGeneral.parar("chrono2Label");
-        isStopCuber2 = true;
-        insertTimesCompe();
+        if(isStarted) {
+            CodeGeneral.parar("chrono2Label");
+            isStopCuber2 = true;
+            insertTimesCompe();
+            if(isStopCuber1 && isStopCuber2){
+                isStarted = false;
+            } // SI LOS DOS HAN PARADO EN TODOS EL CRONOMETRO SE PARA
+        } // SI INICIARON EL CRONOMETRO ENTONCES, SE PARA
     }
 
     public void insertTimesCompe() {

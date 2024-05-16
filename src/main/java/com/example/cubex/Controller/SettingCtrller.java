@@ -171,7 +171,7 @@ public class SettingCtrller extends CodeGeneral implements Initializable {
         for (Average average : AverageDAO.avgMinutesType(idCategory)) {
             contador++;
             // SE CREA UN LABEL POR CADA COLUMNA
-            Label label1 = new Label(String.valueOf(contador));
+            Label label1 = new Label("   " + contador + ")");
             Label label2 = new Label(average.getAvgMinutes() + " : ");
 
             // SE LES DA UN ESTILO
@@ -651,8 +651,8 @@ public class SettingCtrller extends CodeGeneral implements Initializable {
             invalidProLabel.setText("Invalid MM/YY");
         } else {
             invalidProLabel.setText("");
-            MemberDAO.insertMember(MemberDAO.insertIdUser(CacheStatic.cubeUser.getMail()), localDate);
-            if (CubeUserDAO.modifyPro(CacheStatic.cubeUser.getMail()) && MemberDAO.isMember) {
+            CubeUserDAO.modifyPro(CacheStatic.cubeUser.getMail());
+            if (CubeUserDAO.isMember && MemberDAO.insertMember(MemberDAO.insertIdUser(CacheStatic.cubeUser.getMail()), localDate)) {
                 // SI SE ACTUALIZO EL USUARIO, MOSTRAR UN MENSAJE DE EXITO
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Actualizacion de usuario");
@@ -691,6 +691,14 @@ public class SettingCtrller extends CodeGeneral implements Initializable {
             }
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void onProfileEditAction(ActionEvent event) {
+        if(!StartCtrller.isDemo){
+            accountPane.setVisible(true);
+            communityPane.setVisible(false);
         }
     }
 

@@ -10,7 +10,7 @@ import java.sql.*;
 import java.time.LocalDate;
 
 public class MemberDAO {
-    public static boolean isMember = false;
+
     public static int insertIdUser(String mail) {
         String sql = "SELECT ID_USER FROM CUBE_USERS WHERE MAIL = ? AND ROLE_USER = 'MEMBER';";
         int idUser = -1;
@@ -39,8 +39,9 @@ public class MemberDAO {
         return idUser;
     }
 
-    public static void insertMember(int idUser, LocalDate date) {
+    public static boolean insertMember(int idUser, LocalDate date) {
         String sql = "INSERT INTO MEMBERS (ID_USER, REGISTRATION_DATE) VALUES (?, ?);";
+        boolean successfulModifyProUser = false;
         try {
             Connection con = DatabaseConnection.conectar();
             PreparedStatement statement = con.prepareStatement(sql);
@@ -48,9 +49,9 @@ public class MemberDAO {
             statement.setString(2, String.valueOf(date));
             int rowsInserted = statement.executeUpdate();
             if (rowsInserted > 0) {
-                isMember = true;
+                successfulModifyProUser = true;
             } else {
-                isMember = false;
+                successfulModifyProUser = false;
             }
             con.close();
         } catch (SQLException e) {
@@ -60,6 +61,7 @@ public class MemberDAO {
             alert.setContentText("Error al conectar a la base de datos: " + e.getMessage());
             alert.showAndWait();
         }
+        return successfulModifyProUser;
     }
 
     public static boolean selectMember (String mail) {

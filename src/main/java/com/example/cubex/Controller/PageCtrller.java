@@ -18,6 +18,8 @@ public class PageCtrller extends CodeGeneral implements Initializable {
 
     int idSession;
     LocalDate localDate = LocalDate.now(); // ATRIBUTO QUE GUARDA EL DIA ACTUAL
+    boolean isStarted = false; // ATRIBUTO QUE GUARDA SI HA EMPEZADO EL CRONOMETRO
+    boolean isStopCuber1 = true; // ATRIBUTO PARA SABER CUANDO HAN PARADO EL TIEMPO
 
     @FXML
     void start() {
@@ -35,34 +37,51 @@ public class PageCtrller extends CodeGeneral implements Initializable {
                 alert.setContentText("Por favor, elige una sesion para poder guardar los tiempos.");
                 alert.showAndWait();
             } else {
-                idSession = TimeTrainingDAO.selectSession(SessionCtrller.isUsing); // GUARDAR EL ID_SESSION DE LA SESSION UTILIZADA
+                if(isStopCuber1) {
+                    idSession = TimeTrainingDAO.selectSession(SessionCtrller.isUsing); // GUARDAR EL ID_SESSION DE LA SESSION UTILIZADA
+                    CodeGeneral.start(chrono1Label); // INICIAR TIEMPOS
+                    isStarted = true;
+                    isStopCuber1 = false;
+                }
             }
+        } else {
+            if(isStopCuber1) {
+                CodeGeneral.start(chrono1Label);
+                isStarted = true;
+                isStopCuber1 = false;
+            } // SI HA PARADO EL CRONOMETRO, ENTONCES EMPIEZA EL CRONOMETRO
         } // SI NO ES USER DEMO, SE LE OBLIGARA A USAR UNA SESION PARA GUARDAR LOS TIEMPOS EN ESA SESSION
-        CodeGeneral.start(chrono1Label);
+
     } // EMPEZAR EL CRONOMETRO
 
     @FXML
     void parar() {
-        CodeGeneral.parar("chrono1Label");
-        if (!StartCtrller.isDemo) {
-            String tiempo = chrono1Label.getText(); // GUARDAR EL TIEMPO QUE HA HECHO
-            tiempo = tiempo.replace(',', '.'); // PARA QUE LAS DECIMAS DE LA BASE DE DATOS SE ESTABLEZCA BIEN
+        if(isStarted) {
+            CodeGeneral.parar("chrono1Label");
+            isStopCuber1 = true;
+            if (!StartCtrller.isDemo) {
+                String tiempo = chrono1Label.getText(); // GUARDAR EL TIEMPO QUE HA HECHO
+                tiempo = tiempo.replace(',', '.'); // PARA QUE LAS DECIMAS DE LA BASE DE DATOS SE ESTABLEZCA BIEN
 
-            /* ESTABLECES MINUTOS Y SEGUNDOS */
-            int indiceMinutos = tiempo.indexOf(":"); // INDICE QUE INDICA EN QUE POSICION ESTA :
-            String subMinutos = tiempo.substring(0, indiceMinutos); // ESTABLECE EL VALOR ANTES DEL :
-            // PARA ESTABLECER EL VALOR DE LOS SEGUNDOS, SE COJE EL VALOR DESPUES DEL : HASTA EL FINAL
-            String subSeconds = tiempo.substring(indiceMinutos + 1, indiceMinutos + (tiempo.length() - indiceMinutos));
+                /* ESTABLECES MINUTOS Y SEGUNDOS */
+                int indiceMinutos = tiempo.indexOf(":"); // INDICE QUE INDICA EN QUE POSICION ESTA :
+                String subMinutos = tiempo.substring(0, indiceMinutos); // ESTABLECE EL VALOR ANTES DEL :
+                // PARA ESTABLECER EL VALOR DE LOS SEGUNDOS, SE COJE EL VALOR DESPUES DEL : HASTA EL FINAL
+                String subSeconds = tiempo.substring(indiceMinutos + 1, indiceMinutos + (tiempo.length() - indiceMinutos));
 
-            if (!TimeTrainingDAO.createTimeTraining(scrambleLabel.getText(), subMinutos, subSeconds, localDate, idSession)) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Tiempos fallidos.");
-                alert.setHeaderText("¡ERROR!");
-                alert.setContentText("No se ha podido insertar el tiempo.");
-                alert.showAndWait();
-            } // MENSAJE POR SI ALGO FALLA AL INSERTAR LOS DATOS
-        } // SI NO ES USER DEMO, SE LE GUARDA LOS TIEMPOS EN ESA SESSION QUE ESTA SIENDO UTILIZADA
-        scrambleLabel.setText(CodeGeneral.scramble()); // SE VUELVE A GENERAR EL SCRAMBLE
+                if (!TimeTrainingDAO.createTimeTraining(scrambleLabel.getText(), subMinutos, subSeconds, localDate, idSession)) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Tiempos fallidos.");
+                    alert.setHeaderText("¡ERROR!");
+                    alert.setContentText("No se ha podido insertar el tiempo.");
+                    alert.showAndWait();
+                } // MENSAJE POR SI ALGO FALLA AL INSERTAR LOS DATOS
+            } // SI NO ES USER DEMO, SE LE GUARDA LOS TIEMPOS EN ESA SESSION QUE ESTA SIENDO UTILIZADA
+            scrambleLabel.setText(CodeGeneral.scramble()); // SE VUELVE A GENERAR EL SCRAMBLE
+            if(isStopCuber1){
+                isStarted = false;
+            } // HA PARADO EL CRONOMETRO
+        } // SI INICIARON EL CRONOMETRO ENTONCES, SE PARA
     } // PARAR EL CRONOMETRO
 
     @Override

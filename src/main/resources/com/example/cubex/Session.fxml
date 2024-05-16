@@ -89,11 +89,6 @@
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </Button>
-                  <Label fx:id="loginMessage1" layoutX="21.0" layoutY="136.0">
-                     <font>
-                        <Font size="13.0" />
-                     </font>
-                  </Label>
                   <Label fx:id="DetailsNameSessionLabel" layoutX="16.0" layoutY="10.0" prefHeight="31.0" prefWidth="222.0" style="-fx-underline: true;">
                      <font>
                         <Font name="System Bold" size="21.0" />
@@ -160,6 +155,35 @@
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </Button>
+               </children>
+            </Pane>
+            <Pane fx:id="detailsManualPane" layoutX="63.0" layoutY="13.0" prefHeight="279.0" prefWidth="314.0" style="-fx-background-color: #325743; -fx-background-radius: 24; -fx-border-color: black; -fx-border-radius: 24;">
+               <children>
+                  <Button layoutX="16.0" layoutY="232.0" mnemonicParsing="false" onAction="#onInserTimeDetailsAction" prefHeight="31.0" prefWidth="172.0" style="-fx-background-color: #74cc5e;" text="INSERT TIME">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Button>
+                  <Label fx:id="DetailsNameSessionLabel1" layoutX="16.0" layoutY="10.0" prefHeight="31.0" prefWidth="222.0" style="-fx-underline: true;">
+                     <font>
+                        <Font name="System Bold" size="21.0" />
+                     </font>
+                  </Label>
+                  <Button layoutX="189.0" layoutY="232.0" mnemonicParsing="false" onAction="#onCloseTimesDetailsAction" prefHeight="31.0" prefWidth="109.0" style="-fx-background-color: #6d7b64;" text="CLOSE">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Button>
+                  <Label fx:id="scrambleLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="9.0" layoutY="49.0" prefHeight="67.0" prefWidth="297.0" style="-fx-background-color: #b1c8a3; -fx-background-radius: 5;" textAlignment="CENTER">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="detailTimeTxt" layoutX="56.0" layoutY="136.0" prefHeight="67.0" prefWidth="202.0" promptText="00:00,00">
+                     <font>
+                        <Font size="39.0" />
+                     </font>
+                  </TextField>
                </children>
             </Pane>
          </children>

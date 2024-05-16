@@ -244,7 +244,6 @@ public class AverageDAO {
 
             while (resultSet.next()) {
                 int avgMinutes = resultSet.getInt("MEDIA");
-                System.out.println(avgMinutes);
                 Average average = new Average(avgMinutes);
                 averageMinutes.add(average);
             }
@@ -314,7 +313,6 @@ public class AverageDAO {
 
             if (resultSet.next()) {
                 nameUser = resultSet.getString("NAME_USER");
-                System.out.println(nameUser);
             }
         } catch (SQLException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -359,7 +357,6 @@ public class AverageDAO {
                 while (resultSet.next()) {
                     String nameUser = resultSet.getString("NAME_USER");
                     CubeUser cubeUser = new CubeUser(nameUser);
-                    System.out.println(nameUser);
                     nameAverage.add(cubeUser);
                 }
             } catch (SQLException e) {
@@ -395,7 +392,6 @@ public class AverageDAO {
 
             while (resultSet.next()) {
                 int avgMinutes = resultSet.getInt("MIN(MEDIA)");
-                System.out.println(avgMinutes);
                 Average average = new Average(avgMinutes);
                 PbAverageMinutes.add(average);
             }
@@ -476,7 +472,6 @@ public class AverageDAO {
                 while (resultSet.next()) {
                     String nameUser = resultSet.getString("NAME_USER");
                     CubeUser cubeUser = new CubeUser(nameUser);
-                    System.out.println(nameUser);
                     nameAverage.add(cubeUser);
                 }
             } catch (SQLException e) {
@@ -501,7 +496,6 @@ public class AverageDAO {
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 timesTotal = resultSet.getInt("PERIOD_AVG");
-                System.out.println(timesTotal);
             }
         } catch (SQLException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);

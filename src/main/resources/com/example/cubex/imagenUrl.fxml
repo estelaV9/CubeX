@@ -21,7 +21,7 @@
                   <Font name="DejaVu Sans Bold" size="21.0" />
                </font>
             </Button>
-            <ImageView fx:id="imagenView" fitHeight="219.0" fitWidth="318.0" layoutX="56.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="imagenView" fitHeight="219.0" fitWidth="318.0" layoutX="56.0" layoutY="14.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" />
          </children>
       </Pane>
       <Button fx:id="backSettingBtt" layoutX="410.0" layoutY="19.0" mnemonicParsing="false" onAction="#onBackSettingAction" prefHeight="34.0" prefWidth="45.0" style="-fx-background-color: #325743; -fx-background-radius: 100;">

@@ -26,6 +26,7 @@ import java.util.Locale;
 
 public class CubeUserDAO {
     public static List<CubeUser> users = new ArrayList<>();
+    public static boolean isMember = false;
 
     public static boolean insertarUsuarios(String nameUser, String passwdUser, String mailUser, LocalDate registration) {
         boolean successfulCreation = false;
@@ -154,7 +155,6 @@ public class CubeUserDAO {
 
 
     public static boolean modifyPro(String mailUser) {
-        boolean successfulModifyProUser = false;
         try {
             Connection connection = DatabaseConnection.conectar();
             String sqlUpdate = "UPDATE CUBE_USERS SET ROLE_USER = 'MEMBER' WHERE MAIL = ?" +
@@ -163,7 +163,9 @@ public class CubeUserDAO {
             statement.setString(1, mailUser);
             int rowsUpdate = statement.executeUpdate();
             if (rowsUpdate > 0) {
-                successfulModifyProUser = true;
+                isMember = true;
+            } else {
+                isMember = false;
             }
         } catch (SQLException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -172,7 +174,7 @@ public class CubeUserDAO {
             alert.setContentText("Error al conectar a la base de datos: " + e.getMessage());
             alert.showAndWait();
         }
-        return successfulModifyProUser;
+        return isMember;
     }
 
     public static List<CubeUser> listUser(String option, String category) {
