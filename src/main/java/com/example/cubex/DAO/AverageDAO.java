@@ -1,14 +1,11 @@
 package com.example.cubex.DAO;
 
-import com.example.cubex.Controller.RegistrationCtrller;
 import com.example.cubex.Database.DatabaseConnection;
 import com.example.cubex.model.Average;
 import com.example.cubex.model.CubeUser;
-import com.example.cubex.model.TimeTraining;
 import javafx.scene.control.Alert;
 
 import java.sql.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 

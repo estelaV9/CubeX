@@ -16,7 +16,7 @@
       </ImageView>
       <Pane layoutX="29.0" layoutY="68.0" prefHeight="312.0" prefWidth="427.0" style="-fx-background-color: #325743; -fx-background-radius: 24;">
          <children>
-            <Button fx:id="loadImagenBtt" layoutX="81.0" layoutY="245.0" mnemonicParsing="false" onAction="#onLoadImagenAction" prefHeight="31.0" prefWidth="266.0" style="-fx-background-color: #74cc5e;" text="LOAD IMAGE">
+            <Button layoutX="81.0" layoutY="245.0" mnemonicParsing="false" onAction="#onLoadImagenAction" prefHeight="31.0" prefWidth="266.0" style="-fx-background-color: #74cc5e;" text="LOAD IMAGE">
                <font>
                   <Font name="DejaVu Sans Bold" size="21.0" />
                </font>

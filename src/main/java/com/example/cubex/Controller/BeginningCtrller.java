@@ -2,7 +2,6 @@ package com.example.cubex.Controller;
 
 import com.example.cubex.Main;
 import javafx.fxml.FXML;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -12,11 +11,9 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class BeginningCtrller {
-    @FXML
-    private Button startBtt;
+    @FXML private Button startBtt;
 
-    @FXML
-    void onStartAction(ActionEvent event) {
+    @FXML void onStartAction() {
         try {
             FXMLLoader fxmlLoader = new
                     FXMLLoader(Main.class.getResource("Start.fxml"));

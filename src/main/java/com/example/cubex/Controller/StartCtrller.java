@@ -1,32 +1,24 @@
 package com.example.cubex.Controller;
 
 import com.example.cubex.Main;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 
 public class StartCtrller {
+    @FXML private Button logBtt;
+    @FXML private Button signBtt;
 
-    @FXML
-    private Button logBtt;
-
-    @FXML
-    private Button signBtt;
-
-    @FXML
-    private Button tryBtt;
-    public static boolean optionRegistrer = false;
     // SI HA INICIADO LA APLICACION COMO DEMO ALGUNAS FUNCIONES NO PODRA HACER
-    public static boolean isDemo = false;
+    public static boolean optionRegistrer = false;
+    public static boolean isDemo = false; // ATRIBUTO QUE GUARDA SI UN USUARIO ES DEMO
 
     @FXML
-    void onLogAction(ActionEvent event) {
+    void onLogAction() {
         optionRegistrer = false;
         isDemo = false;
         try {
@@ -47,7 +39,7 @@ public class StartCtrller {
     }
 
     @FXML
-    void onSignAction(ActionEvent event) {
+    void onSignAction() {
         optionRegistrer = true;
         isDemo = false;
         try {
@@ -68,7 +60,7 @@ public class StartCtrller {
     }
 
     @FXML
-    void onTryAction(ActionEvent event) {
+    void onTryAction() {
         isDemo = true;
         try {
             FXMLLoader fxmlLoader = new
@@ -79,8 +71,6 @@ public class StartCtrller {
             Stage stage = (Stage) this.logBtt.getScene().getWindow();
             stage.setTitle("Timer Page");
             stage.setScene(scene);
-
-
             if (!stage.isShowing()) {
                 stage.show();
             }
@@ -88,5 +78,4 @@ public class StartCtrller {
             e.printStackTrace();
         }
     }
-
 }

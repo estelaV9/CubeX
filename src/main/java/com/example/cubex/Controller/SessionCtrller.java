@@ -3,12 +3,10 @@ package com.example.cubex.Controller;
 import com.example.cubex.DAO.*;
 import com.example.cubex.Database.DatabaseConnection;
 import com.example.cubex.model.CacheStatic;
-import com.example.cubex.model.Member;
 import com.example.cubex.model.TimeTraining;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.print.PageOrientation;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
@@ -18,83 +16,37 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-
-import javax.print.attribute.standard.PrinterName;
 import javax.swing.*;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 public class SessionCtrller extends CodeGeneral implements Initializable {
-    @FXML
-    private Button addSessionBtt;
-
-    @FXML
-    private Button cancelSessionBtt;
-    @FXML
-    private Button createSessionBtt;
-    @FXML
-    private Button reloadBtt;
-    @FXML
-    private Pane nameSession;
-    @FXML
-    private AnchorPane paneScroll;
-
-    @FXML
-    private Pane demoProfilePane;
-    @FXML
-    private Pane profilePage;
-    @FXML
-    private Pane SessionPane;
-    @FXML
-    private ComboBox categoriesCB;
-    @FXML
-    private AnchorPane panelAllTimesScroll;
-    @FXML
-    private ComboBox categoriesCB1;
-
-    @FXML
-    private ScrollPane allTimesScroll;
-    @FXML
-    private ScrollPane scroll;
-
-    @FXML
-    private Label DetailsAvg;
-
-    @FXML
-    private Label DetailsNameSessionLabel;
-
-    @FXML
-    private Label DetailsPbTime;
-
-    @FXML
-    private Label DetailsTotalTimes;
-
-    @FXML
-    private Label DetailsWorstTime;
-
-    @FXML
-    private Button closeDetailsPane;
-
-    @FXML
-    private Button createSessionBtt1;
-
-    @FXML
-    private Pane detailsPane;
-
-    @FXML
-    private Label loginMessage1;
+    @FXML private Pane nameSession;
+    @FXML private AnchorPane paneScroll;
+    @FXML private Pane demoProfilePane;
+    @FXML private Pane profilePage;
+    @FXML private ComboBox categoriesCB;
+    @FXML private ComboBox categoriesCB1;
+    @FXML private AnchorPane panelAllTimesScroll;
+    @FXML private ScrollPane allTimesScroll;
+    @FXML private ScrollPane scroll;
+    @FXML private Label DetailsAvg;
+    @FXML private Label DetailsNameSessionLabel;
+    @FXML private Label DetailsPbTime;
+    @FXML private Label DetailsTotalTimes;
+    @FXML private Label DetailsWorstTime;
+    @FXML private Button closeDetailsPane;
+    @FXML private Pane detailsPane;
+    @FXML private Label loginMessage1;
 
     int idSession;
-    public static String isUsing;
-    private double nextPaneY = 10; // POSICION Y DEL PROXIMO PANEL
+    public static String isUsing; // SABER QUE SESSION SE ESTA USANDO
+    private double nextPaneY = 10; // POSICION Y DEL PROXIMO PANEL PARA LOS PANELES DE LAS SESSIONES
     double newHeight = 0; // NUEVA POSICION Y SI SE ELIMINA ALGUN PANEL
     private static int contadorCreate = 0; // CONTADOR PARA VER CUANTAS VECES CREA UNA SESION EL USUARIO DEMO
-
+    public static int idSessions;
     LocalDate localDate = LocalDate.now();
     String category, sessionToDelete, sessionToUse, SessionDetails;
 
@@ -103,34 +55,34 @@ public class SessionCtrller extends CodeGeneral implements Initializable {
         CodeGeneral.onFalseMenus(demoProfilePane, profilePage, settingMenu, optionMenu, optionDemoPane, nameSession);
         sessionName.setPromptText("Name of Session");
         sessionName.setStyle("-fx-prompt-text-fill: #9B9B9B; -fx-background-color: #b1c8a3;");
+        categoriesCB1.setStyle("-fx-background-color : #b1c8a3");
         paneScroll.prefWidth(50);
         CodeGeneral.cubeCategory(categoriesCB);
         CodeGeneral.cubeCategory(categoriesCB1);
-        categoriesCB1.setStyle("-fx-background-color : #b1c8a3");
+
         if (!StartCtrller.isDemo) {
-            // SI NO ES UN USUARIO DEMO, SE CARGAN LAS SESIONES DEL USUARIO
-            loadSession();
+            loadSession(); // SI NO ES UN USUARIO DEMO, SE CARGAN LAS SESIONES DEL USUARIO
             allTimesScroll.setVisible(true);
             categoriesCB1.setVisible(true);
-        }
+        } else {
+            allTimesScroll.setVisible(false);
+            categoriesCB1.setVisible(false);
+        } // SI ES USER DEMO NO SE LE PERMITIRA VER LOS TIEMPOS SEGUN LOS CUBOS QUE HA HECHO
         detailsPane.setVisible(false);
 
         if(!StartCtrller.isDemo){
             if(SettingCtrller.isModifyImagen){
                 onUpdateImgAction();
-            }
-        }
+            } // SI SE HA PUESTO UNA FOTO SE CARGA ESA FOTO
+        } // SI NO ES USUARIO DEMO SE CARGA LA FOTO QUE SE HAYA PUESTO
     }
-
 
     @FXML
     void onShowTimes() {
         nameSession.setVisible(false);
-
         String category = String.valueOf(categoriesCB1.getSelectionModel().getSelectedItem());
         int idCategory = SessionDAO.idCategory(category);
         int contador = 0;
-
 
         // CONTENEDOR PRINCIPAL
         VBox mainContainer = new VBox();
@@ -149,7 +101,6 @@ public class SessionCtrller extends CodeGeneral implements Initializable {
             Label label2 = new Label(timeTraining.getMinutes() + ":" + timeTraining.getSeconds());
             Label label3 = new Label(String.valueOf(timeTraining.getRegistrationDate()));
 
-
             // ESTILOS
             label1.setStyle("-fx-font-size: 17px; -fx-text-fill: black;");
             label2.setStyle("-fx-font-size: 17px; -fx-text-fill: black;");
@@ -165,16 +116,15 @@ public class SessionCtrller extends CodeGeneral implements Initializable {
         // AGREGAR EL CONTENEDOR PRINCIPAL AL SCROLLPANE
         allTimesScroll.setContent(mainContainer);
         allTimesScroll.setFitToWidth(true);
+    } // MOSTRAR LOS TIEMPOS DE LAS SESIONES SEGUN LA CATEGORIA
 
-    }
-
-    @FXML
-    void onAddSessionAction(ActionEvent event) {
-        demoProfilePane.setVisible(false);
+    @FXML void onAddSessionAction() {
         nameSession.setVisible(true);
-    }
+    } // MOSTRAR POPUP PARA CREAR SESSION
 
-    public static int idSessions;
+    @FXML void onCloseLimitAccess(ActionEvent event) {
+        demoProfilePane.setVisible(false);
+    } // CERRAR EL PANEL DE DEMO
 
     @FXML
     void onCreateSessionAction() {
@@ -187,9 +137,9 @@ public class SessionCtrller extends CodeGeneral implements Initializable {
         } else {
             if (StartCtrller.isDemo) {
                 contadorCreate++;
-            }
-            if (contadorCreate > 1) {
-                // EL USUARIO QUE ENTRE DESDE LA DEMO NO PODRA CREAR MAS SESIONES, SOLO LE APARECERA LA SESION GENERAL
+            } // SI ES USER DEMO, SE CUENTA LA SESSION QUE HA CREADO
+            if (contadorCreate > 1 && StartCtrller.isDemo) {
+                // EL USER DEMO NO PODRA CREAR MAS SESIONES, SOLO PODRA CREAR UNA
                 demoProfilePane.setLayoutX(144);
                 demoProfilePane.setLayoutY(101);
                 demoProfilePane.setVisible(true);
@@ -231,10 +181,10 @@ public class SessionCtrller extends CodeGeneral implements Initializable {
 
 
     public Pane createSessions(String sessionName, String category) {
-        Pane newPane = new Pane();
+        Pane newPane = new Pane(); // SE CREA UN NUEVO PANEL PARA LA SESSION
         newPane.setLayoutX(10); // ESPACIADO HORIZONTAL
-        newPane.setLayoutY(nextPaneY);
-        // TAMANIO DEL PANEL
+        newPane.setLayoutY(nextPaneY); // ESPACIADO VERTICAL
+        // TAMAÑO DEL PANEL
         newPane.setPrefHeight(187);
         newPane.setPrefWidth(220);
         newPane.setStyle("-fx-background-color:  #325743; -fx-background-radius: 24; -fx-border-color: black; -fx-border-radius: 24;");
@@ -257,14 +207,11 @@ public class SessionCtrller extends CodeGeneral implements Initializable {
         details.setPrefHeight(31);
         details.setStyle("-fx-background-color: #b1c8a3; -fx-font-family: DejaVu Sans; -fx-font-weight: bold; -fx-font-size: 15px;");
 
-        details.setUserData(sessionName);
         details.setOnAction(event -> {
             detailsPane.setVisible(true);
             nameSession.setVisible(false);
             if(!StartCtrller.isDemo) {
-                sessionToUse = (String) ((Button) event.getSource()).getUserData(); // SELECCIONAR CUAL ESTA USUANDO
-                SessionDetails = sessionName; // SE ESTABLECE EL NOMBRE DE LA SESION QUE QUIERA USAR
-                idSession = SessionDAO.selectNumberSession(SessionDetails);
+                idSession = SessionDAO.selectNumberSession(sessionName);
                 // ACTUALIZAR TODOS LAS COLUMNAS DE AVERAGE DE ESA SESSION
                 AverageDAO.worstMinutes(idSession);
                 AverageDAO.worstSecond(idSession);
@@ -275,13 +222,13 @@ public class SessionCtrller extends CodeGeneral implements Initializable {
                 AverageDAO.avgSeconds(idSession);
 
                 // MOSTRAR LOS DATOS
-                DetailsNameSessionLabel.setText(SessionDetails.toUpperCase());
+                DetailsNameSessionLabel.setText(sessionName.toUpperCase());
                 DetailsTotalTimes.setText(String.valueOf(AverageDAO.timesTotalSession(idSession)));
                 DetailsWorstTime.setText(AverageDAO.worstMinutesTotalSession(idSession) + ":" + AverageDAO.worstSecondTotalSession(idSession));
                 DetailsPbTime.setText(AverageDAO.pbMinutesTotalSession(idSession) + ":" + AverageDAO.pbSecondTotalSession(idSession));
                 DetailsAvg.setText(AverageDAO.avgMinutesTotalSession(idSession) + ":" + AverageDAO.avgSecondTotalSession(idSession));
             } else {
-                DetailsNameSessionLabel.setText("DEMO");
+                DetailsNameSessionLabel.setText(sessionName);
                 DetailsTotalTimes.setText(String.valueOf(0));
                 DetailsWorstTime.setText(0 + ":" + 00.00);
                 DetailsPbTime.setText(0 + ":" + 00.00);
@@ -311,12 +258,11 @@ public class SessionCtrller extends CodeGeneral implements Initializable {
         use.setPrefHeight(31);
         use.setStyle("-fx-background-color: #74cc5e; -fx-font-family: DejaVu Sans; -fx-font-weight: bold; -fx-font-size: 15px;");
 
-        use.setUserData(sessionName);
         use.setOnAction(event -> {
-            sessionToUse = (String) ((Button) event.getSource()).getUserData(); // SELECCIONAR CUAL ESTA USUANDO
-            isUsing = sessionName; // SE ESTABLECE EL NOMBRE DE LA SESION QUE QUIERA USAR
+            isUsing = sessionName; // SE ESTABLECE EL NOMBRE DE LA SESION QUE SE VA A USAR
             idSessions = SessionDAO.selectNumberSession(isUsing);
         });
+
         Button delete = new Button("DELETE");
         delete.setLayoutX(118);
         delete.setLayoutY(143);
@@ -324,24 +270,13 @@ public class SessionCtrller extends CodeGeneral implements Initializable {
         delete.setPrefHeight(31);
         delete.setStyle("-fx-background-color: #a82f2a; -fx-font-family: DejaVu Sans; -fx-font-weight: bold; -fx-font-size: 15px;");
 
-        // PARA PODER ELIMINAR DE LA BASE DE DATOS LA SESION, PRIMERO SE LE ASIGNA EL NOMBRE DE LA SESION A USERDATA
-        // USERDATA ES UNA PROPIEDAD QUE PERMITE ADJUNTAR CUALQUIER OBJETO A UN NODO, EN ESTE CASO, EL BOTON DELETE AL LABEL
-        // QUE CONTIENE EL NOMBRE DE LA SESSION
-        // COMO ESTOY CREANDO UN BOTON POR CADA SESION Y EL METODO setUserData SE LLAMA DENTRO DE ESTE CICLO, CADA BOTON DELETE
-        // TENDRA ASOCIADO UN NOMBRE DE LA SESION YA QUE CADA INSTANCIA DEL BOTON ES INDEPENDIENTE Y ASI NO SE SOBREESCRIBEN VALORES
-        delete.setUserData(sessionName);
-
         delete.setOnAction(event -> {
-            // OBTENER EL NODO QUE DISPARO EL EBVENTO, SE OBTIENE LE VALOR USERDATA, RECUPERANDO ASI EL NOMBRE DE LA SESION
-            // PARA SABER QUE SESION ELIMINAR
-            sessionToDelete = (String) ((Button) event.getSource()).getUserData();
-            onDeleteSession(sessionToDelete); // LLAMAR AL METODO PARA ELIMINARLO
+            onDeleteSession(sessionName); // LLAMAR AL METODO PARA ELIMINARLO
             Button deleteButton = (Button) event.getSource(); // OBTENER EL BOTON DELETE QUE ACTIVO EL EVENTO
             Pane sessionPane = (Pane) deleteButton.getParent(); // OBTENER EL PANEL DE SESION QUE CONTIENE EL BOTON DELETE
             paneScroll.getChildren().remove(sessionPane); // SE ELIMINA
             onReloadAction(); // CUANDO SE ELIMINA SE ACTUALIZA LAS SESIONES
         }); // ELIMINAR EL PANEL DEL SCROLLPANE
-
 
         // SE AGREGAN TODOS AL NUEVO PANEL
         newPane.getChildren().addAll(
@@ -350,23 +285,21 @@ public class SessionCtrller extends CodeGeneral implements Initializable {
                 details, use, delete
         );
 
-        // SE AUMENTA LA POSICION Y EN EL PROXIMO PANEL
-        nextPaneY += newPane.getPrefHeight() + 10;
+        nextPaneY += newPane.getPrefHeight() + 10; // SE AUMENTA LA POSICION Y EN EL PROXIMO PANEL
 
         // SI EL NUEVO PANEL ESTA FUERA DEL AREA VISIBLE, SE AJUSTA EL TAMAÑO DEL PANE DEL SCROLLPANE
         if (nextPaneY > paneScroll.getPrefHeight()) {
-            paneScroll.setPrefHeight(nextPaneY + 10); // ESPACIO ADIVIONAL PRA EVITAR BORDES CORTADOS
+            paneScroll.setPrefHeight(nextPaneY + 10); // SE HACE MAS GRANDE EL PANEL QUE CONTIENE LAS SESSIONES
         }
         return newPane;
     } // CREAR UN NUEVO PANEL DE SESSION
 
-    @FXML
-    void onCloseDetailsPaneAction(ActionEvent event) {
+    @FXML void onCloseDetailsPaneAction() {
         detailsPane.setVisible(false);
     }
 
     @FXML
-    void onEditNameDetailsAction(ActionEvent event) {
+    void onEditNameDetailsAction() {
         if(!StartCtrller.isDemo) {
             String nombre = JOptionPane.showInputDialog(null, "Nombre sesion");
             if (nombre != null) {
@@ -431,9 +364,12 @@ public class SessionCtrller extends CodeGeneral implements Initializable {
                 "¿Está seguro de que desea eliminar la sesión?", "Confirmación", JOptionPane.YES_NO_OPTION);
         if (opcion == JOptionPane.YES_OPTION) {
             if (StartCtrller.isDemo) {
-                contadorCreate = 0;
+                contadorCreate = 0; // SI LO ELIMINA, VUELVE A 0 EL CONTADOR
             } else {
-                if (AverageDAO.deleteAverage(nameSession) && SessionDAO.deleteSession(nameSession)) {
+                boolean average = AverageDAO.deleteAverage(nameSession);
+                TimeTrainingDAO.deleteTimesSession(nameSession);
+                boolean sessions = SessionDAO.deleteSession(nameSession);
+                if (average && sessions) { // SOLO AVERAGE Y SESSIONS POR SI NO HAY NINGUN TIEMPO
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Sesion eliminada.");
                     alert.setHeaderText("Eliminación exitosa");
@@ -451,7 +387,7 @@ public class SessionCtrller extends CodeGeneral implements Initializable {
     } // ELIMINAR SESION
 
     @FXML
-    void onCancelSessionCreate(ActionEvent event) {
+    void onCancelSessionCreate() {
         int opcion = JOptionPane.showConfirmDialog(null,
                 "¿Estás seguro de que quieres cancelar la creación de la sesión?\n" +
                         "Todos los datos ingresados se perderán.", "Confirmación", JOptionPane.YES_NO_OPTION);
@@ -460,18 +396,15 @@ public class SessionCtrller extends CodeGeneral implements Initializable {
         }
     } // CANCELAR SESSION
 
-    @FXML
+
     void onReloadAction() {
-        if (!StartCtrller.isDemo) {
-            loadSession();
-        }
         paneScroll.setStyle("-fx-background-color :  #325743");
         nextPaneY = 10;
         paneScroll.getChildren().clear();
         paneScroll.setPrefHeight(alturaPanel()); // SE ESTABLECE LA NUEVA ALTURA
-        loadSession();
-
-
+        if (!StartCtrller.isDemo) {
+            loadSession();
+        }
     } // ACTUALIZAR SESIONES (POR SI HA BORRADO NO TENER UN HUECO VACIO
 
     public double alturaPanel() {
@@ -501,8 +434,5 @@ public class SessionCtrller extends CodeGeneral implements Initializable {
         } else {
             return 294; // SI NO HAY NINGUN PANEL SE QUEDA EL TAMAÑO ESTANDAR
         }
-
     }
-
-
 }

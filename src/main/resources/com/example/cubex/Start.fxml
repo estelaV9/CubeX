@@ -19,7 +19,7 @@
             <Image url="@Imagen/cuadro.png" />
          </image>
       </ImageView>
-      <Button fx:id="tryBtt" layoutX="121.0" layoutY="305.0" mnemonicParsing="false" onAction="#onTryAction" style="-fx-background-color: #73ca5b;" text="Try demo -&gt;">
+      <Button layoutX="121.0" layoutY="305.0" mnemonicParsing="false" onAction="#onTryAction" style="-fx-background-color: #73ca5b;" text="Try demo -&gt;">
          <font>
             <Font size="15.0" />
          </font>

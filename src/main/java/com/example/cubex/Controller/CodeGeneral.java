@@ -1,7 +1,6 @@
 package com.example.cubex.Controller;
 
 import com.example.cubex.DAO.CubeUserDAO;
-import com.example.cubex.DAO.SessionDAO;
 import com.example.cubex.DAO.TimeCompetitionDAO;
 import com.example.cubex.DAO.TimeTrainingDAO;
 import com.example.cubex.Database.DatabaseConnection;
@@ -16,7 +15,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -28,7 +26,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
 import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
@@ -129,6 +126,9 @@ public class CodeGeneral implements Initializable {
     } // SALIR DE LA APLICACIÓN
 
     @FXML void onProfileAction() {
+        // CUANDO PULSES AL PERFIL SE CIERRAN LAS VENTANAS EMERGENTES DE SETTING Y OPTION
+        settingMenu.setVisible(false);
+        onCloseOptionAction();
         if(!pulsarProfile){
             if(StartCtrller.isDemo){
                 demoProfilePane.setVisible(true);
@@ -150,9 +150,6 @@ public class CodeGeneral implements Initializable {
                 levelProfileTxt.setText(String.valueOf(CacheStatic.cubeUser.getLevelUser()));
                 pulsarProfile = true;
             }
-            onCloseSettingAction();
-            onCloseMenuAction();
-            onCloseOptionAction();
         } else {
             if(StartCtrller.isDemo){
                 demoProfilePane.setVisible(false);
@@ -171,6 +168,15 @@ public class CodeGeneral implements Initializable {
 
                                 /********* TIMES MENU ***********/
     @FXML void onOpenMenuAction(ActionEvent event) {
+        // CIERRAR TODAS LAS VENTANAS EMERGENTES QUE HAYA Y MOSTRAR LA QUE SE PULSO
+        if(StartCtrller.isDemo){
+            demoProfilePane.setVisible(false);
+        } else {
+            profilePage.setVisible(false);
+        }
+        onCloseOptionAction();
+        settingMenu.setVisible(false);
+
         timesMenu.setVisible(true);
         closeBtt.setVisible(true);
         nameSessionLabel.setText(SessionCtrller.isUsing);
@@ -339,6 +345,14 @@ public class CodeGeneral implements Initializable {
                                 /********* OPTIONS MENU ***********/
 
     @FXML void onOptionAction() {
+        // SE CIERRAN TODAS LAS VENTANAS EMERGENTES DE PERFIL Y SETTING
+        if(StartCtrller.isDemo){
+            demoProfilePane.setVisible(false);
+        } else {
+            profilePage.setVisible(false);
+        }
+        settingMenu.setVisible(false);
+
         if(!pulsarOption){ // SI NO SE HA PULSADO, SE ABRE EL MENU
             if(StartCtrller.isDemo){
                 optionMenu.setVisible(false);
@@ -349,9 +363,6 @@ public class CodeGeneral implements Initializable {
                 optionDemoPane.setVisible(false);
                 pulsarOption = true;
             }
-            onCloseSettingAction();
-            onCloseMenuAction();
-            onProfileAction();
         } else { // SI SE HA PULSADO, SE CIERRA EL MENU
             onCloseOptionAction();
             pulsarOption = false;
@@ -404,9 +415,18 @@ public class CodeGeneral implements Initializable {
 
                                 /********* SETTINGS MENU ***********/
     @FXML void onSettingsAction(ActionEvent event) {
+        // CIERRAR TODAS LAS VENTANAS EMERGENTES QUE HAYA Y MOSTRAR LA QUE SE PULSO
+        if(StartCtrller.isDemo){
+            demoProfilePane.setVisible(false);
+        } else {
+            profilePage.setVisible(false);
+        }
+        onCloseOptionAction();
+
         if(!pulsarSettings){ // SI NO SE HA PULSADO, SE ABRE EL MENU
             settingMenu.setVisible(true);
             pulsarSettings = true;
+
         } else { // SI SE HA PULSADO, SE CIERRA EL MENU
             onCloseSettingAction();
             pulsarSettings = false;

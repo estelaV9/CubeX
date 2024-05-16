@@ -45,8 +45,8 @@
                         <Font size="15.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="emailTxt" layoutX="66.0" layoutY="35.0" prefHeight="25.0" prefWidth="174.0" style="-fx-background-color: #b1c8a3;" />
-                  <PasswordField fx:id="passwordTxt" layoutX="14.0" layoutY="101.0" prefHeight="25.0" prefWidth="181.0" style="-fx-background-color: #b1c8a3;" />
+                  <TextField fx:id="emailTxt" layoutX="66.0" layoutY="35.0" prefHeight="25.0" prefWidth="174.0" promptText="example@example.com" style="-fx-background-color: #b1c8a3;" />
+                  <PasswordField fx:id="passwordTxt" layoutX="14.0" layoutY="101.0" prefHeight="25.0" prefWidth="181.0" promptText="Ps.contains(8)" style="-fx-background-color: #b1c8a3;" />
                   <Label layoutX="14.0" layoutY="224.0" text="Don't have an account? ">
                      <font>
                         <Font size="15.0" />
@@ -62,7 +62,7 @@
                         <Font name="DejaVu Sans Bold Oblique" size="13.0" />
                      </font>
                   </Label>
-                  <Button fx:id="cancelBtt" layoutX="182.0" layoutY="171.0" mnemonicParsing="false" onAction="#onCancelAction" prefHeight="31.0" prefWidth="72.0" style="-fx-background-color: #325743;" text="Cancel">
+                  <Button layoutX="182.0" layoutY="171.0" mnemonicParsing="false" onAction="#onCancelAction" prefHeight="31.0" prefWidth="72.0" style="-fx-background-color: #325743;" text="Cancel">
                      <font>
                         <Font size="15.0" />
                      </font>
@@ -121,7 +121,7 @@
                         <Font size="15.0" />
                      </font>
                   </Label>
-                  <PasswordField fx:id="txtConfirmPsswd" layoutX="61.0" layoutY="156.0" prefHeight="25.0" prefWidth="181.0" style="-fx-background-color: #b1c8a3;" />
+                  <PasswordField fx:id="txtConfirmPsswd" alignment="CENTER_RIGHT" layoutX="61.0" layoutY="156.0" prefHeight="25.0" prefWidth="181.0" style="-fx-background-color: #b1c8a3;" />
                   <Label layoutX="12.0" layoutY="234.0" text="Already have an account?">
                      <font>
                         <Font size="15.0" />

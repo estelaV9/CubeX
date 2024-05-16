@@ -13,17 +13,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-
 import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
-
-
 public class RegistrationCtrller implements Initializable {
-    @FXML private Button cancelBtt;
     @FXML private Button backBtt;
     @FXML private TextField emailTxt;
     @FXML private Button logBtt;
@@ -36,7 +32,6 @@ public class RegistrationCtrller implements Initializable {
     @FXML private TextField txtEmailUser;
     @FXML private TextField txtNameUser;
     @FXML private PasswordField txtPasswdUser;
-
 
     @FXML
     void onEnterAction() {
@@ -53,12 +48,13 @@ public class RegistrationCtrller implements Initializable {
             alert.setContentText("Por favor, ingrese un correo válido.\nFor example : example@example.com");
             alert.showAndWait();
         } else if (Validator.isValidPassword(passwordTxt.getText())) {
+            // SE CREA EL USUARIO STATICO DE ESA SESSION
             CacheStatic.cubeUser = new CubeUser(passwordTxt.getText(), emailTxt.getText());
             if(CubeUserDAO.logearUsuario(emailTxt.getText(), passwordTxt.getText())){
                 loginMessage.setText("Invalid login");
             } else {
                 openMainPage();
-            }
+            } // SI NO COINCIDE EL LOGIN SE MOSTRAR UN MENSAJE DE ERROR, SI NO SE VA A LA PAGINA PRINCIPAL
         }
     } // INICIAR SESION
 
@@ -86,7 +82,6 @@ public class RegistrationCtrller implements Initializable {
             alert.showAndWait();
         } else if (Validator.isValidPassword(txtPasswdUser.getText())) {
             CacheStatic.cubeUser = new CubeUser(txtNameUser.getText(), txtPasswdUser.getText(), txtEmailUser.getText(), currentDate);
-
             if(CubeUserDAO.insertarUsuarios(CacheStatic.cubeUser.getNameUser(), CacheStatic.cubeUser.getPasswordUser(),
                     CacheStatic.cubeUser.getMail(), CacheStatic.cubeUser.getRegistrationDate())){
                 // SI SE INSERTO EL USUARIO, MOSTRAR UN MENSAJE DE EXITO
@@ -107,31 +102,17 @@ public class RegistrationCtrller implements Initializable {
         }
     } // CREAR UNA CUENTA
 
-
     @FXML
     void onSignAction() {
         signVision.setVisible(true);
         logginVision.setVisible(false);
-        // PONGO LOS PROMPT TEXT MANUALMENTE
-        txtNameUser.setPromptText("Name of user");
-        txtEmailUser.setPromptText("example@example.com");
-        txtPasswdUser.setPromptText("Password");
-        txtConfirmPsswd.setPromptText("Confirm Password");
-        txtNameUser.setStyle("-fx-prompt-text-fill: #9B9B9B; -fx-background-color: #b1c8a3;");
-        txtEmailUser.setStyle("-fx-prompt-text-fill: #9B9B9B; -fx-background-color: #b1c8a3;");
-        txtPasswdUser.setStyle("-fx-prompt-text-fill: #9B9B9B; -fx-background-color: #b1c8a3;");
-        txtConfirmPsswd.setStyle("-fx-prompt-text-fill: #9B9B9B; -fx-background-color: #b1c8a3;");
-    } // APARIENCIA DEL SIGN UP
+    } // VISUALIZAR EL SIGN UP
 
     @FXML
     void onLogAction() {
         signVision.setVisible(false);
         logginVision.setVisible(true);
-        emailTxt.setPromptText("example@example.com");
-        passwordTxt.setPromptText("Password");
-        emailTxt.setStyle("-fx-prompt-text-fill: #9B9B9B; -fx-background-color: #b1c8a3;");
-        passwordTxt.setStyle("-fx-prompt-text-fill: #9B9B9B; -fx-background-color: #b1c8a3;");
-    } // APARIENCIA DEL LOGIN
+    } // VISUALIZAR EL LOGIN
 
     @FXML
     void onCancelAction() {
@@ -165,7 +146,7 @@ public class RegistrationCtrller implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    } // IR A LA PAGINA START
+    } // VOLVER A LA PAGINA START
 
 
     public void openMainPage() {
@@ -184,20 +165,34 @@ public class RegistrationCtrller implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    } // IR A LA PAGINA PRINCIPAL
+    } // PAGINA PRINCIPAL
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // SEGUN LA OPCION QUE HAYA ELEGIDO EN EL START SE MOSTRARA UN PANEL Y OTRO
         if (!StartCtrller.optionRegistrer) {
             onLogAction();
-
-
-
             emailTxt.setText("eljoaki@gmail.com");
             passwordTxt.setText("Ps.contains(8)");
+
+            // SE PONE MANUALMENTE LOS PROMPTTEXT PORQUE LUEGO NO SE PUEDE DARLE UN ESTILO
+            emailTxt.setPromptText("example@example.com");
+            passwordTxt.setPromptText("Ps.contains(8)");
+            //SE LE DA UN ESTILO
+            emailTxt.setStyle("-fx-prompt-text-fill: #1e3728; -fx-background-color: #b1c8a3;");
+            passwordTxt.setStyle("-fx-prompt-text-fill: #1e3728; -fx-background-color: #b1c8a3;");
         } else {
             onSignAction();
-        }
-    }
+            // SE PONE MANUALMENTE LOS PROMPTTEXT PORQUE LUEGO NO SE PUEDE DARLE UN ESTILO
+            txtNameUser.setPromptText("NAME OF USER");
+            txtEmailUser.setPromptText("example@example.com");
+            txtPasswdUser.setPromptText("Ps.contains(8)");
+            txtConfirmPsswd.setPromptText("CONFIRM PASSWORD");
+
+            // SE LE DA UN ESTILO
+            txtNameUser.setStyle("-fx-prompt-text-fill: #9B9B9B; -fx-background-color: #b1c8a3;");
+            txtEmailUser.setStyle("-fx-prompt-text-fill: #9B9B9B; -fx-background-color: #b1c8a3;");
+            txtPasswdUser.setStyle("-fx-prompt-text-fill: #9B9B9B; -fx-background-color: #b1c8a3;");
+            txtConfirmPsswd.setStyle("-fx-prompt-text-fill: #9B9B9B; -fx-background-color: #b1c8a3;");
+        } // SEGUN LA OPCION QUE HAYA ELEGIDO EN EL START SE MOSTRARA UN PANEL Y OTRO
+    } // SE INICIALIZA CON LA VISTA QUE HAYA ELEGIDO Y CON ESTILOS EN LOS TEXTFIELD
 }

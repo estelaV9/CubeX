@@ -1,71 +1,54 @@
 package com.example.cubex.Controller;
 
-import com.example.cubex.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.image.WritableImage;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+
 import java.io.File;
 
 public class ImagenCtrller {
+    @FXML private ImageView imagenView;
+    @FXML private Button backSettingBtt;
+
+    public static File selectedFile; // SE HACE ESTATICO PARA QUE LAS OTRAS VISTAS PUEDAN ACCEDER AL ARCHIVO
 
     @FXML
-    private ImageView imagenView;
-
-    @FXML
-    private Button loadImagenBtt;
-
-    @FXML
-    private Button backSettingBtt;
-
-
-
-
-    public static File selectedFile;
-    @FXML
-    void onLoadImagenAction(ActionEvent event) {
-        // Crear un objeto FileChooser
+    void onLoadImagenAction() {
+        /*ABRIR EL EXPLORADOR DE ARCHIVOS Y ELEGIR UNA IMAGEN*/
+        // SE CREA UN OBJETO FILECHOOSER
         FileChooser fileChooser = new FileChooser();
 
-        // Configurar el FileChooser para que solo muestre archivos de imagen
+        // SE CONFIGURA PARA QUE SOLO MUESTRE ARCHIVOS DE IMAGEN
         fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("Imágenes", "*.png", "*.jpg", "*.gif")
-        );
+                new FileChooser.ExtensionFilter("Imágenes", "*.png", "*.jpg"));
 
-        // Mostrar el diálogo de selección de archivo y obtener el archivo seleccionado
+        // SE MUESTRA EL EXPLORADOR DE ARCHIVOS Y SE OBTIENE EL ARCHIVO SELECCIONADO POR EL USUARIO
         selectedFile = fileChooser.showOpenDialog(null);
 
-        // Mostrar la imagen en el ImageView
+        // SE MUESTRA LA IMAGEN EN EL IMAGENVIEW
         imagenView.setImage(returnImagen(selectedFile));
     }
 
-    public static Image returnImagen (File selectedFile) {
+    public static Image returnImagen(File selectedFile) {
         Image image = null;
-        // Si el usuario seleccionó un archivo
+        // SI EL USUARIO SELECIONO UN ARCHIVO
         if (selectedFile != null) {
-            // Crear una URL a partir del archivo seleccionado
+            // A PARTIR DEL ARCHIVO QUE HA SELECIONADO SE GUARDA LA URL
             String fileUrl = selectedFile.toURI().toString();
-            // Crear una imagen a partir de la URL
+            // SE CREA LA IMAGEN A PARTIR DE LA URL
             image = new Image(fileUrl);
         }
         return image;
-    }
-
-
+    } // PARA QEU RETORNE LA MISMA IMAGEN EN LAS DISTINTAS VISTAS SE HACE UN METODO ESTATICO QUE DEVUELVE UNA IMAGEN CON
+      // EL ARCHIVO SELECCIONADO
 
     @FXML
     void onBackSettingAction(ActionEvent event) {
         Stage myStage = (Stage) this.backSettingBtt.getScene().getWindow();
         myStage.close();
-
-
-    }
-
+    } // SE CIERRA SOLO LA VISTA DE LA IMAGEN
 }
