@@ -81,7 +81,6 @@ public class CompetitionDAO {
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 numberCompe = resultSet.getInt("COUNT(ID_COMPE)");
-                System.out.println(numberCompe);
             }
         } catch (SQLException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);

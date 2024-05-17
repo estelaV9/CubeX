@@ -45,7 +45,7 @@
                 <AnchorPane fx:id="panelAllTimesScroll" minHeight="0.0" minWidth="0.0" prefHeight="186.0" prefWidth="188.0" style="-fx-background-color: #204338;" />
               </content>
             </ScrollPane>
-            <ComboBox fx:id="categoriesCB1" layoutX="126.0" layoutY="22.0" onAction="#onShowTimes" prefHeight="44.0" prefWidth="202.0" style="-fx-background-color: #b1c8a3; -fx-prompt-text-fill: rgba(255, 0, 0, 0.5);" />
+            <ComboBox fx:id="categoriesCB1" layoutX="126.0" layoutY="22.0" onAction="#onShowTimes" prefHeight="44.0" prefWidth="202.0" style="-fx-background-color: #b1c8a3;" />
             <Pane fx:id="nameSession" layoutX="67.0" layoutY="33.0" prefHeight="248.0" prefWidth="256.0" style="-fx-background-color: #325743; -fx-background-radius: 24; -fx-border-color: black; -fx-border-radius: 24;">
                <children>
                   <Button layoutX="17.0" layoutY="202.0" mnemonicParsing="false" onAction="#onCreateSessionAction" prefHeight="31.0" prefWidth="166.0" style="-fx-background-color: #74cc5e;" text="Create">

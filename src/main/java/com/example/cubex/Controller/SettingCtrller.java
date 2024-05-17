@@ -22,6 +22,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import javax.swing.*;
@@ -44,8 +45,6 @@ public class SettingCtrller extends CodeGeneral implements Initializable {
     private Pane accountPane;
     @FXML
     private Label accountTitle;
-    @FXML
-    private Button backBtt;
     @FXML
     private Button communityBtt;
     @FXML
@@ -354,13 +353,9 @@ public class SettingCtrller extends CodeGeneral implements Initializable {
             Scene scene = new Scene(root);
             Stage stage = new Stage();
             stage.setScene(scene);
-            // stage.show();
             stage.setTitle("Imagen Page");
-            Stage myStage = (Stage) this.editBtt.getScene().getWindow();
-            myStage.show();
-            myStage.setOnCloseRequest(event1 -> {
-                myStage.requestFocus();
-            });
+            // CUANDO SE HABRA EL FXML, NO SE PODRA ACCEDER A ESTE HASTA QUE NO SE HAYA CERRADO EL OTRO FXML
+            stage.initModality(Modality.APPLICATION_MODAL);
             if (!stage.isShowing()) {
                 stage.show();
             }
@@ -379,25 +374,6 @@ public class SettingCtrller extends CodeGeneral implements Initializable {
     }
 
 
-
-    @FXML
-    void onBackAction(ActionEvent event) {
-        try {
-            FXMLLoader fxmlLoader = new
-                    FXMLLoader(Main.class.getResource("Page.fxml"));
-            Parent root = fxmlLoader.load();
-            PageCtrller controller = fxmlLoader.getController();
-            Scene scene = new Scene(root);
-            Stage stage = (Stage) this.backBtt.getScene().getWindow();
-            stage.setTitle("Timer Page");
-            stage.setScene(scene);
-            if (!stage.isShowing()) {
-                stage.show();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }// PAGINA PRINCIPAL
 
 
     @FXML
@@ -448,6 +424,10 @@ public class SettingCtrller extends CodeGeneral implements Initializable {
 
     @FXML
     void onGithubAction() {
+        loadGithub();
+    } // REDIRIGE A MI GITHUB
+
+    public static  void loadGithub() {
         try {
             Desktop.getDesktop().browse(new URI("https://github.com/estelaV9"));
             /*SE USA LA CLASE DESKTOP QUE PERMITE HACER COSAS RELACIONADAS CON EL ESCRITORIO DEL ORDENADOR
@@ -456,7 +436,7 @@ public class SettingCtrller extends CodeGeneral implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    } // REDIRIGE A MI GITHUB
+    } // METODO ESTATICO PARA PODER LLAMAR CON LAS OTRAS CLASES
 
 
     /**
@@ -640,10 +620,10 @@ public class SettingCtrller extends CodeGeneral implements Initializable {
             alert.showAndWait();
         } else if (!Validator.isValidNameCard(fullNameTxt.getText())){
             invalidProLabel.setText("Invalid name");
-        } /*else if (!Validator.noNumber) {
+        } else if (!Validator.isNumeric(cardNumberTxt.getText()) || !Validator.isNumeric(cvcTxt.getText())) {
             // COMPROBAR QUE EN EL NUMERO DE LA TARJETA Y EL CVC SOLO TENGA NUMEROS
             invalidProLabel.setText("Only numbers");
-        }*/ else if (!Validator.isValidCard(Long.parseLong(cardNumberTxt.getText()))) {
+        } else if (!Validator.isValidCard(Long.parseLong(cardNumberTxt.getText()))) {
             invalidProLabel.setText("Invalid card");
         } else if (!Validator.isValidCvc(Integer.parseInt(cvcTxt.getText()))) {
             invalidProLabel.setText("Invalid cvc");
@@ -708,7 +688,7 @@ public class SettingCtrller extends CodeGeneral implements Initializable {
         accountPane.setVisible(false);
         communityPane.setVisible(false);
         onProfileSetAction();
-        CodeGeneral.cubeCategory(categoriesCB);
+        CuberTypeDAO.cubeCategory(categoriesCB);
         if(CubeUserDAO.selectUrl(CacheStatic.cubeUser.getMail())){
             onUpdateImgAction();
         } // SI LA IMAGEN SE MODIFICO ENTONCES SE CARGA LA IMAGEN

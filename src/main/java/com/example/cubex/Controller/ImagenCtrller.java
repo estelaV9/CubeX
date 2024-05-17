@@ -20,11 +20,11 @@ public class ImagenCtrller {
     public static File selectedFile; // SE HACE ESTATICO PARA QUE LAS OTRAS VISTAS PUEDAN ACCEDER AL ARCHIVO
     boolean isOpenChooser = false; // CONTADOR DE VECES QUE HA TOCADO LOAD IMAGEN
 
-     /** NOTA : preferiblemente elige una imagen redondeada. He investidado el como redondearlo (con paneles, con circle,
+     /** NOTA : preferiblemente elegir una imagen redondeada. He investidado el como redondearlo (con paneles, con circle,
      * la propia imagen...) pero no he conseguido modificarlo.
-     * Para que quede más visual elige una redondeada (en la carpeta Image te dejo 2 por si quieres probar).
+     * Para que quede más visual elige una redondeada (en la carpeta Image dejo 2 por si quieres probar).
      * Funciona bien con una imagen cualquiera, aunque me hubiese gustado que cuando se cargara cualquier imagen se
-     * redondeara*/
+     * redondeara */
 
     @FXML
     void onLoadImagenAction() {

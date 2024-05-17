@@ -11,6 +11,7 @@ import com.example.cubex.model.TimeCompetition;
 import com.example.cubex.model.TimeTraining;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -31,7 +32,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-public class CodeGeneral implements Initializable {
+public class CodeGeneral {
                             /********* GENERAL ATRIBUTTES ***********/
     @FXML public Button closeBtt;
     @FXML public Button closeOpBtt;
@@ -71,6 +72,7 @@ public class CodeGeneral implements Initializable {
     @FXML private ScrollPane timesCompeScroll;
     @FXML public ImageView imageProfileGeneral;
     @FXML public ImageView imageProfileEditGeneral;
+    @FXML public Button backBtt;
 
 
     // ATRIBUTOS SEMAFOROS PARA ABRIR Y CERRAR DESDE EL MISMO BOTON
@@ -468,42 +470,47 @@ public class CodeGeneral implements Initializable {
     }// PAGINA PRINCIPAL
 
     @FXML void onChampAction() {
+        try {
+            FXMLLoader fxmlLoader = new
+                    FXMLLoader(Main.class.getResource("Championship.fxml"));
+            Parent root = fxmlLoader.load();
+            ChampionshipCtrller controller = fxmlLoader.getController();
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) this.champBtt.getScene().getWindow();
+            stage.setTitle("Championship Page");
+            stage.setScene(scene);
+            if (!stage.isShowing()) {
+                stage.show();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    } // IR A CAMPEONATOS
 
-    }
+    @FXML
+    void onBackAction(ActionEvent event) {
+        try {
+            FXMLLoader fxmlLoader = new
+                    FXMLLoader(Main.class.getResource("Page.fxml"));
+            Parent root = fxmlLoader.load();
+            PageCtrller controller = fxmlLoader.getController();
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) this.backBtt.getScene().getWindow();
+            stage.setTitle("Timer Page");
+            stage.setScene(scene);
+            if (!stage.isShowing()) {
+                stage.show();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }// PAGINA PRINCIPAL
 
     public static String scramble(){
         Scramble scramble = new Scramble();
         int random = (int) (Math.random() * (25 - 20 + 1) + 20);
         return scramble.generateScramble(random);
     } // GENERAR EL SCRAMBLE
-
-   public static void cubeCategory(ComboBox categoriesCB){
-        categoriesCB.setPromptText("CATEGORY");
-        categoriesCB.setStyle("-fx-background-color: #325743; -fx-text-fill: red;");
-
-        // METER EN UN ARRAYLIST LAS CATEGORIAS
-        Connection connection = DatabaseConnection.conectar();
-        try {
-            String sqlCount = "SELECT COUNT(ID_TYPE) FROM CUBE_TYPE";
-            PreparedStatement statement1 = connection.prepareStatement(sqlCount);
-            ResultSet resultSet = statement1.executeQuery();
-
-            int count = 0;
-            if (resultSet.next()) {
-                count = resultSet.getInt(1);
-            }
-
-            String sqlCat = "SELECT NAME_TYPE FROM CUBE_TYPE";
-            PreparedStatement statement = connection.prepareStatement(sqlCat);
-            ResultSet resultSet1 = statement.executeQuery();
-            while (resultSet1.next()) {
-                categories.add(resultSet1.getString(1));
-            }
-            categoriesCB.getItems().addAll(categories);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    } // METER LAS CATEGORIAS DE LOS CUBOS EN UN ARRAYLIST
 
 
     public static Timeline timeline1; // CRONOMETRO PARA MOSTRAR EL TIEMPO DE CUBER1
@@ -581,8 +588,5 @@ public class CodeGeneral implements Initializable {
         imageProfileEditGeneral.setImage(CubeUserDAO.imgUrlSelect(CacheStatic.cubeUser.getMail()));
         imageProfileGeneral.setImage(CubeUserDAO.imgUrlSelect(CacheStatic.cubeUser.getMail()));
     }
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
 
-    }
 }

@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="740.0" style="-fx-background-color: #1e3728;" stylesheets="@Style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cubex.Controller.ChampionshipCtrller">
+   <children>
+      <Pane fx:id="champMenu" prefHeight="400.0" prefWidth="270.0" style="-fx-background-color: #204338;">
+         <children>
+            <Button fx:id="githubBtt" layoutX="50.0" layoutY="346.0" mnemonicParsing="false" onAction="#onGithubAction" prefHeight="40.0" prefWidth="170.0" style="-fx-background-color: #204338;" text="estelaV9" textFill="#201f1f">
+               <font>
+                  <Font name="DejaVu Sans Bold" size="17.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="41.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@Imagen/github.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button layoutX="197.0" layoutY="1.0" mnemonicParsing="false" onAction="#onProfileEditAction" prefHeight="40.0" prefWidth="56.0" style="-fx-background-color: #204338;" textFill="#201f1f">
+               <font>
+                  <Font name="DejaVu Sans Bold" size="17.0" />
+               </font>
+               <graphic>
+                  <ImageView fx:id="imageProfile" fitHeight="49.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@Imagen/loginPhotoMini.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="backBtt" layoutX="9.0" layoutY="183.0" mnemonicParsing="false" onAction="#onBackAction" prefHeight="32.0" prefWidth="251.0" style="-fx-background-color: #6d7b64; -fx-background-radius: 100;" text="BACK">
+               <font>
+                  <Font name="DejaVu Sans Bold" size="17.0" />
+               </font>
+            </Button>
+            <Button fx:id="exitBtt" layoutX="9.0" layoutY="235.0" mnemonicParsing="false" onAction="#onExitAction" prefHeight="31.0" prefWidth="251.0" style="-fx-background-color: #a82f2a; -fx-background-radius: 100;" text="EXIT">
+               <font>
+                  <Font name="DejaVu Sans Bold" size="17.0" />
+               </font>
+            </Button>
+            <Button layoutX="10.0" layoutY="61.0" mnemonicParsing="false" onAction="#onGeneralChampAction" prefHeight="31.0" prefWidth="251.0" style="-fx-background-color: #325743; -fx-background-radius: 100;" text="GENERAL">
+               <font>
+                  <Font name="DejaVu Sans Bold" size="17.0" />
+               </font>
+            </Button>
+            <Button layoutX="10.0" layoutY="101.0" mnemonicParsing="false" onAction="#onYourChampionshipAction" prefHeight="31.0" prefWidth="251.0" style="-fx-background-color: #325743; -fx-background-radius: 100;" text="YOUR CHAMPIONSHIPS">
+               <font>
+                  <Font name="DejaVu Sans Bold" size="17.0" />
+               </font>
+            </Button>
+            <Line endX="100.0" layoutX="140.0" layoutY="226.0" startX="-100.0" stroke="#262626" strokeWidth="2.0" />
+            <Button fx:id="signOutBtt" layoutX="9.0" layoutY="141.0" mnemonicParsing="false" onAction="#onSignOutAction" prefHeight="31.0" prefWidth="251.0" style="-fx-background-color: #325743; -fx-background-radius: 100;" text="SIGN OUT">
+               <font>
+                  <Font name="DejaVu Sans Bold" size="17.0" />
+               </font>
+            </Button>
+            <ImageView fitHeight="41.0" fitWidth="152.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Imagen/title.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+      <Label alignment="CENTER" layoutX="296.0" layoutY="14.0" prefHeight="40.0" prefWidth="426.0" text="CHAMPIONSHIPS" textFill="#6d7b64">
+         <font>
+            <Font name="DejaVu Sans Bold" size="33.0" />
+         </font>
+      </Label>
+      <Line endX="206.0" endY="-1.1444091796875E-5" layoutX="458.0" layoutY="54.0" startX="-103.00003051757812" startY="-1.1444091796875E-5" stroke="#6d7b64" strokeWidth="3.0" />
+      <Pane fx:id="generalChampPane" layoutX="296.0" layoutY="65.0" prefHeight="318.0" prefWidth="426.0" style="-fx-background-color: #1e3728;">
+         <children>
+            <ScrollPane fx:id="championshipScroll" hbarPolicy="NEVER" layoutX="59.0" layoutY="12.0" prefHeight="295.0" prefWidth="312.0" style="-fx-border-color: #1e3728; -fx-border-width: 2;" vbarPolicy="ALWAYS">
+               <content>
+                  <AnchorPane fx:id="paneChampScroll" minHeight="0.0" minWidth="0.0" prefHeight="294.0" prefWidth="294.0" style="-fx-background-color: #325743;" />
+               </content>
+               <effect>
+                  <DropShadow height="30.0" radius="14.5" width="30.0">
+                     <color>
+                        <Color red="0.4274509847164154" green="0.48235294222831726" blue="0.3921568691730499" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </ScrollPane>
+         </children>
+      </Pane>
+      <Pane fx:id="yourChampsPane" layoutX="296.0" layoutY="65.0" prefHeight="318.0" prefWidth="426.0" style="-fx-background-color: #1e3728;">
+         <children>
+            <Button layoutX="14.0" layoutY="273.0" mnemonicParsing="false" onAction="#onShowCreatePane" prefHeight="31.0" prefWidth="396.0" style="-fx-background-color: #74cc5e;" text="CREATE NEW CHAMPIONSHIP">
+               <font>
+                  <Font name="DejaVu Sans Bold" size="15.0" />
+               </font>
+            </Button>
+            <Pane fx:id="newChampPane" layoutX="14.0" layoutY="4.0" prefHeight="258.0" prefWidth="396.0" style="-fx-background-color: #325743; -fx-background-radius: 24; -fx-border-color: black; -fx-border-radius: 24;">
+               <children>
+                  <Button layoutX="13.0" layoutY="215.0" mnemonicParsing="false" onAction="#onCreateChampAction" prefHeight="31.0" prefWidth="240.0" style="-fx-background-color: #74cc5e;" text="CREATE">
+                     <font>
+                        <Font name="DejaVu Sans Bold Oblique" size="15.0" />
+                     </font>
+                  </Button>
+                  <Label layoutX="14.0" layoutY="32.0" text="Championship's name">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="211.0" layoutY="32.0" text="Type of cube">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="championNameTxt" layoutX="13.0" layoutY="55.0" prefHeight="25.0" prefWidth="152.0" style="-fx-background-color: #b1c8a3;" />
+                  <Button layoutX="259.0" layoutY="215.0" mnemonicParsing="false" onAction="#onCancelChampCreate" prefHeight="31.0" prefWidth="120.0" style="-fx-background-color: #6d7b64;" text="CANCEL">
+                     <font>
+                        <Font name="DejaVu Sans Bold Oblique" size="15.0" />
+                     </font>
+                  </Button>
+                  <Label layoutX="89.0" layoutY="3.0" style="-fx-underline: true;" text="NEW CHAMPIONSHIP">
+                     <font>
+                        <Font name="System Bold" size="21.0" />
+                     </font>
+                  </Label>
+                  <ComboBox fx:id="categoriesCB" layoutX="175.0" layoutY="54.0" prefHeight="26.0" prefWidth="102.0" style="-fx-background-color: #b1c8a3;" />
+                  <ComboBox fx:id="categoriesCB1" layoutX="280.0" layoutY="54.0" prefHeight="26.0" prefWidth="102.0" style="-fx-background-color: #b1c8a3;" />
+                  <DatePicker fx:id="datePickerTxxt" layoutX="13.0" layoutY="102.0" prefHeight="25.0" prefWidth="152.0" />
+                  <Label layoutX="12.0" layoutY="81.0" text="Date of championship">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <TextArea fx:id="descriptionChampTxt" layoutX="174.0" layoutY="91.0" prefHeight="119.0" prefWidth="208.0" promptText="Description of your championship" style="-fx-control-inner-background: #b1c8a3; -fx-border-radius: 3;" />
+                  <Label layoutX="12.0" layoutY="131.0" text="Number of &#10;participants">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="numberPartTxt" layoutX="99.0" layoutY="136.0" prefHeight="32.0" prefWidth="66.0" style="-fx-background-color: #b1c8a3;" />
+                  <TextField fx:id="priceChampTxt" layoutX="13.0" layoutY="176.0" prefHeight="32.0" prefWidth="111.0" style="-fx-background-color: #b1c8a3;" />
+                  <Label fx:id="priceLabel" layoutX="132.0" layoutY="180.0" text="Price ">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

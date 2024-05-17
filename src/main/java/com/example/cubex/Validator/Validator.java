@@ -159,11 +159,14 @@ public class Validator {
         return matcher.find();
     } // VALIDAR NOMBRE DEL PROPIETARIO DE LA TARJETA
 
-    public static boolean isNumber(String aux) {
-        Pattern pattern = Pattern.compile("\\d+");
-        Matcher matcher = pattern.matcher(aux);
-        return matcher.find();
-    } // VALIDAR QUE SOLO TENGA NUMEROS EN LA TARJETA
+    public static boolean isNumeric(String text) {
+        String regex = "^[0-9]*$";
+        if (!text.matches(regex)) {
+            return false;
+        } else {
+            return true;
+        }
+    }// VALIDAR QUE SOLO TENGA NUMEROS
 
     public static boolean isValidMY(String aux) {
         Pattern pattern = Pattern.compile("\\d{2}/\\d{2}"); // DOS NUMEROS SEGUIDO DE UNA BARRA Y OTROS DOS NUMEROS

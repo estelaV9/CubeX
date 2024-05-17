@@ -61,11 +61,9 @@ public class SessionCtrller extends CodeGeneral implements Initializable {
         CodeGeneral.onFalseMenus(demoProfilePane, profilePage, settingMenu, optionMenu, optionDemoPane, nameSession);
         sessionName.setPromptText("Name of Session");
         sessionName.setStyle("-fx-prompt-text-fill: #9B9B9B; -fx-background-color: #b1c8a3;");
-        categoriesCB.setStyle("-fx-background-color: red;");
-        categoriesCB1.setStyle("-fx-background-color: red;");
         paneScroll.prefWidth(50);
-        CodeGeneral.cubeCategory(categoriesCB);
-        CodeGeneral.cubeCategory(categoriesCB1);
+        CuberTypeDAO.cubeCategory(categoriesCB);
+        CuberTypeDAO.cubeCategory(categoriesCB1);
 
         if (!StartCtrller.isDemo) {
             loadSession(); // SI NO ES UN USUARIO DEMO, SE CARGAN LAS SESIONES DEL USUARIO
@@ -364,7 +362,6 @@ public class SessionCtrller extends CodeGeneral implements Initializable {
         if(!StartCtrller.isDemo) {
             String nombre = JOptionPane.showInputDialog(null, "Nombre sesion");
             if (nombre != null) {
-                System.out.println(nombre);
                 if (SessionDAO.changeNameSesssion(nombre, idSession)) {
                     detailsPane.setVisible(false);
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -454,6 +451,9 @@ public class SessionCtrller extends CodeGeneral implements Initializable {
                         "Todos los datos ingresados se perderán.", "Confirmación", JOptionPane.YES_NO_OPTION);
         if (opcion == JOptionPane.YES_OPTION) {
             nameSession.setVisible(false);
+            // BORRAR LOS VALORES ESTABLECIDOS
+            sessionName.clear();
+            categoriesCB.setValue(null);
         }
     } // CANCELAR SESSION
 

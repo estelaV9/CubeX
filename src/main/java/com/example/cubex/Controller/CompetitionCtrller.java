@@ -122,7 +122,7 @@ public class CompetitionCtrller extends CodeGeneral implements Initializable {
         CodeGeneral.onFalseMenus(demoProfilePane, profilePage, settingMenu, optionMenu, optionDemoPane, timesMenuCompe);
         closeTimesCompe.setVisible(false);
         scrambleLabel.setText(CodeGeneral.scramble());
-        CodeGeneral.cubeCategory(categoriesCB);
+        CuberTypeDAO.cubeCategory(categoriesCB);
         chrono1Label.setText("0:00,00");
         chrono2Label.setText("0:00,00");
         if(!StartCtrller.isDemo){

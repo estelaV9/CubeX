@@ -131,7 +131,6 @@ public class TimeTrainingDAO {
                 double seconds = resultSet.getDouble("SECONDS1");
                 LocalDate date = resultSet.getDate("REGISTRATION_DATE").toLocalDate();
                 TimeTraining timeTraining = new TimeTraining(minutes, seconds, date);
-                System.out.println(minutes +  ":" + seconds + date);
                 timesCategory.add(timeTraining);
             }
         } catch (SQLException e) {
@@ -248,7 +247,6 @@ public class TimeTrainingDAO {
                 while (resultSet.next()) {
                     String nameUser = resultSet.getString("NAME_USER");
                     CubeUser cubeUser = new CubeUser(nameUser);
-                    System.out.println(nameUser);
                     nameAverage.add(cubeUser);
                 }
             } catch (SQLException e) {
