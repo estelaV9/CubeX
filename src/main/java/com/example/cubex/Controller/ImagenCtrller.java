@@ -18,34 +18,55 @@ public class ImagenCtrller {
     @FXML private Button backSettingBtt;
 
     public static File selectedFile; // SE HACE ESTATICO PARA QUE LAS OTRAS VISTAS PUEDAN ACCEDER AL ARCHIVO
+    boolean isOpenChooser = false; // CONTADOR DE VECES QUE HA TOCADO LOAD IMAGEN
+
+     /** NOTA : preferiblemente elige una imagen redondeada. He investidado el como redondearlo (con paneles, con circle,
+     * la propia imagen...) pero no he conseguido modificarlo.
+     * Para que quede más visual elige una redondeada (en la carpeta Image te dejo 2 por si quieres probar).
+     * Funciona bien con una imagen cualquiera, aunque me hubiese gustado que cuando se cargara cualquier imagen se
+     * redondeara*/
 
     @FXML
     void onLoadImagenAction() {
         /*ABRIR EL EXPLORADOR DE ARCHIVOS Y ELEGIR UNA IMAGEN*/
         // SE CREA UN OBJETO FILECHOOSER
-        FileChooser fileChooser = new FileChooser();
+        FileChooser fileChooser = null;
+        if(!isOpenChooser) {
+            fileChooser = new FileChooser();
 
-        // SE CONFIGURA PARA QUE SOLO MUESTRE ARCHIVOS DE IMAGEN
-        fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("Imágenes", "*.png", "*.jpg"));
+            // SE CONFIGURA PARA QUE SOLO MUESTRE ARCHIVOS DE IMAGEN
+            fileChooser.getExtensionFilters().addAll(
+                    new FileChooser.ExtensionFilter("Imágenes", "*.png", "*.jpg"));
+            isOpenChooser = true;
+        } // SI YA ESTA ABIERTO EL EXPLORADOR DE ARCHIVOS QUE NO SE VUELVA A ABRIR
+        if(fileChooser != null) {
 
-        // SE MUESTRA EL EXPLORADOR DE ARCHIVOS Y SE OBTIENE EL ARCHIVO SELECCIONADO POR EL USUARIO
-        selectedFile = fileChooser.showOpenDialog(null);
+            // SE MUESTRA EL EXPLORADOR DE ARCHIVOS Y SE OBTIENE EL ARCHIVO SELECCIONADO POR EL USUARIO
+            selectedFile = fileChooser.showOpenDialog(null);
 
-        // SE MUESTRA LA IMAGEN EN EL IMAGENVIEW
-        imagenView.setImage(returnImagen(selectedFile));
 
-        if (CubeUserDAO.urlUpdate(selectedFile, CacheStatic.cubeUser.getMail())) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Imagen actualizada");
-            alert.setHeaderText("¡Éxito!");
-            alert.setContentText("La imagen se ha actualizado correctamente.");
-            alert.showAndWait();
+            // SE MUESTRA LA IMAGEN EN EL IMAGENVIEW
+            imagenView.setImage(returnImagen(selectedFile));
+
+            if (CubeUserDAO.urlUpdate(selectedFile, CacheStatic.cubeUser.getMail())) {
+                isOpenChooser = false;
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Imagen actualizada");
+                alert.setHeaderText("¡Éxito!");
+                alert.setContentText("La imagen se ha actualizado correctamente.");
+                alert.showAndWait();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error al actualizar la imagen");
+                alert.setHeaderText("¡ERROR!");
+                alert.setContentText("La imagen no se ha podido actualizar.");
+                alert.showAndWait();
+            }
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error al actualizar la imagen");
+            alert.setTitle("Imagen no seleccionada");
             alert.setHeaderText("¡ERROR!");
-            alert.setContentText("La imagen no se ha podido actualizar.");
+            alert.setContentText("Por favor, eliga una imagen para cargar.");
             alert.showAndWait();
         }
     }

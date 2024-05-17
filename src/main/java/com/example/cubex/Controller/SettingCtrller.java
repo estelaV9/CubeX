@@ -375,6 +375,7 @@ public class SettingCtrller extends CodeGeneral implements Initializable {
     void onUpdateImgAction(){
         imageProfile.setImage(CubeUserDAO.imgUrlSelect(CacheStatic.cubeUser.getMail()));
         imageProfileEdit.setImage(CubeUserDAO.imgUrlSelect(CacheStatic.cubeUser.getMail()));
+
     }
 
 

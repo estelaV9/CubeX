@@ -73,4 +73,6 @@
 } /* DEFINIR EL COLOR DEL BOTON DEL SCROLL */
 
 
-
+.img {
+  border-radius: 10px;
+}
