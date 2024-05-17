@@ -361,7 +361,7 @@ public class CodeGeneral {
             Parent root = fxmlLoader.load();
             SettingCtrller controller = fxmlLoader.getController();
             Scene scene = new Scene(root);
-            Stage stage = (Stage) this.settingMenu.getScene().getWindow();
+            Stage stage = (Stage) this.settingsBtt.getScene().getWindow();
             stage.setTitle("Settings Page");
             stage.setScene(scene);
             if (!stage.isShowing()) {

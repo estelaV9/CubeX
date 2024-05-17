@@ -15,7 +15,6 @@ import java.util.List;
 import javafx.scene.image.Image;
 
 public class CubeUserDAO {
-    public static List<CubeUser> users = new ArrayList<>();
     public static boolean isMember = false;
 
     public static boolean insertarUsuarios(String nameUser, String passwdUser, String mailUser, LocalDate registration) {
@@ -167,20 +166,19 @@ public class CubeUserDAO {
         return isMember;
     }
 
-    public static List<CubeUser> listUser(String option, String category) {
+    public static List<CubeUser> listUser() {
+        List<CubeUser> users = new ArrayList<>();
         try {
             Connection connection = DatabaseConnection.conectar();
             String sql = "SELECT NAME_USER, LEVEL_USER, ROLE_USER FROM CUBE_USERS";
             PreparedStatement statement = connection.prepareStatement(sql);
             ResultSet resultSet = statement.executeQuery();
-
             while (resultSet.next()) {
                 String nameUser = resultSet.getString("NAME_USER");
                 int level = resultSet.getInt("LEVEL_USER");
                 String roleUser = resultSet.getString("ROLE_USER");
                 CubeUser cubeUser = new CubeUser(nameUser, level, roleUser);
                 users.add(cubeUser);
-
             }
         } catch (SQLException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);

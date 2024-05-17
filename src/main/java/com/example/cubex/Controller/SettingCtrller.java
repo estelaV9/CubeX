@@ -18,6 +18,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -141,6 +142,8 @@ public class SettingCtrller extends CodeGeneral implements Initializable {
 
     @FXML
     private ImageView imageProfileEdit;
+    @FXML
+    private TextField userNameSearchTxt;
 
     LocalDate localDate = LocalDate.now();
     static boolean pulsarFilter;
@@ -279,11 +282,11 @@ public class SettingCtrller extends CodeGeneral implements Initializable {
     } // CERRAR EL MENU DE FILTROS
 
     @FXML
-    void onChampFilterAction(ActionEvent event) {
+    void onChampFilterAction(ActionEvent event) {/*
         onCloseFilterAction();
         String category = String.valueOf(categoriesCB.getSelectionModel().getSelectedItem());
         int contador = 0;
-        CubeUserDAO.users = CubeUserDAO.listUser("average", category);
+        CubeUserDAO.users = CubeUserDAO.listUser();
 
         // SE CREAN 4 VBOX PARA CADA COLUMNS
         VBox vbox1 = new VBox();
@@ -328,7 +331,7 @@ public class SettingCtrller extends CodeGeneral implements Initializable {
 
         // SE AGREGA EL HBOX AL SCROLLPANE
         scrollPane.setContent(hbox);
-        scrollPane.setFitToWidth(true);
+        scrollPane.setFitToWidth(true);*/
     } // FILTRAR POR CAMPEONATO
 
     @FXML
@@ -391,6 +394,60 @@ public class SettingCtrller extends CodeGeneral implements Initializable {
             filterMenu.setVisible(false);
             userTops.setStyle("-fx-background-color: #b1c8a3;");
         }
+    }
+
+    @FXML
+    void onSearchUserAction(MouseEvent event) {
+        String nameUser = userNameSearchTxt.getText();
+        boolean isUserFound = true;
+        // SE CREAN 4 VBOX PARA CADA COLUMNS
+        VBox vbox1 = new VBox();
+        VBox vbox2 = new VBox();
+        VBox vbox3 = new VBox();
+        VBox vbox4 = new VBox();
+
+        //ESPACIO VERTICAL ENTRE LOS ELEMENTOS DE LAS COLUMNAS
+        vbox1.setSpacing(10);
+        vbox2.setSpacing(10);
+        vbox3.setSpacing(10);
+        vbox4.setSpacing(10);
+        for(CubeUser user : CubeUserDAO.listUser()) {
+            if (user.getNameUser().equals(nameUser)) {
+                Label label1 = new Label("1)");
+                Label label2 = new Label(user.getNameUser());
+                Label label3 = new Label(String.valueOf(user.getLevelUser()));
+                Label label4 = new Label(String.valueOf(user.getRoleUser()));
+                // SE LES DA UN ESTILO
+                label1.setStyle("-fx-font-size: 17px; -fx-text-fill: black;");
+                label2.setStyle("-fx-font-size: 17px; -fx-text-fill: black;");
+                label3.setStyle("-fx-font-size: 17px; -fx-text-fill: black;");
+                label4.setStyle("-fx-font-size: 17px; -fx-text-fill: black;");
+
+                // SE AGREGAN LOS LABELS A LAS COLUMNAS CORRESPONDIENTES
+                vbox1.getChildren().add(label1);
+                vbox2.getChildren().add(label2);
+                vbox3.getChildren().add(label3);
+                vbox4.getChildren().add(label4);
+                isUserFound = true;
+            } else {
+                isUserFound = false; // SI NO SE HA ENCONTRADO NINGUN USUARIO CON ESE NOMBRE SE MOSTRARA UN MENSAJE
+            }
+        }
+        HBox hbox = null;
+        if (isUserFound) {
+            // SE CREAN UN HBOX QUE CONTENGAN LAS 4 COLUMNAS
+            hbox = new HBox(vbox1, vbox2, vbox3, vbox4);
+            hbox.setSpacing(20); // ESPACIO HORIZONTAL ENTRE LAS COLUMNAS
+        } else {
+            Label label1 = new Label("NO USER HAS BEEN FOUND WITH\nTHAT NAME");
+            label1.setStyle("-fx-font-family: DejaVu Sans; -fx-font-weight: bold; -fx-font-size: 21px; -fx-text-fill: #6d7b64; ");
+            hbox = new HBox(label1);
+        }
+
+            hbox.setStyle("-fx-background-color :  #325743");
+            // SE AGREGA EL VBOX AL SCROLLPANE
+            scrollPane.setContent(hbox);
+            scrollPane.setFitToWidth(true);
     }
 
     @FXML

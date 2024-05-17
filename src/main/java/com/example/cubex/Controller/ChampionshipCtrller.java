@@ -4,23 +4,28 @@ import com.example.cubex.DAO.ChampionshipDAO;
 import com.example.cubex.DAO.CubeUserDAO;
 import com.example.cubex.DAO.CuberTypeDAO;
 import com.example.cubex.DAO.MemberDAO;
+import com.example.cubex.Main;
 import com.example.cubex.Validator.Validator;
 import com.example.cubex.model.CacheStatic;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 
 import javax.swing.*;
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 public class ChampionshipCtrller extends CodeGeneral implements Initializable {
-
     @FXML
     private ComboBox<?> categoriesCB;
 
@@ -185,7 +190,21 @@ public class ChampionshipCtrller extends CodeGeneral implements Initializable {
 
     @FXML
     void onProfileEditAction(ActionEvent event) {
-        onEditProfileAction();
+        try {
+            FXMLLoader fxmlLoader = new
+                    FXMLLoader(Main.class.getResource("Setting.fxml"));
+            Parent root = fxmlLoader.load();
+            SettingCtrller controller = fxmlLoader.getController();
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) this.profileBtt.getScene().getWindow();
+            stage.setTitle("Settings Page");
+            stage.setScene(scene);
+            if (!stage.isShowing()) {
+                stage.show();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -200,7 +219,7 @@ public class ChampionshipCtrller extends CodeGeneral implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         yourChampsPane.setVisible(false);
-        generalChampPane.setVisible(false);
+        generalChampPane.setVisible(true);
         if (CubeUserDAO.selectUrl(CacheStatic.cubeUser.getMail())) {
             imageProfile.setImage(CubeUserDAO.imgUrlSelect(CacheStatic.cubeUser.getMail()));
         } // SI LA IMAGEN SE MODIFICO ENTONCES SE CARGA LA IMAGEN
