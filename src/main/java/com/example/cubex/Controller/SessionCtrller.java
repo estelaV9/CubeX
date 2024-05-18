@@ -389,6 +389,7 @@ public class SessionCtrller extends CodeGeneral implements Initializable {
     }
 
     public void loadSession() {
+        /** Nota : Puse este metodo aqui para no hacer statico las clases porque si no daba error **/
         int minIdSession = SessionDAO.minIdSession(CacheStatic.cubeUser.getMail());
         int maxIdSession = SessionDAO.maxIdSession(CacheStatic.cubeUser.getMail());
         String sql = "SELECT NAME_SESSION, ID_TYPE FROM SESSIONS WHERE ID_SESSION = ?";

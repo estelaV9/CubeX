@@ -83,22 +83,6 @@
          </font>
       </Label>
       <Line endX="206.0" endY="-1.1444091796875E-5" layoutX="458.0" layoutY="54.0" startX="-103.00003051757812" startY="-1.1444091796875E-5" stroke="#6d7b64" strokeWidth="3.0" />
-      <Pane fx:id="generalChampPane" layoutX="296.0" layoutY="65.0" prefHeight="318.0" prefWidth="426.0" style="-fx-background-color: #1e3728;">
-         <children>
-            <ScrollPane fx:id="championshipScroll" hbarPolicy="NEVER" layoutX="59.0" layoutY="12.0" prefHeight="295.0" prefWidth="312.0" style="-fx-border-color: #1e3728; -fx-border-width: 2;" vbarPolicy="ALWAYS">
-               <content>
-                  <AnchorPane fx:id="paneChampScroll" minHeight="0.0" minWidth="0.0" prefHeight="294.0" prefWidth="294.0" style="-fx-background-color: #325743;" />
-               </content>
-               <effect>
-                  <DropShadow height="30.0" radius="14.5" width="30.0">
-                     <color>
-                        <Color red="0.4274509847164154" green="0.48235294222831726" blue="0.3921568691730499" />
-                     </color>
-                  </DropShadow>
-               </effect>
-            </ScrollPane>
-         </children>
-      </Pane>
       <Pane fx:id="yourChampsPane" layoutX="296.0" layoutY="65.0" prefHeight="318.0" prefWidth="426.0" style="-fx-background-color: #1e3728;">
          <children>
             <Button layoutX="14.0" layoutY="273.0" mnemonicParsing="false" onAction="#onShowCreatePane" prefHeight="31.0" prefWidth="396.0" style="-fx-background-color: #74cc5e;" text="CREATE NEW CHAMPIONSHIP">
@@ -157,6 +141,22 @@
                   </Label>
                </children>
             </Pane>
+         </children>
+      </Pane>
+      <Pane fx:id="generalChampPane" layoutX="296.0" layoutY="65.0" prefHeight="318.0" prefWidth="426.0" style="-fx-background-color: #1e3728;">
+         <children>
+            <ScrollPane fx:id="championshipScroll" hbarPolicy="NEVER" layoutX="78.0" layoutY="8.0" prefHeight="303.0" prefWidth="270.0" style="-fx-border-color: #1e3728; -fx-border-width: 2;" vbarPolicy="ALWAYS">
+               <content>
+                  <AnchorPane fx:id="paneChampScroll" minHeight="0.0" minWidth="0.0" prefHeight="300.0" prefWidth="254.0" style="-fx-background-color: #325743;" />
+               </content>
+               <effect>
+                  <DropShadow height="30.0" radius="14.5" width="30.0">
+                     <color>
+                        <Color red="0.4274509847164154" green="0.48235294222831726" blue="0.3921568691730499" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </ScrollPane>
          </children>
       </Pane>
    </children>
