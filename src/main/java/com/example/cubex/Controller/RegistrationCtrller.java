@@ -106,12 +106,32 @@ public class RegistrationCtrller implements Initializable {
     void onSignAction() {
         signVision.setVisible(true);
         logginVision.setVisible(false);
+        // SE PONE MANUALMENTE LOS PROMPTTEXT PORQUE LUEGO NO SE PUEDE DARLE UN ESTILO
+        txtNameUser.setPromptText("NAME OF USER");
+        txtEmailUser.setPromptText("example@example.com");
+        txtPasswdUser.setPromptText("Ps.contains(8)");
+        txtConfirmPsswd.setPromptText("CONFIRM PASSWORD");
+
+        // SE LE DA UN ESTILO
+        txtNameUser.setStyle("-fx-prompt-text-fill: #9B9B9B; -fx-background-color: #b1c8a3;");
+        txtEmailUser.setStyle("-fx-prompt-text-fill: #9B9B9B; -fx-background-color: #b1c8a3;");
+        txtPasswdUser.setStyle("-fx-prompt-text-fill: #9B9B9B; -fx-background-color: #b1c8a3;");
+        txtConfirmPsswd.setStyle("-fx-prompt-text-fill: #9B9B9B; -fx-background-color: #b1c8a3;");
     } // VISUALIZAR EL SIGN UP
 
     @FXML
     void onLogAction() {
         signVision.setVisible(false);
         logginVision.setVisible(true);
+        emailTxt.setText("eljoaki@gmail.com");
+        passwordTxt.setText("Ps.contains(8)");
+
+        // SE PONE MANUALMENTE LOS PROMPTTEXT PORQUE LUEGO NO SE PUEDE DARLE UN ESTILO
+        emailTxt.setPromptText("example@example.com");
+        passwordTxt.setPromptText("Ps.contains(8)");
+        //SE LE DA UN ESTILO
+        emailTxt.setStyle("-fx-prompt-text-fill: #9B9B9B; -fx-background-color: #b1c8a3;");
+        passwordTxt.setStyle("-fx-prompt-text-fill: #9B9B9B; -fx-background-color: #b1c8a3;");
     } // VISUALIZAR EL LOGIN
 
     @FXML
@@ -171,28 +191,8 @@ public class RegistrationCtrller implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         if (!StartCtrller.optionRegistrer) {
             onLogAction();
-            emailTxt.setText("eljoaki@gmail.com");
-            passwordTxt.setText("Ps.contains(8)");
-
-            // SE PONE MANUALMENTE LOS PROMPTTEXT PORQUE LUEGO NO SE PUEDE DARLE UN ESTILO
-            emailTxt.setPromptText("example@example.com");
-            passwordTxt.setPromptText("Ps.contains(8)");
-            //SE LE DA UN ESTILO
-            emailTxt.setStyle("-fx-prompt-text-fill: #1e3728; -fx-background-color: #b1c8a3;");
-            passwordTxt.setStyle("-fx-prompt-text-fill: #1e3728; -fx-background-color: #b1c8a3;");
         } else {
             onSignAction();
-            // SE PONE MANUALMENTE LOS PROMPTTEXT PORQUE LUEGO NO SE PUEDE DARLE UN ESTILO
-            txtNameUser.setPromptText("NAME OF USER");
-            txtEmailUser.setPromptText("example@example.com");
-            txtPasswdUser.setPromptText("Ps.contains(8)");
-            txtConfirmPsswd.setPromptText("CONFIRM PASSWORD");
-
-            // SE LE DA UN ESTILO
-            txtNameUser.setStyle("-fx-prompt-text-fill: #9B9B9B; -fx-background-color: #b1c8a3;");
-            txtEmailUser.setStyle("-fx-prompt-text-fill: #9B9B9B; -fx-background-color: #b1c8a3;");
-            txtPasswdUser.setStyle("-fx-prompt-text-fill: #9B9B9B; -fx-background-color: #b1c8a3;");
-            txtConfirmPsswd.setStyle("-fx-prompt-text-fill: #9B9B9B; -fx-background-color: #b1c8a3;");
         } // SEGUN LA OPCION QUE HAYA ELEGIDO EN EL START SE MOSTRARA UN PANEL Y OTRO
     } // SE INICIALIZA CON LA VISTA QUE HAYA ELEGIDO Y CON ESTILOS EN LOS TEXTFIELD
 }

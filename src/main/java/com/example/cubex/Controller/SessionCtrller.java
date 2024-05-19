@@ -254,8 +254,6 @@ public class SessionCtrller extends CodeGeneral implements Initializable {
         autoRadio.setToggleGroup(manualAuto);
         autoRadio.setSelected(true);
 
-
-
         Button use = new Button("USE");
         use.setLayoutX(17);
         use.setLayoutY(143);

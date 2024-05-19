@@ -358,6 +358,30 @@ public class CubeUserDAO {
     } // SELECCIONAR LA URL
 
 
+    public static List<CubeUser> listUserChamp(int idUser) {
+        List<CubeUser> userChamp = new ArrayList<>();
+        try {
+            Connection connection = DatabaseConnection.conectar();
+            String sql = "SELECT NAME_USER FROM CUBE_USERS WHERE ID_USER = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, idUser);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                String nameUser = resultSet.getString("NAME_USER");
+                CubeUser cubeUser = new CubeUser(nameUser);
+                userChamp.add(cubeUser);
+            }
+        } catch (SQLException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error de conexión.");
+            alert.setHeaderText("¡ERROR!");
+            alert.setContentText("Error al conectar a la base de datos: " + e.getMessage());
+            alert.showAndWait();
+        }
+        return userChamp;
+    }
+
+
 
 
 }

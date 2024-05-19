@@ -60,10 +60,28 @@ public class ChampionshipDAO {
         return adminCreator;
     }
 
+    public static int selectIdChamp (String nameChamp){
+        String sql = "SELECT ID_CHAMP FROM CHAMPIONSHIP WHERE NAME_CHAMP = ?;";
+        int idChamp = -1;
+        try {
+            Connection con = DatabaseConnection.conectar();
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.setString(1, nameChamp);
+            ResultSet resultSet = statement.executeQuery();
+            if(resultSet.next()){
+                idChamp = resultSet.getInt("ID_CHAMP");
+            }
+            con.close();
+        } catch (SQLException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error de conexión.");
+            alert.setHeaderText("¡ERROR!");
+            alert.setContentText("Error al conectar a la base de datos: " + e.getMessage());
+            alert.showAndWait();
+        }
+        return idChamp;
+    }
 
-    /*public static boolean memberChamp () {
-        String sql =
-    }*/
 
 
 
