@@ -632,7 +632,7 @@ public class ChampionshipCtrller extends CodeGeneral implements Initializable {
             // PARA ESTABLECER EL VALOR DE LOS SEGUNDOS, SE COJE EL VALOR DESPUES DEL : HASTA EL FINAL
             String subSeconds = tiempo.substring(indiceMinutos + 1, indiceMinutos + (tiempo.length() - indiceMinutos));
             int idUser = CubeUserDAO.selectIdUser(CacheStatic.cubeUser.getMail());
-            if (!TimeChampionshipDAO.createTimeChampionship(idUser, scrambleLabel.getText(), subMinutos, subSeconds, , )) {
+            /*if (!TimeChampionshipDAO.createTimeChampionship(idUser, scrambleLabel.getText(), subMinutos, subSeconds, , )) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Tiempos fallidos.");
                 alert.setHeaderText("¡ERROR!");

@@ -429,25 +429,30 @@ public class SettingCtrller extends CodeGeneral implements Initializable {
                 vbox3.getChildren().add(label3);
                 vbox4.getChildren().add(label4);
                 isUserFound = true;
+                break;
             } else {
                 isUserFound = false; // SI NO SE HA ENCONTRADO NINGUN USUARIO CON ESE NOMBRE SE MOSTRARA UN MENSAJE
             }
         }
-        HBox hbox = null;
+        HBox hbox;
         if (isUserFound) {
             // SE CREAN UN HBOX QUE CONTENGAN LAS 4 COLUMNAS
             hbox = new HBox(vbox1, vbox2, vbox3, vbox4);
             hbox.setSpacing(20); // ESPACIO HORIZONTAL ENTRE LAS COLUMNAS
-        } else {
-            Label label1 = new Label("NO USER HAS BEEN FOUND WITH\nTHAT NAME");
-            label1.setStyle("-fx-font-family: DejaVu Sans; -fx-font-weight: bold; -fx-font-size: 21px; -fx-text-fill: #6d7b64; ");
-            hbox = new HBox(label1);
-        }
-
             hbox.setStyle("-fx-background-color :  #325743");
             // SE AGREGA EL VBOX AL SCROLLPANE
             scrollPane.setContent(hbox);
             scrollPane.setFitToWidth(true);
+        } else {
+            Label label1 = new Label("NO USER HAS BEEN FOUND WITH\nTHAT NAME");
+            label1.setStyle("-fx-font-family: DejaVu Sans; -fx-font-weight: bold; -fx-font-size: 21px; -fx-text-fill: #6d7b64; ");
+            hbox = new HBox(label1);
+            hbox.setStyle("-fx-background-color :  #325743");
+            // SE AGREGA EL VBOX AL SCROLLPANE
+            scrollPane.setContent(hbox);
+            scrollPane.setFitToWidth(true);
+        }
+
     }
 
     @FXML
