@@ -284,6 +284,27 @@ public class CubeUserDAO {
         return idUser;
     }
 
+    public static String selectNameUser (int idUser){
+        String sql = "SELECT NAME_USER FROM CUBE_USERS WHERE ID_USER = ?";
+        String nameUser = "";
+        try {
+            Connection connection = DatabaseConnection.conectar();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, idUser);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                nameUser = resultSet.getString("NAME_USER");
+            }
+        } catch (SQLException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error de conexión.");
+            alert.setHeaderText("¡ERROR!");
+            alert.setContentText("Error al conectar a la base de datos: " + e.getMessage());
+            alert.showAndWait();
+        }
+        return nameUser;
+    } // SABER EL NOMBRE DEL USUARIO
+
     public static boolean urlUpdate (File selectedFile, String mail){
         String sql = "UPDATE CUBE_USERS SET URL_IMAGEN = ? WHERE MAIL = ?";
         boolean isUpdate = false;

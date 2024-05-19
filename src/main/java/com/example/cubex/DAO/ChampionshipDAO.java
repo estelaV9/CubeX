@@ -82,6 +82,28 @@ public class ChampionshipDAO {
         return idChamp;
     }
 
+    public static boolean existsNameChamp (String nameChamp){
+        String sql = "SELECT NAME_CHAMP FROM CHAMPIONSHIP WHERE NAME_CHAMP = ?;";
+        boolean isExists = false;
+        try {
+            Connection con = DatabaseConnection.conectar();
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.setString(1, nameChamp);
+            ResultSet resultSet = statement.executeQuery();
+            if(resultSet.next()){
+                isExists = true;
+            }
+            con.close();
+        } catch (SQLException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error de conexión.");
+            alert.setHeaderText("¡ERROR!");
+            alert.setContentText("Error al conectar a la base de datos: " + e.getMessage());
+            alert.showAndWait();
+        }
+        return isExists;
+    } // NOMBRE DEL CAMPEONATO
+
 
 
 
