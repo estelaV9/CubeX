@@ -446,6 +446,14 @@ public class ChampionshipCtrller extends CodeGeneral implements Initializable {
                 insertTimes.setPrefHeight(31);
                 insertTimes.setStyle("-fx-background-color: #6d7b64; -fx-font-family: DejaVu Sans; -fx-font-weight: bold; -fx-font-size: 15px;");
 
+                insertTimes.setOnAction(event -> {
+                    idChampActual = idChamp;
+                    yourChampsPane.setVisible(true);
+                    scrambleLabel.setText(CodeGeneral.scramble());
+                    timeChampPane.setVisible(true);
+                    newChampPane.setVisible(false);
+                });
+
                 Button join = new Button("JOIN");
                 join.setLayoutX(123);
                 join.setLayoutY(218);
