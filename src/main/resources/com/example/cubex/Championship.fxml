@@ -137,6 +137,18 @@
                   <Font name="DejaVu Sans Bold" size="15.0" />
                </font>
             </Button>
+            <ScrollPane fx:id="champJoinScroll" hbarPolicy="NEVER" layoutX="158.0" layoutY="5.0" prefHeight="258.0" prefWidth="251.0" style="-fx-border-color: #1e3728; -fx-border-width: 2;" vbarPolicy="ALWAYS">
+               <content>
+                  <AnchorPane fx:id="scrollChampJoinPane" minHeight="0.0" minWidth="0.0" prefHeight="252.0" prefWidth="254.0" style="-fx-background-color: #325743;" />
+               </content>
+               <effect>
+                  <DropShadow height="30.0" radius="14.5" width="30.0">
+                     <color>
+                        <Color red="0.4274509847164154" green="0.48235294222831726" blue="0.3921568691730499" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </ScrollPane>
             <Pane fx:id="newChampPane" layoutX="14.0" layoutY="4.0" prefHeight="258.0" prefWidth="396.0" style="-fx-background-color: #325743; -fx-background-radius: 24; -fx-border-color: black; -fx-border-radius: 24;">
                <children>
                   <Button layoutX="13.0" layoutY="215.0" mnemonicParsing="false" onAction="#onCreateChampAction" prefHeight="31.0" prefWidth="240.0" style="-fx-background-color: #74cc5e;" text="CREATE">
@@ -188,18 +200,6 @@
                   </Label>
                </children>
             </Pane>
-            <ScrollPane fx:id="champJoinScroll" hbarPolicy="NEVER" layoutX="158.0" layoutY="5.0" prefHeight="258.0" prefWidth="251.0" style="-fx-border-color: #1e3728; -fx-border-width: 2;" vbarPolicy="ALWAYS">
-               <content>
-                  <AnchorPane fx:id="scrollChampJoinPane" minHeight="0.0" minWidth="0.0" prefHeight="252.0" prefWidth="254.0" style="-fx-background-color: #325743;" />
-               </content>
-               <effect>
-                  <DropShadow height="30.0" radius="14.5" width="30.0">
-                     <color>
-                        <Color red="0.4274509847164154" green="0.48235294222831726" blue="0.3921568691730499" />
-                     </color>
-                  </DropShadow>
-               </effect>
-            </ScrollPane>
             <Pane fx:id="timeChampPane" layoutX="-16.0" layoutY="10.0" prefHeight="251.0" prefWidth="314.0" style="-fx-background-color: #325743; -fx-background-radius: 24; -fx-border-color: black; -fx-border-radius: 24;">
                <children>
                   <Button layoutX="9.0" layoutY="205.0" mnemonicParsing="false" onAction="#onInserTimeChampAction" prefHeight="31.0" prefWidth="179.0" style="-fx-background-color: #74cc5e;" text="INSERT TIME">
@@ -237,6 +237,7 @@
                         <Font size="19.0" />
                      </font>
                   </Label>
+                  <ComboBox fx:id="categoryChamp" layoutX="157.0" layoutY="13.0" prefHeight="25.0" prefWidth="86.0" />
                </children>
             </Pane>
          </children>

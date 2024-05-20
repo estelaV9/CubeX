@@ -33,6 +33,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ChampionshipCtrller extends CodeGeneral implements Initializable {
     @FXML
@@ -40,6 +42,9 @@ public class ChampionshipCtrller extends CodeGeneral implements Initializable {
 
     @FXML
     private ComboBox<?> categoriesCB1;
+
+    @FXML
+    private ComboBox<?> categoryChamp;
 
     @FXML
     private Pane champMenu;
@@ -182,8 +187,20 @@ public class ChampionshipCtrller extends CodeGeneral implements Initializable {
             if (!MemberDAO.selectMember(CacheStatic.cubeUser.getMail())) {
                 if (categoriesCB.getValue() == null) {
                     description = descriptionChampTxt.getText() + "\n" + categoriesCB1.getValue() + " CUBE CATEGORIES.";
+                    Pattern pattern = Pattern.compile("(\\d+x\\d+x\\d+)\\s*CUBE\\s*CATEGORIES");
+                    Matcher matcher = pattern.matcher(description);
+                    if (matcher.find()) {
+                        String category = matcher.group(1);
+                        System.out.println("La categoría es: " + category);
+                    }
                 } else if (categoriesCB1.getValue() == null) {
                     description = descriptionChampTxt.getText() + "\n" + categoriesCB.getValue() + " CUBE CATEGORIES.";
+                    Pattern pattern = Pattern.compile("(\\d+x\\d+x\\d+)\\s*(?:CUBE|CLOCK|MASTERMORPHIX|MEGAMINX|PYRAMINX|PYRAMORPHIX|SKEWB|SQUARE-1)\\s*CATEGORIES");
+                    Matcher matcher = pattern.matcher(description);
+                    if (matcher.find()) {
+                        String category = matcher.group(1);
+                        System.out.println("La categoría es: " + category);
+                    }
                 } else {
                     description = descriptionChampTxt.getText() + "\n" + categoriesCB.getValue() + " AND " +
                             categoriesCB1.getValue() + " CUBE CATEGORIES.";
@@ -426,6 +443,28 @@ public class ChampionshipCtrller extends CodeGeneral implements Initializable {
                 updateName.setPrefHeight(31);
                 updateName.setStyle("-fx-background-color: #6d7b64; -fx-font-family: DejaVu Sans; -fx-font-weight: bold; -fx-font-size: 15px;");
 
+                updateName.setOnAction(event ->{
+                    String nombre = JOptionPane.showInputDialog(null, "Nuevo nombre del campeonato");
+                    if (nombre != null) {
+                        if (ChampionshipDAO.updateName(nombre, idChamp)) {
+                            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                            alert.setTitle("Nombre de Sesion cambiada.");
+                            alert.setHeaderText("Actualizacion exitosa");
+                            alert.setContentText("Se ha actualizado el nombre de la sesion correctamente");
+                            alert.showAndWait();
+                            nextPaneY = 0;
+                            paneChampScroll.getChildren().clear();
+                            loadChampionship();
+                        } else {
+                            Alert alert = new Alert(Alert.AlertType.ERROR);
+                            alert.setTitle("Nombre de Sesion no cambiada.");
+                            alert.setHeaderText("Actualizacion fallida");
+                            alert.setContentText("No se ha actualizado el nombre de la sesion correctamente");
+                            alert.showAndWait();
+                        }
+                    }
+                });
+
                 // SE AGREGAN TODOS AL NUEVO PANEL
                 newPane.getChildren().addAll(
                         nameChampionship, administrator, dateChampionship, numberPartChamp,
@@ -587,6 +626,27 @@ public class ChampionshipCtrller extends CodeGeneral implements Initializable {
                 updateName.setPrefHeight(31);
                 updateName.setStyle("-fx-background-color: #6d7b64; -fx-font-family: DejaVu Sans; -fx-font-weight: bold; -fx-font-size: 15px;");
 
+                updateName.setOnAction(event ->{
+                    String nombre = JOptionPane.showInputDialog(null, "Nuevo nombre del campeonato");
+                    if (nombre != null) {
+                        if (ChampionshipDAO.updateName(nombre, idChamp)) {
+                            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                            alert.setTitle("Nombre de Sesion cambiada.");
+                            alert.setHeaderText("Actualizacion exitosa");
+                            alert.setContentText("Se ha actualizado el nombre de la sesion correctamente");
+                            alert.showAndWait();
+                            nextPaneY = 0;
+                            paneChampScroll.getChildren().clear();
+                            loadChampionship();
+                        } else {
+                            Alert alert = new Alert(Alert.AlertType.ERROR);
+                            alert.setTitle("Nombre de Sesion no cambiada.");
+                            alert.setHeaderText("Actualizacion fallida");
+                            alert.setContentText("No se ha actualizado el nombre de la sesion correctamente");
+                            alert.showAndWait();
+                        }
+                    }
+                });
                 // SE AGREGAN TODOS AL NUEVO PANEL
                 newPane.getChildren().addAll(
                         nameChampionship, administrator, dateChampionship, numberPartChamp,
