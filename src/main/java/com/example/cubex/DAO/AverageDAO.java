@@ -633,8 +633,6 @@ public class AverageDAO {
         return avgSeconds;
     }
 
-
-
 }
 
 

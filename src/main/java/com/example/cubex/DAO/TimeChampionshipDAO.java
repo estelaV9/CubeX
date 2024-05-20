@@ -37,4 +37,52 @@ public class TimeChampionshipDAO {
         return isCreate;
     }
 
+    public static boolean deleteUserChamp (int idChamp, int idUser){
+        String sql = "DELETE FROM TIMES_CHAMPIONSHIP WHERE ID_CHAMP = ? AND ID_USER = ?";
+        boolean isDelete = false;
+        try {
+            Connection con = DatabaseConnection.conectar();
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.setInt(1, idChamp);
+            statement.setInt(2, idUser);
+            int rowsAffected = statement.executeUpdate();
+            if(rowsAffected > 0){
+                isDelete = true;
+            }
+            con.close();
+        } catch (SQLException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error de conexión.");
+            alert.setHeaderText("¡ERROR!");
+            alert.setContentText("Error al conectar a la base de datos: " + e.getMessage());
+            alert.showAndWait();
+        }
+        return isDelete;
+    }
+
+    public static boolean deleteTimesChamp (int idChamp){
+        String sql = "DELETE FROM TIMES_CHAMPIONSHIP WHERE ID_CHAMP = ? ";
+        boolean isDelete = false;
+        try {
+            Connection con = DatabaseConnection.conectar();
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.setInt(1, idChamp);
+            int rowsAffected = statement.executeUpdate();
+            if(rowsAffected > 0){
+                isDelete = true;
+            }
+            con.close();
+        } catch (SQLException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error de conexión.");
+            alert.setHeaderText("¡ERROR!");
+            alert.setContentText("Error al conectar a la base de datos: " + e.getMessage());
+            alert.showAndWait();
+        }
+        return isDelete;
+    }
+
+
+
+
 }

@@ -9,9 +9,9 @@ import java.time.LocalDate;
 
 public class ChampionshipDAO {
     public static boolean insertChampionship (int idUser, String nameChamp, int price, int numberPart, String descriptionChamp,
-                                       LocalDate registrationDate, boolean membersOnly) {
+                                       LocalDate registrationDate, boolean membersOnly, String category) {
         String sql = "INSERT INTO CHAMPIONSHIP (ID_USER, NAME_CHAMP, PRICE, NUMBER_PART, DESCRIPTION_CHAMP, " +
-                "REGISTRATION_DATE, MEMBERS_ONLY) VALUES (?, ?, ?, ?, ?, ?, ?);";
+                "REGISTRATION_DATE, MEMBERS_ONLY, DESCRIPTION_CATEGORY) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
         boolean isInsert = false;
         try {
             Connection connection = DatabaseConnection.conectar();
@@ -23,6 +23,7 @@ public class ChampionshipDAO {
             statement.setString(5, descriptionChamp);
             statement.setDate(6, Date.valueOf(registrationDate));
             statement.setBoolean(7, membersOnly);
+            statement.setString(8, category);
             int rowsAffected = statement.executeUpdate();
             if(rowsAffected > 0){
                 isInsert = true;
@@ -129,33 +130,8 @@ public class ChampionshipDAO {
     }// ACTUALIZAR NOMBRE DEL CAMPEONATO
 
 
-    public String selectCategory (int idChamp) {
-        String sql = "SELECT\n" +
-                "    CASE\n" +
-                "        WHEN description_CHAMP LIKE '%2x2x2%' THEN '2x2x2'\n" +
-                "        WHEN description_CHAMP LIKE '%3x3x3%' THEN '3x3x3'\n" +
-                "        WHEN description_CHAMP LIKE '%3x3x3 BLIND%' THEN '3x3x3 BLIND'\n" +
-                "        WHEN description_CHAMP LIKE '%3x3x3 FEWEST MOVES CHALLENGE%' THEN '3x3x3 FEWEST MOVES CHALLENGE'\n" +
-                "        WHEN description_CHAMP LIKE '%3x3x3 MIRROR%' THEN '3x3x3 MIRROR'\n" +
-                "        WHEN description_CHAMP LIKE '%3x3x3 MULTIBLIND%' THEN '3x3x3 MULTIBLIND'\n" +
-                "        WHEN description_CHAMP LIKE '%3x3x3 ONE-HANDED%' THEN '3x3x3 ONE-HANDED'\n" +
-                "        WHEN description_CHAMP LIKE '%4x4x4%' THEN '4x4x4'\n" +
-                "        WHEN description_CHAMP LIKE '%4x4x4 BLIND%' THEN '4x4x4 BLIND'\n" +
-                "        WHEN description_CHAMP LIKE '%5x5x5%' THEN '5x5x5'\n" +
-                "        WHEN description_CHAMP LIKE '%5x5x5 BLIND%' THEN '5x5x5 BLIND'\n" +
-                "        WHEN description_CHAMP LIKE '%6x6x6%' THEN '6x6x6'\n" +
-                "        WHEN description_CHAMP LIKE '%7x7x7%' THEN '7x7x7'\n" +
-                "        WHEN description_CHAMP LIKE '%CLOCK%' THEN 'CLOCK'\n" +
-                "        WHEN description_CHAMP LIKE '%MASTERMORPHIX%' THEN 'MASTERMORPHIX'\n" +
-                "        WHEN description_CHAMP LIKE '%MEGAMINX%' THEN 'MEGAMINX'\n" +
-                "        WHEN description_CHAMP LIKE '%PYRAMINX%' THEN 'PYRAMINX'\n" +
-                "        WHEN description_CHAMP LIKE '%PYRAMORPHIX%' THEN 'PYRAMORPHIX'\n" +
-                "        WHEN description_CHAMP LIKE '%SKEWB%' THEN 'SKEWB'\n" +
-                "        WHEN description_CHAMP LIKE '%SQUARE-1%' THEN 'SQUARE-1'\n" +
-                "        ELSE NULL\n" +
-                "    END AS cube_type\n" +
-                "FROM CHAMPIONSHIP\n" +
-                "WHERE ID_CHAMP = ?;";
+    public static String selectCategory (int idChamp) {
+        String sql = "SELECT DESCRIPTION_CATEGORY FROM CHAMPIONSHIP WHERE ID_CHAMP = ?;";
         String category = "";
         try {
             Connection con = DatabaseConnection.conectar();
@@ -163,7 +139,7 @@ public class ChampionshipDAO {
             statement.setInt(1, idChamp);
             ResultSet resultSet = statement.executeQuery();
             if(resultSet.next()){
-                category = resultSet.getString("D");
+                category = resultSet.getString("DESCRIPTION_CATEGORY");
             }
             con.close();
         } catch (SQLException e) {
@@ -176,6 +152,55 @@ public class ChampionshipDAO {
         return category;
 
     } // SELECCIONAR LA CATEGORIA QUE SE GUARDA EN LA DESCRIPCION
+
+
+    public static int countTimesChamp (int idChamp, int idUser, int idType ) {
+        String sql = "SELECT COUNT(ID_TIMES_VERSUS) FROM TIMES_CHAMPIONSHIP WHERE ID_CHAMP = ? AND ID_USER = ? AND ID_TYPE = ?;";
+        int totalTimes = 0;
+        try {
+            Connection con = DatabaseConnection.conectar();
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.setInt(1, idChamp);
+            statement.setInt(2, idUser);
+            statement.setInt(3, idType);
+            ResultSet resultSet = statement.executeQuery();
+            if(resultSet.next()){
+                totalTimes = resultSet.getInt("COUNT(ID_TIMES_VERSUS)");
+            }
+            con.close();
+        } catch (SQLException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error de conexión.");
+            alert.setHeaderText("¡ERROR!");
+            alert.setContentText("Error al conectar a la base de datos: " + e.getMessage());
+            alert.showAndWait();
+        }
+        return totalTimes;
+
+    }
+
+    public static boolean deleteChamp (int idChamp){
+        String sql = "DELETE FROM CHAMPIONSHIP WHERE ID_CHAMP = ?";
+        boolean isDelete = false;
+        try {
+            Connection con = DatabaseConnection.conectar();
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.setInt(1, idChamp);
+            int rowsAffected = statement.executeUpdate();
+            if(rowsAffected > 0){
+                isDelete = true;
+            }
+            con.close();
+        } catch (SQLException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error de conexión.");
+            alert.setHeaderText("¡ERROR!");
+            alert.setContentText("Error al conectar a la base de datos: " + e.getMessage());
+            alert.showAndWait();
+        }
+        return isDelete;
+    }
+
 
 
 

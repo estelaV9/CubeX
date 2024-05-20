@@ -200,9 +200,9 @@
                   </Label>
                </children>
             </Pane>
-            <Pane fx:id="timeChampPane" layoutX="-16.0" layoutY="10.0" prefHeight="251.0" prefWidth="314.0" style="-fx-background-color: #325743; -fx-background-radius: 24; -fx-border-color: black; -fx-border-radius: 24;">
+            <Pane fx:id="timeChampPane" layoutX="-16.0" layoutY="-4.0" prefHeight="265.0" prefWidth="314.0" style="-fx-background-color: #325743; -fx-background-radius: 24; -fx-border-color: black; -fx-border-radius: 24;">
                <children>
-                  <Button layoutX="9.0" layoutY="205.0" mnemonicParsing="false" onAction="#onInserTimeChampAction" prefHeight="31.0" prefWidth="179.0" style="-fx-background-color: #74cc5e;" text="INSERT TIME">
+                  <Button layoutX="9.0" layoutY="224.0" mnemonicParsing="false" onAction="#onInserTimeChampAction" prefHeight="31.0" prefWidth="179.0" style="-fx-background-color: #74cc5e;" text="INSERT TIME">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
@@ -212,17 +212,17 @@
                         <Font name="System Bold" size="21.0" />
                      </font>
                   </Label>
-                  <Button layoutX="189.0" layoutY="205.0" mnemonicParsing="false" onAction="#onCloseTimesChampAction" prefHeight="31.0" prefWidth="114.0" style="-fx-background-color: #6d7b64;" text="CLOSE">
+                  <Button layoutX="189.0" layoutY="224.0" mnemonicParsing="false" onAction="#onCloseTimesChampAction" prefHeight="31.0" prefWidth="114.0" style="-fx-background-color: #6d7b64;" text="CLOSE">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </Button>
-                  <Label fx:id="scrambleLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="41.0" prefHeight="67.0" prefWidth="297.0" style="-fx-background-color: #b1c8a3; -fx-background-radius: 5;" textAlignment="CENTER">
+                  <Label fx:id="scrambleLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="60.0" prefHeight="67.0" prefWidth="297.0" style="-fx-background-color: #b1c8a3; -fx-background-radius: 5;" textAlignment="CENTER">
                      <font>
                         <Font size="15.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="champTimeTxt" layoutX="58.0" layoutY="116.0" prefHeight="67.0" prefWidth="202.0" promptText="00:00,00">
+                  <TextField fx:id="champTimeTxt" layoutX="58.0" layoutY="135.0" prefHeight="67.0" prefWidth="202.0" promptText="00:00,00">
                      <font>
                         <Font size="39.0" />
                      </font>
@@ -237,7 +237,11 @@
                         <Font size="19.0" />
                      </font>
                   </Label>
-                  <ComboBox fx:id="categoryChamp" layoutX="157.0" layoutY="13.0" prefHeight="25.0" prefWidth="86.0" />
+                  <Label fx:id="categoriTimesChamp" layoutX="16.0" layoutY="34.0">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Label>
                </children>
             </Pane>
          </children>

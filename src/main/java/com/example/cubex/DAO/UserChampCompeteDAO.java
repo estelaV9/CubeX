@@ -128,4 +128,26 @@ public class UserChampCompeteDAO {
         return successfulDelete;
     } // ELIMINAR UN USUARIO DE UNA COMPETICION
 
+    public static boolean deleteTimesChamp (int idChamp) {
+        String sql = "DELETE FROM USER_CHAMP_COMPETE WHERE ID_CHAMP = ?";
+        boolean successfulDelete = false;
+        try {
+            Connection connection = DatabaseConnection.conectar();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, idChamp);
+            int rowsDelete = statement.executeUpdate();
+            if (rowsDelete > 0) {
+                successfulDelete = true;
+            }
+            connection.close(); // Cerrar conexión a la base de datos
+        } catch (SQLException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error de conexión.");
+            alert.setHeaderText("¡ERROR!");
+            alert.setContentText("Error al conectar a la base de datos: " + e.getMessage());
+            alert.showAndWait();
+        }
+        return successfulDelete;
+    } // ELIMINAR UN USUARIO DE UNA COMPETICION
+
 }
