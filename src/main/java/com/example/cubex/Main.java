@@ -13,7 +13,7 @@ import java.util.Objects;
 public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("Registration.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("Beginning.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("CUBE-X");
         stage.getIcons().add(new Image(this.getClass().getResource("Imagen/cubeX_icon.png").toString()));

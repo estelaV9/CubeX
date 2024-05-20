@@ -330,7 +330,7 @@ public class SessionCtrller extends CodeGeneral implements Initializable {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Tiempo no válido.");
             alert.setHeaderText("¡ERROR!");
-            alert.setContentText("Por favor, ingrese un tiempo válido.\nFor example : 00:12,11");
+            alert.setContentText("Por favor, ingrese un tiempo válido.\nFor example : 1:12,11");
             alert.showAndWait();
         } else {
             if (!StartCtrller.isDemo) {
