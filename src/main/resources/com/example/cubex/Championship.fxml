@@ -137,9 +137,9 @@
                   <Font name="DejaVu Sans Bold" size="15.0" />
                </font>
             </Button>
-            <ScrollPane fx:id="champJoinScroll" hbarPolicy="NEVER" layoutX="158.0" layoutY="5.0" prefHeight="258.0" prefWidth="251.0" style="-fx-border-color: #1e3728; -fx-border-width: 2;" vbarPolicy="ALWAYS">
+            <ScrollPane fx:id="champJoinScroll" hbarPolicy="NEVER" layoutX="113.0" layoutY="48.0" prefHeight="215.0" prefWidth="202.0" style="-fx-border-color: #1e3728; -fx-border-width: 2;" vbarPolicy="ALWAYS">
                <content>
-                  <AnchorPane fx:id="scrollChampJoinPane" minHeight="0.0" minWidth="0.0" prefHeight="252.0" prefWidth="254.0" style="-fx-background-color: #325743;" />
+                  <AnchorPane fx:id="scrollChampJoinPane" minHeight="0.0" minWidth="0.0" prefHeight="211.0" prefWidth="184.0" style="-fx-background-color: #325743;" />
                </content>
                <effect>
                   <DropShadow height="30.0" radius="14.5" width="30.0">
@@ -149,6 +149,8 @@
                   </DropShadow>
                </effect>
             </ScrollPane>
+            <ComboBox fx:id="nameChamp" layoutX="114.0" layoutY="-4.0" onAction="#onSearchTimesChampAction" prefHeight="25.0" prefWidth="202.0" style="-fx-background-color: #b1c8a3;" stylesheets="@Style.css" />
+            <ComboBox fx:id="categoryChamp" layoutX="114.0" layoutY="21.0" onAction="#onSearchCategoryChampAction" prefHeight="25.0" prefWidth="202.0" style="-fx-background-color: #b1c8a3;" />
             <Pane fx:id="newChampPane" layoutX="14.0" layoutY="4.0" prefHeight="258.0" prefWidth="396.0" style="-fx-background-color: #325743; -fx-background-radius: 24; -fx-border-color: black; -fx-border-radius: 24;">
                <children>
                   <Button layoutX="13.0" layoutY="215.0" mnemonicParsing="false" onAction="#onCreateChampAction" prefHeight="31.0" prefWidth="240.0" style="-fx-background-color: #74cc5e;" text="CREATE">

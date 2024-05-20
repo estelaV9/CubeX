@@ -6,6 +6,7 @@ import com.example.cubex.Main;
 import com.example.cubex.Validator.Validator;
 import com.example.cubex.model.CacheStatic;
 import com.example.cubex.model.CubeUser;
+import com.example.cubex.model.TimesChampionship;
 import com.example.cubex.model.UserChampCompete;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -42,6 +43,10 @@ public class ChampionshipCtrller extends CodeGeneral implements Initializable {
 
     @FXML
     private ComboBox<?> categoriesCB1;
+    @FXML
+    private ComboBox<?> categoryChamp;
+    @FXML
+    private ComboBox<?> nameChamp;
 
     @FXML
     private Pane champMenu;
@@ -256,6 +261,70 @@ public class ChampionshipCtrller extends CodeGeneral implements Initializable {
             priceChampTxt.clear();
             numberPartTxt.clear();
             descriptionChampTxt.clear();
+        }
+    }
+
+    @FXML
+    void onSearchTimesChampAction(ActionEvent event) {
+        String nameChampionship = String.valueOf(nameChamp.getSelectionModel().getSelectedItem());
+        ChampionshipDAO.categoryChamp(categoryChamp, nameChampionship);
+    }
+
+    @FXML
+    void onSearchCategoryChampAction(ActionEvent event) {
+        String nameChampionship = String.valueOf(nameChamp.getSelectionModel().getSelectedItem());
+        int idChamp = ChampionshipDAO.selectIdChamp(nameChampionship);
+        ChampionshipDAO.categoryChamp(categoryChamp, nameChampionship);
+        if (categoryChamp.getValue() != null) {
+            int idType = SessionDAO.idCategory(categoryChamp.getSelectionModel().getSelectedItem().toString());
+            int contador = 0, minutes;
+            double seconds;
+            String category, nameUser, nameUserWinner;
+            // CONTENEDOR PRINCIPAL
+            VBox mainContainer = new VBox();
+            mainContainer.setSpacing(20);
+            for (TimesChampionship timesChampionship : ChampionshipDAO.listTimesChamp(nameChampionship, String.valueOf(categoryChamp.getSelectionModel().getSelectedItem()))) {
+                contador++;
+
+                // CREAR UN HBOX PARA CADA TIEMPO
+                HBox timeBox = new HBox();
+                timeBox.setSpacing(20);
+
+                // LABELS PARA LOS TIEMPOS
+                nameUser = CubeUserDAO.selectNameUser(timesChampionship.getIdUser());
+
+                Label label1 = new Label("  " + contador + ")");
+                Label label2 = new Label(timesChampionship.getMinutes() + ":" + timesChampionship.getSeconds());
+                Label label3 = new Label(nameUser);
+
+                // ESTILOS
+                label1.setStyle("-fx-font-size: 17px; -fx-text-fill: black;");
+                label2.setStyle("-fx-font-size: 17px; -fx-text-fill: black;");
+                label3.setStyle("-fx-font-size: 17px; -fx-text-fill: black;");
+
+
+                // AGREGAR ELEMENTOS AL HBOX
+                timeBox.getChildren().addAll( label1, label2, label3);
+
+                // AGREGAR EL HBOX AL CONTENEDOR PRINCIPAL
+                mainContainer.getChildren().add(timeBox);
+            }
+            minutes = TimeChampionshipDAO.dataWinnerCategory(idChamp, idType).getMinutes();
+            seconds = TimeChampionshipDAO.dataWinnerCategory(idChamp, idType).getSeconds();
+            nameUserWinner = CubeUserDAO.selectNameUser(TimeChampionshipDAO.dataWinnerCategory(idChamp, idType).getIdUser());
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Ganador.");
+            alert.setHeaderText("¡GANADOR!");
+            alert.setContentText("WINNER : " + nameUserWinner + " TIMES : " + minutes + ":" + seconds);
+            alert.showAndWait();
+
+            if(!CubeChampPerteneceDAO.isPertenece(idType, idChamp, nameUserWinner)){
+                CubeChampPerteneceDAO.createWinnerPertenece(idType, idChamp, nameUserWinner);
+            }
+
+            mainContainer.setStyle("-fx-background-color : #204338");
+            // AGREGAR EL CONTENEDOR PRINCIPAL AL SCROLLPANE
+            champJoinScroll.setContent(mainContainer);
         }
     }
 
@@ -743,6 +812,7 @@ public class ChampionshipCtrller extends CodeGeneral implements Initializable {
                     }// MENSAJE POR SI ALGO FALLA AL INSERTAR LOS DATOS
                     scrambleLabel.setText(CodeGeneral.scramble()); // VOLVER A GENERAR EL SCRAMBLE*/
                 } else {
+
                     categoriTimesChamp.setText(categoria2);
                     if (ChampionshipDAO.countTimesChamp(idChampActual, idUser, idCategoria2) != 5) {
                         String tiempo = champTimeTxt.getText(); // GUARDAR EL TIEMPO QUE HA HECHO
@@ -764,12 +834,16 @@ public class ChampionshipCtrller extends CodeGeneral implements Initializable {
                             countTimesLabel.setText(ChampionshipDAO.countTimesChamp(idChampActual, idUser, idCategoria2) + "/5");
                         }// MENSAJE POR SI ALGO FALLA AL INSERTAR LOS DATOS
                         scrambleLabel.setText(CodeGeneral.scramble()); // VOLVER A GENERAR EL SCRAMBLE*/
+
                     } else {
+
                         Alert alert = new Alert(Alert.AlertType.ERROR);
                         alert.setTitle("Maximo de tiempos alcanzados.");
                         alert.setHeaderText("¡ERROR!");
                         alert.setContentText("No se puede insertar mas tiempos porque ya has hecho los cinco tiempos.");
                         alert.showAndWait();
+
+
                     }
                 } // SI NO ES USER DEMO, SE LE GUARDA LOS TIEMPOS EN ESA SESSION QUE ESTA SIENDO UTILIZADA
 
@@ -923,6 +997,7 @@ public class ChampionshipCtrller extends CodeGeneral implements Initializable {
         CuberTypeDAO.cubeCategory(categoriesCB1);
         paneChampScroll.getChildren().clear();
         loadChampionship();
+        ChampionshipDAO.nameChamp(nameChamp);
     }
 
 }

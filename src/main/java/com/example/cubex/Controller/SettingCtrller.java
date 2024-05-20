@@ -123,9 +123,6 @@ public class SettingCtrller extends CodeGeneral implements Initializable {
     public Pane communityPane;
 
     @FXML
-    private Button expFilterBtt;
-
-    @FXML
     private Button filterBtt;
     @FXML
     private Button userTops;
@@ -147,7 +144,6 @@ public class SettingCtrller extends CodeGeneral implements Initializable {
 
     LocalDate localDate = LocalDate.now();
     static boolean pulsarFilter;
-    public static boolean isModifyImagen;
 
 
     @FXML
@@ -213,7 +209,7 @@ public class SettingCtrller extends CodeGeneral implements Initializable {
         scrollPane.setFitToWidth(true);
     }
 
-    @FXML
+    /*@FXML
     void onBestFilterAction(ActionEvent event) {
         onCloseFilterAction();
         String category = String.valueOf(categoriesCB.getSelectionModel().getSelectedItem());
@@ -274,65 +270,13 @@ public class SettingCtrller extends CodeGeneral implements Initializable {
         // SE AGREGA EL HBOX AL SCROLLPANE
         scrollPane.setContent(hbox);
         scrollPane.setFitToWidth(true);
-    } // FILTRAR POR MEJOR TIEMPO
+    } // FILTRAR POR MEJOR TIEMPO*/
 
     @FXML
     void onCloseFilterAction() {
         filterMenu.setVisible(false);
     } // CERRAR EL MENU DE FILTROS
 
-    @FXML
-    void onChampFilterAction(ActionEvent event) {/*
-        onCloseFilterAction();
-        String category = String.valueOf(categoriesCB.getSelectionModel().getSelectedItem());
-        int contador = 0;
-        CubeUserDAO.users = CubeUserDAO.listUser();
-
-        // SE CREAN 4 VBOX PARA CADA COLUMNS
-        VBox vbox1 = new VBox();
-        VBox vbox2 = new VBox();
-        VBox vbox3 = new VBox();
-        VBox vbox4 = new VBox();
-
-
-        //ESPACIO VERTICAL ENTRE LOS ELEMENTOS DE LAS COLUMNAS
-        vbox1.setSpacing(10);
-        vbox2.setSpacing(10);
-        vbox3.setSpacing(10);
-        vbox4.setSpacing(10);
-
-        // ITERAR SOBRE LA LISTA DE USUARIOS Y CREAR UN LABEL POR CADA UNO
-        for (CubeUser user : CubeUserDAO.users) {
-            contador++;
-            // SE CREA UN LABEL POR CADA COLUMNA
-            Label label1 = new Label(String.valueOf(contador));
-            Label label2 = new Label(user.getNameUser());
-            Label label3 = new Label(String.valueOf(user.getLevelUser()));
-            Label label4 = new Label(String.valueOf(user.getRoleUser()));
-
-            // SE LES DA UN ESTILO
-            label1.setStyle("-fx-font-size: 17px; -fx-text-fill: black;");
-            label2.setStyle("-fx-font-size: 17px; -fx-text-fill: black;");
-            label3.setStyle("-fx-font-size: 17px; -fx-text-fill: black;");
-            label4.setStyle("-fx-font-size: 17px; -fx-text-fill: black;");
-
-            // SE AGREGAN LOS LABELS A LAS COLUMNAS CORRESPONDIENTES
-            vbox1.getChildren().add(label1);
-            vbox2.getChildren().add(label2);
-            vbox3.getChildren().add(label3);
-            vbox4.getChildren().add(label4);
-        }
-
-        // SE CREAN UN HBOX QUE CONTENGAN LAS 4 COLUMNAS
-        HBox hbox = new HBox(vbox1, vbox2, vbox3, vbox4);
-        hbox.setSpacing(20); // ESPACIO HORIZONTAL ENTRE LAS COLUMNAS
-        hbox.setStyle("-fx-background-color :  #325743");
-
-
-        // SE AGREGA EL HBOX AL SCROLLPANE
-        scrollPane.setContent(hbox);
-        scrollPane.setFitToWidth(true);*/
-    } // FILTRAR POR CAMPEONATO
 
     @FXML
     void onFilterAction(ActionEvent event) {
@@ -377,11 +321,13 @@ public class SettingCtrller extends CodeGeneral implements Initializable {
     }
 
 
-
-
     @FXML
     void onManualAction(ActionEvent event) {
-
+        try {
+            Desktop.getDesktop().browse(new URI("https://github.com/estelaV9/CubeX/blob/main/ManualUsuario_deVegaEstela.pdf"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML

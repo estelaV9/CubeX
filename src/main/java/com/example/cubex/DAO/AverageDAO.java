@@ -633,6 +633,63 @@ public class AverageDAO {
         return avgSeconds;
     }
 
+
+
+
+
+
+
+
+    public static boolean avgMinutesChamp(int idChamp, int idUser, int idCategory) {
+        String sql = "SELECT TRUNCATE((SUM(MINUTES1 * 60 + SECONDS1) - MIN(MINUTES1 * 60 + SECONDS1) - MAX(MINUTES1 * 60 + SECONDS1)) / (COUNT(MINUTES1) - 2)/60, 0) " +
+                "FROM TIMES_CHAMPIONSHIP \n" +
+                "WHERE ID_CHAMP = ? AND ID_TYPE = ? AND ID_USER =?;";
+        boolean isUpdate = false;
+        try {
+            Connection connection = DatabaseConnection.conectar();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, idChamp);
+            statement.setInt(2, idCategory);
+            statement.setInt(3, idUser);
+            int rowsInserted = statement.executeUpdate();
+            if (rowsInserted > 0) {
+                isUpdate = true;
+            }
+        } catch (SQLException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error de conexión.");
+            alert.setHeaderText("¡ERROR!");
+            alert.setContentText("Error al conectar a la base de datos: " + e.getMessage());
+            alert.showAndWait();
+        }
+        return isUpdate;
+    }
+
+    public static boolean avgSecondsChamp(int idChamp, int idUser, int idCategory) {
+        String sql = "SELECT MOD(TRUNCATE((SUM(MINUTES1 * 60 + SECONDS1) - MIN(MINUTES1 * 60 + SECONDS1) - MAX(MINUTES1 * 60 + SECONDS1)) / (COUNT(MINUTES1) - 2), 3), 60)\n" +
+                "FROM TIMES_CHAMPIONSHIP " +
+                "WHERE ID_CHAMP = ? AND ID_TYPE = ? AND ID_USER =?;";
+        boolean isUpdate = false;
+        try {
+            Connection connection = DatabaseConnection.conectar();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, idChamp);
+            statement.setInt(2, idCategory);
+            statement.setInt(3, idUser);
+            int rowsInserted = statement.executeUpdate();
+            if (rowsInserted > 0) {
+                isUpdate = true;
+            }
+        } catch (SQLException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error de conexión.");
+            alert.setHeaderText("¡ERROR!");
+            alert.setContentText("Error al conectar a la base de datos: " + e.getMessage());
+            alert.showAndWait();
+        }
+        return isUpdate;
+    }
+
 }
 
 

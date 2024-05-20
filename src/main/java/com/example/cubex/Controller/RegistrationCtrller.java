@@ -123,8 +123,6 @@ public class RegistrationCtrller implements Initializable {
     void onLogAction() {
         signVision.setVisible(false);
         logginVision.setVisible(true);
-        emailTxt.setText("eljoaki@gmail.com");
-        passwordTxt.setText("Ps.contains(8)");
 
         // SE PONE MANUALMENTE LOS PROMPTTEXT PORQUE LUEGO NO SE PUEDE DARLE UN ESTILO
         emailTxt.setPromptText("example@example.com");

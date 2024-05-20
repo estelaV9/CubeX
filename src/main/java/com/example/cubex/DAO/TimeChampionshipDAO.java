@@ -1,12 +1,10 @@
 package com.example.cubex.DAO;
 
 import com.example.cubex.Database.DatabaseConnection;
+import com.example.cubex.model.TimesChampionship;
 import javafx.scene.control.Alert;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDate;
 
 public class TimeChampionshipDAO {
@@ -81,6 +79,42 @@ public class TimeChampionshipDAO {
         }
         return isDelete;
     }
+
+    public static TimesChampionship dataWinnerCategory (int idChamp, int idType){
+        String sql = "SELECT ID_USER, TRUNCATE((SUM(MINUTES1 * 60 + SECONDS1) - MIN(MINUTES1 * 60 + SECONDS1) - MAX(MINUTES1 * 60 + SECONDS1)) / (COUNT(MINUTES1) - 2)/60, 0) as minutos, \n" +
+                "\tMOD(TRUNCATE((SUM(MINUTES1 * 60 + SECONDS1) - MIN(MINUTES1 * 60 + SECONDS1) - MAX(MINUTES1 * 60 + SECONDS1)) / (COUNT(MINUTES1) - 2), 3), 60) as seconds\n" +
+                "FROM TIMES_CHAMPIONSHIP \n" +
+                "WHERE ID_CHAMP = ? AND ID_TYPE = ?\n" +
+                "GROUP BY ID_USER\n" +
+                "ORDER BY minutos, seconds\n" +
+                "LIMIT 1;";
+        TimesChampionship timesChampionship = null;
+        try {
+            Connection con = DatabaseConnection.conectar();
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.setInt(1, idChamp);
+            statement.setInt(2, idType);
+            ResultSet resultSet = statement.executeQuery();
+            if(resultSet.next()){
+                int idUser = resultSet.getInt("ID_USER");
+                int minutes = resultSet.getInt("minutos");
+                double seconds = resultSet.getDouble("seconds");
+                timesChampionship = new TimesChampionship(idUser, minutes, seconds);
+            }
+            con.close();
+        } catch (SQLException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error de conexión.");
+            alert.setHeaderText("¡ERROR!");
+            alert.setContentText("Error al conectar a la base de datos: " + e.getMessage());
+            alert.showAndWait();
+        }
+        return timesChampionship;
+    }
+
+
+
+
 
 
 

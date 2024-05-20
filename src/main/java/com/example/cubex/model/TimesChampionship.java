@@ -10,6 +10,13 @@ public class TimesChampionship {
     private int idChamp;
     private int idType;
 
+    public TimesChampionship(int idUser, int minutes, double seconds, int idType) {
+        this.idUser = idUser;
+        this.minutes = minutes;
+        this.seconds = seconds;
+        this.idType = idType;
+    }
+
     public TimesChampionship(int idUser, String scramble, int minutes, double seconds, int idChamp, int idType) {
         this.idUser = idUser;
         this.scramble = scramble;
@@ -17,6 +24,12 @@ public class TimesChampionship {
         this.seconds = seconds;
         this.idChamp = idChamp;
         this.idType = idType;
+    }
+
+    public TimesChampionship(int idUser, int minutes, double seconds) {
+        this.idUser = idUser;
+        this.minutes = minutes;
+        this.seconds = seconds;
     }
 
     public int getIdTimesChamp() {

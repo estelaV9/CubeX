@@ -219,13 +219,17 @@ public class CubeUserDAO {
     }
 
 
-    public static boolean levelUpdate (){
+    public static boolean levelUpdate (int idUser){
         String sql = "UPDATE CUBE_USERS SET LEVEL_USER = " +
-                "(SELECT TRUNCATE(COUNT(DESCRIPTION_SCRAMBLE) * 25 / 100, 0)  FROM TIMES_TRAINING)";
+                "(SELECT TRUNCATE(COUNT(DESCRIPTION_SCRAMBLE) * 25 / 100, 0)  FROM TIMES_TRAINING" +
+                " WHERE ID_SESSION = (SELECT ID_SESSION FROM SESSIONS WHERE ID_USER = ?))" +
+                " WHERE ID_USER = ?";
         boolean isUpdate = false;
         try {
             Connection connection = DatabaseConnection.conectar();
             PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, idUser);
+            statement.setInt(2, idUser);
             int rowsInserted = statement.executeUpdate();
             if (rowsInserted > 0) {
                 isUpdate = true;
@@ -241,7 +245,8 @@ public class CubeUserDAO {
     }
 
     public static int levelNumber (String mailUser) {
-        levelUpdate();
+        int idUser = CubeUserDAO.selectIdUser(mailUser);
+        levelUpdate(idUser);
         String sql = "SELECT LEVEL_USER FROM CUBE_USERS WHERE MAIL = ?";
         int levelNumber = 0;
         try {

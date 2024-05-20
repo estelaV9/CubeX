@@ -348,24 +348,14 @@
                               <AnchorPane fx:id="communityScrollPane" minHeight="0.0" minWidth="0.0" prefHeight="198.0" prefWidth="332.0" style="-fx-background-color: #325743;" />
                            </content>
                         </ScrollPane>
-                        <Pane fx:id="filterMenu" layoutX="110.0" layoutY="5.0" prefHeight="186.0" prefWidth="276.0" style="-fx-background-color: #204338; -fx-background-radius: 24;">
+                        <Pane fx:id="filterMenu" layoutX="110.0" layoutY="5.0" prefHeight="96.0" prefWidth="276.0" style="-fx-background-color: #204338; -fx-background-radius: 24;">
                            <children>
-                              <Button fx:id="closeFiBtt" layoutX="13.0" layoutY="135.0" mnemonicParsing="false" onAction="#onCloseFilterAction" prefHeight="31.0" prefWidth="251.0" style="-fx-background-color: #6d7b64; -fx-background-radius: 100;" text="CLOSE">
+                              <Button fx:id="closeFiBtt" layoutX="13.0" layoutY="53.0" mnemonicParsing="false" onAction="#onCloseFilterAction" prefHeight="31.0" prefWidth="251.0" style="-fx-background-color: #6d7b64; -fx-background-radius: 100;" text="CLOSE">
                                  <font>
                                     <Font name="DejaVu Sans Bold" size="17.0" />
                                  </font>
                               </Button>
-                              <Button layoutX="13.0" layoutY="54.0" mnemonicParsing="false" onAction="#onAvgFilterAction" prefHeight="31.0" prefWidth="251.0" style="-fx-background-color: #325743; -fx-background-radius: 100;" text="BEST AVERAGE">
-                                 <font>
-                                    <Font name="DejaVu Sans Bold" size="17.0" />
-                                 </font>
-                              </Button>
-                              <Button layoutX="13.0" layoutY="14.0" mnemonicParsing="false" onAction="#onBestFilterAction" prefHeight="31.0" prefWidth="251.0" style="-fx-background-color: #325743; -fx-background-radius: 100;" text="BEST TIMES">
-                                 <font>
-                                    <Font name="DejaVu Sans Bold" size="17.0" />
-                                 </font>
-                              </Button>
-                              <Button layoutX="13.0" layoutY="94.0" mnemonicParsing="false" onAction="#onChampFilterAction" prefHeight="31.0" prefWidth="251.0" style="-fx-background-color: #325743; -fx-background-radius: 100;" text="BEST CHAMPIONS">
+                              <Button layoutX="13.0" layoutY="10.0" mnemonicParsing="false" onAction="#onAvgFilterAction" prefHeight="31.0" prefWidth="251.0" style="-fx-background-color: #325743; -fx-background-radius: 100;" text="BEST AVERAGE">
                                  <font>
                                     <Font name="DejaVu Sans Bold" size="17.0" />
                                  </font>
