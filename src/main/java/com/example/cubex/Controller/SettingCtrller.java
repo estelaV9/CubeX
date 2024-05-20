@@ -751,9 +751,11 @@ public class SettingCtrller extends CodeGeneral implements Initializable {
         communityPane.setVisible(false);
         onProfileSetAction();
         CuberTypeDAO.cubeCategory(categoriesCB);
-        if(CubeUserDAO.selectUrl(CacheStatic.cubeUser.getMail())){
-            onUpdateImgAction();
-        } // SI LA IMAGEN SE MODIFICO ENTONCES SE CARGA LA IMAGEN
+        if(!StartCtrller.isDemo) {
+            if (CubeUserDAO.selectUrl(CacheStatic.cubeUser.getMail())) {
+                onUpdateImgAction();
+            } // SI LA IMAGEN SE MODIFICO ENTONCES SE CARGA LA IMAGEN
+        }
     }
 
 }

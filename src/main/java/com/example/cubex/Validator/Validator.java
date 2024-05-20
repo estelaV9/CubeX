@@ -150,7 +150,7 @@ public class Validator {
 
     public static boolean isValidNameCard(String fullName) {
         //DEBE CONTENER DESDE EL PRINCIPIO (^) HASTA EL FINAL ($) AL MENOS TRES CARACTERES SEGUIDO OPCIONALMENTE
-        // POR CERO O UN GRUPO DE UN ESPACIO Y DOS O MAS LETRAS (para apellidos compuestos) Y SEGUIDO DE UNO O MAS
+        // POR CERO O UN GRUPO DE UN ESPACIO Y DOS O MAS LETRAS (para nombres compuestos) Y SEGUIDO DE UNO O MAS
         // GRUPOS DE UN ESPACIO Y DOS O MAS LETRAS (permitiendo asi nombres como Maria del Carmen Garcia Fernandez)
         Pattern pattern = Pattern.compile("^[a-zA-Z]{3,}(\\s[a-zA-Z]+)*\\s[a-zA-Z]{2,}$");
         // LLAMAMOS A LA CLASE PATTERN Y USAMOS EL METODO MATCHER. Y PASAMOS COMO PARAMETRO EL CORREO

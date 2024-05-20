@@ -133,8 +133,6 @@ public class ChampionshipCtrller extends CodeGeneral implements Initializable {
         listUserChampPane.setVisible(false);
         nextPaneYJoin = 10;
         scrollChampJoinPane.getChildren().clear();
-        int idUser = CubeUserDAO.selectIdUser(CacheStatic.cubeUser.getMail());
-        loadJoinChampionship(idUser);
     }
 
     @FXML
@@ -363,10 +361,17 @@ public class ChampionshipCtrller extends CodeGeneral implements Initializable {
             int idUser = CubeUserDAO.selectIdUser(CacheStatic.cubeUser.getMail());
             String nameUser = CubeUserDAO.selectNameUser(idUser);
             if (!ChampionshipDAO.administratorCham(nameChampionship.getText()).equals(nameUser)) {
+                Button insertTimes = new Button("INSERT");
+                insertTimes.setLayoutX(12);
+                insertTimes.setLayoutY(218);
+                insertTimes.setPrefWidth(109);
+                insertTimes.setPrefHeight(31);
+                insertTimes.setStyle("-fx-background-color: #6d7b64; -fx-font-family: DejaVu Sans; -fx-font-weight: bold; -fx-font-size: 15px;");
+
                 Button join = new Button("JOIN");
-                join.setLayoutX(12);
-                join.setLayoutY(245);
-                join.setPrefWidth(218);
+                join.setLayoutX(123);
+                join.setLayoutY(218);
+                join.setPrefWidth(109);
                 join.setPrefHeight(31);
                 join.setStyle("-fx-background-color: #74cc5e; -fx-font-family: DejaVu Sans; -fx-font-weight: bold; -fx-font-size: 15px;");
 
@@ -403,21 +408,28 @@ public class ChampionshipCtrller extends CodeGeneral implements Initializable {
 
                 // SE AGREGAN TODOS AL NUEVO PANEL
                 newPane.getChildren().addAll(
-                        imagePro, proLabel, nameChampionship, administrator, dateChampionship, numberPartChamp,
-                        show, priceChampionship, descriptionChamp, join
+                        nameChampionship, administrator, dateChampionship, numberPartChamp,
+                        show, priceChampionship, descriptionChamp, join, insertTimes
                 );
             } else {
                 Button delete = new Button("DELETE");
-                delete.setLayoutX(12);
-                delete.setLayoutY(245);
-                delete.setPrefWidth(218);
+                delete.setLayoutX(123);
+                delete.setLayoutY(218);
+                delete.setPrefWidth(109);
                 delete.setPrefHeight(31);
                 delete.setStyle("-fx-background-color: #a82f2a; -fx-font-family: DejaVu Sans; -fx-font-weight: bold; -fx-font-size: 15px;");
 
+                Button updateName = new Button("UPDATE");
+                updateName.setLayoutX(12);
+                updateName.setLayoutY(218);
+                updateName.setPrefWidth(109);
+                updateName.setPrefHeight(31);
+                updateName.setStyle("-fx-background-color: #6d7b64; -fx-font-family: DejaVu Sans; -fx-font-weight: bold; -fx-font-size: 15px;");
+
                 // SE AGREGAN TODOS AL NUEVO PANEL
                 newPane.getChildren().addAll(
-                        imagePro, proLabel, nameChampionship, administrator, dateChampionship, numberPartChamp,
-                        show, priceChampionship, descriptionChamp, delete
+                        nameChampionship, administrator, dateChampionship, numberPartChamp,
+                        show, priceChampionship, descriptionChamp, delete, updateName
                 );
             } // SI ES EL CREADOR DE LA SESION ENTONCES LE APARECERA UN BOTON DE ELIMINAR
 
@@ -502,10 +514,25 @@ public class ChampionshipCtrller extends CodeGeneral implements Initializable {
             int idUser = CubeUserDAO.selectIdUser(CacheStatic.cubeUser.getMail());
             String nameUser = CubeUserDAO.selectNameUser(idUser);
             if (!ChampionshipDAO.administratorCham(nameChampionship.getText()).equals(nameUser)) {
+                Button insertTimes = new Button("INSERT");
+                insertTimes.setLayoutX(12);
+                insertTimes.setLayoutY(218);
+                insertTimes.setPrefWidth(109);
+                insertTimes.setPrefHeight(31);
+                insertTimes.setStyle("-fx-background-color: #6d7b64; -fx-font-family: DejaVu Sans; -fx-font-weight: bold; -fx-font-size: 15px;");
+
+                insertTimes.setOnAction(event -> {
+                    idChampActual = idChamp;
+                    yourChampsPane.setVisible(true);
+                    scrambleLabel.setText(CodeGeneral.scramble());
+                    timeChampPane.setVisible(true);
+                    newChampPane.setVisible(false);
+                });
+
                 Button join = new Button("JOIN");
-                join.setLayoutX(12);
+                join.setLayoutX(123);
                 join.setLayoutY(218);
-                join.setPrefWidth(218);
+                join.setPrefWidth(109);
                 join.setPrefHeight(31);
                 join.setStyle("-fx-background-color: #74cc5e; -fx-font-family: DejaVu Sans; -fx-font-weight: bold; -fx-font-size: 15px;");
 
@@ -543,20 +570,27 @@ public class ChampionshipCtrller extends CodeGeneral implements Initializable {
                 // SE AGREGAN TODOS AL NUEVO PANEL
                 newPane.getChildren().addAll(
                         nameChampionship, administrator, dateChampionship, numberPartChamp,
-                        show, priceChampionship, descriptionChamp, join
+                        show, priceChampionship, descriptionChamp, join, insertTimes
                 );
             } else {
                 Button delete = new Button("DELETE");
-                delete.setLayoutX(12);
+                delete.setLayoutX(123);
                 delete.setLayoutY(218);
-                delete.setPrefWidth(218);
+                delete.setPrefWidth(109);
                 delete.setPrefHeight(31);
                 delete.setStyle("-fx-background-color: #a82f2a; -fx-font-family: DejaVu Sans; -fx-font-weight: bold; -fx-font-size: 15px;");
+
+                Button updateName = new Button("UPDATE");
+                updateName.setLayoutX(12);
+                updateName.setLayoutY(218);
+                updateName.setPrefWidth(109);
+                updateName.setPrefHeight(31);
+                updateName.setStyle("-fx-background-color: #6d7b64; -fx-font-family: DejaVu Sans; -fx-font-weight: bold; -fx-font-size: 15px;");
 
                 // SE AGREGAN TODOS AL NUEVO PANEL
                 newPane.getChildren().addAll(
                         nameChampionship, administrator, dateChampionship, numberPartChamp,
-                        show, priceChampionship, descriptionChamp, delete
+                        show, priceChampionship, descriptionChamp, delete, updateName
                 );
             } // SI ES EL CREADOR DE LA SESION ENTONCES LE APARECERA UN BOTON DE ELIMINAR
 
@@ -577,37 +611,6 @@ public class ChampionshipCtrller extends CodeGeneral implements Initializable {
         return newPane;
     } // CREAR UN NUEVO PANEL DE SESSION
 
-
-    public Pane createJoinPane(String nameChamp) {
-        Pane newPane;
-        int idChamp = ChampionshipDAO.selectIdChamp(nameChamp);
-        newPane = new Pane();
-        newPane.setLayoutX(5); // ESPACIADO HORIZONTAL
-        newPane.setLayoutY(nextPaneYJoin); // ESPACIADO VERTICAL
-        // TAMAÑO DEL PANEL
-        newPane.setPrefHeight(82);
-        newPane.setPrefWidth(214);
-        newPane.setStyle("-fx-background-color:  #325743; -fx-background-radius: 24; -fx-border-color: black; -fx-border-radius: 24;");
-
-        Label nameChampionship = new Label(nameChamp);
-        nameChampionship.setLayoutX(12);
-        nameChampionship.setLayoutY(6);
-        nameChampionship.setStyle("-fx-underline: true; -fx-font-family: DejaVu Sans; -fx-font-weight: bold; -fx-font-size: 21px;");
-
-        Button insertTimers = new Button("INSERT TIMES");
-        insertTimers.setPrefWidth(191);
-        insertTimers.setPrefHeight(31);
-        insertTimers.setLayoutX(12);
-        insertTimers.setLayoutY(41);
-        insertTimers.setStyle("-fx-background-color: #b1c8a3; -fx-font-family: DejaVu Sans; -fx-font-weight: bold; -fx-font-size: 15px;");
-
-        insertTimers.setOnAction(event -> {
-            scrambleLabel.setText(CodeGeneral.scramble());
-            timeChampPane.setVisible(true);
-        });
-        newPane.getChildren().addAll(nameChampionship, insertTimers);
-        return newPane;
-    } // CREAR LOS PANELES DE LOS CAMPEONATOS EN EL QUE ESTA UN USUARIO
 
     @FXML
     void onCloseTimesChampAction(ActionEvent event) {
@@ -632,7 +635,7 @@ public class ChampionshipCtrller extends CodeGeneral implements Initializable {
             // PARA ESTABLECER EL VALOR DE LOS SEGUNDOS, SE COJE EL VALOR DESPUES DEL : HASTA EL FINAL
             String subSeconds = tiempo.substring(indiceMinutos + 1, indiceMinutos + (tiempo.length() - indiceMinutos));
             int idUser = CubeUserDAO.selectIdUser(CacheStatic.cubeUser.getMail());
-            /*if (!TimeChampionshipDAO.createTimeChampionship(idUser, scrambleLabel.getText(), subMinutos, subSeconds, , )) {
+            /*if (!TimeChampionshipDAO.createTimeChampionship(idUser, scrambleLabel.getText(), subMinutos, subSeconds, idChampActual, )) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Tiempos fallidos.");
                 alert.setHeaderText("¡ERROR!");
@@ -703,28 +706,6 @@ public class ChampionshipCtrller extends CodeGeneral implements Initializable {
                 } else if (!MemberDAO.selectMember(CacheStatic.cubeUser.getMail()) && !membersOnly) {
                     paneChampScroll.getChildren().addAll(createChampionship(nameChamp, date, numberPart, price, descriptionChamp, membersOnly));
                 }
-            }
-            con.close();
-        } catch (SQLException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error de conexión.");
-            alert.setHeaderText("¡ERROR!");
-            alert.setContentText("Error al conectar a la base de datos: " + e.getMessage());
-            alert.showAndWait();
-        }
-    }
-
-    public void loadJoinChampionship(int idUser) {
-        String sql = "SELECT NAME_CHAMP FROM CHAMPIONSHIP WHERE ID_CHAMP IN (SELECT ID_CHAMP FROM USER_CHAMP_COMPETE WHERE ID_USER = ?);";
-        String nameChamp;
-        try {
-            Connection con = DatabaseConnection.conectar();
-            PreparedStatement statement = con.prepareStatement(sql);
-            statement.setInt(1, idUser);
-            ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                nameChamp = resultSet.getString("NAME_CHAMP");
-                scrollChampJoinPane.getChildren().add(createJoinPane(nameChamp));
             }
             con.close();
         } catch (SQLException e) {
