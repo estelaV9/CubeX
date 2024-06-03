@@ -494,7 +494,7 @@ public class ChampionshipCtrller extends CodeGeneral implements Initializable {
 
                 // SE AGREGAN TODOS AL NUEVO PANEL
                 newPane.getChildren().addAll(
-                        nameChampionship, administrator, categoriesLabel, dateChampionship, numberPartChamp,
+                        imagePro, proLabel, nameChampionship, administrator, categoriesLabel, dateChampionship, numberPartChamp,
                         show, priceChampionship, descriptionChamp, join, insertTimes
                 );
             } else {
@@ -551,7 +551,7 @@ public class ChampionshipCtrller extends CodeGeneral implements Initializable {
 
                 // SE AGREGAN TODOS AL NUEVO PANEL
                 newPane.getChildren().addAll(
-                        nameChampionship, administrator, categoriesLabel, dateChampionship, numberPartChamp,
+                        imagePro, proLabel, nameChampionship, administrator, categoriesLabel, dateChampionship, numberPartChamp,
                         show, priceChampionship, descriptionChamp, delete, updateName
                 );
             } // SI ES EL CREADOR DE LA SESION ENTONCES LE APARECERA UN BOTON DE ELIMINAR

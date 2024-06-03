@@ -179,7 +179,7 @@ public class Validator {
         String time = detailTimeTxt.getText(); // TIEMPO INGRESADO
         time = time.replace(',', '.'); // SE REEMPLAZA LA COMA POR EL PUNTO
 
-        String regex = "^([01]):[0-5][0-9]\\.[0-9]{1,2}$"; // COMIENZA CON UN NUMERO ENTRE 0 Y 1 SEGUIDO DE :
+        String regex = "^([0-9]):[0-5][0-9]\\.[0-9]{1,2}$"; // COMIENZA CON UN NUMERO ENTRE 0 Y 1 SEGUIDO DE :
                                                          // SEGUIDO DE UN DIGITO ENTRE 0-5 CON UN DIGITO ENTRE 0-9
                                                          // SEGUIDO DE UN CARACTER CON DOS DIGITO ENTRE 0-9 Y OTRO OPCIONAL
         // COMPROBAR SI EL TIEMPO CUMPLE EL FORMATO
@@ -192,7 +192,7 @@ public class Validator {
             double seconds = Double.parseDouble(subSeconds);
 
             // VERIFICAR QUE LOS MINUTOS Y SEGUNDOS ESTEN EN UN RANDO CORRECTO (0-59)
-            if (minutes <= 1 && minutes >=0 && seconds >= 0 && seconds <= 59) {
+            if (minutes <= 9 && minutes >=0 && seconds >= 0 && seconds <= 59) {
                 isValid = true;
             }
         }
